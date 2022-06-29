@@ -18,9 +18,12 @@ public class Note
         Octave = octave;
 
         var pitch = GetPitch(basePitch, octave);
+        Name = GetName(basePitch, octave);
         Frequency = GetFrequency(pitch);
         MidiNumber = GetMidiNumber(pitch);
     }
+
+    public string Name { get; }
 
     /// <summary>
     /// <para>A frequency of a note in Herz.</para>
@@ -36,6 +39,11 @@ public class Note
     /// <para>The octave of middle C can be configured using the <see cref="DarkMusicConceptsCore.Configure(DarkMusicConceptsSettings)"/> method to specify a custom <see cref="DarkMusicConceptsSettings.MidiMiddleCOctave"/> value. Default value is <see cref="Octave.OneLine"/></para>
     /// </summary>
     public int MidiNumber { get; }
+
+    private static string GetName(NotePitch basePitch, Octave octave)
+    {
+        return $"{basePitch}{(int)octave}";
+    }
 
     private static int GetPitch(NotePitch basePitch, Octave octave)
     {
