@@ -21,7 +21,7 @@ public class NoteTests
     public void MidiNumber_Tests(NotePitch notePitch, Octave octave, int expectedMidiNumber)
     {
         var note = new Note(notePitch, octave);
-        note.MidiNumber.Should().Be(expectedMidiNumber);
+        note.MidiNumber.Value.Should().Be(expectedMidiNumber);
     }
 
     [Theory]
@@ -37,6 +37,60 @@ public class NoteTests
     public void Frequency_Tests(NotePitch notePitch, Octave octave, double expectedFrequency)
     {
         var note = new Note(notePitch, octave);
-        note.Frequency.Should().BeApproximately(expectedFrequency, 0.01d);
+        note.Frequency.Value.Should().BeApproximately(expectedFrequency, 0.01d);
+    }
+
+    [Fact]
+    public void ComparisonEqualsOperator_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
+    {
+        var note1 = new Note(NotePitch.C, Octave.Contra);
+        var note2 = new Note(NotePitch.C, Octave.Contra);
+        var areEqual = note1 == note2;
+        areEqual.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ComparisonEqualsOperator_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
+    {
+        var note1 = new Note(NotePitch.C, Octave.Contra);
+        var note2 = new Note(NotePitch.D, Octave.OneLine);
+        var areEqual = note1 == note2;
+        areEqual.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ComparisonEquals_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
+    {
+        var note1 = new Note(NotePitch.C, Octave.Contra);
+        var note2 = new Note(NotePitch.C, Octave.Contra);
+        var areEqual = note1.Equals(note2);
+        areEqual.Should().BeTrue();
+    }
+
+    [Fact]
+    public void ComparisonEquals_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
+    {
+        var note1 = new Note(NotePitch.C, Octave.Contra);
+        var note2 = new Note(NotePitch.D, Octave.OneLine);
+        var areEqual = note1.Equals(note2);
+        areEqual.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ComparisonNotEqualOperator_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
+    {
+        var note1 = new Note(NotePitch.C, Octave.Contra);
+        var note2 = new Note(NotePitch.C, Octave.Contra);
+        var areNotEqual = note1 != note2;
+        areNotEqual.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ComparisonNotEqualOperator_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
+    {
+        var note1 = new Note(NotePitch.C, Octave.Contra);
+        var note2 = new Note(NotePitch.D, Octave.OneLine);
+        var areNotEqual = note1 != note2;
+        areNotEqual.Should().BeTrue();
     }
 }

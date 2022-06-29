@@ -21,4 +21,6 @@ public class MidiNumber : ValueOf<int, MidiNumber>
             throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI number cannot exceed 127");
         }
     }
+
+    public static implicit operator MidiNumber(int value) => From(value);
 }

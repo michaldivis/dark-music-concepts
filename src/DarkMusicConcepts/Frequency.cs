@@ -17,6 +17,8 @@ public class Frequency : ValueOf<double, Frequency> {
         }
     }
 
+    public static implicit operator Frequency(double value) => From(value);
+
     public override string ToString()
     {
         return $"{Value} Hz";
