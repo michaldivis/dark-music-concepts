@@ -18,7 +18,7 @@ using DarkMusicConcepts;
 var note = new Note(NotePitch.E, Octave.Great);
 
 Console.WriteLine($"Details about the note {note.Name}:");
-Console.WriteLine($"Frequency is {note.Frequency} Hz");
+Console.WriteLine($"Frequency is {note.Frequency}");
 Console.WriteLine($"MIDI number is {note.MidiNumber}");
 
 // Output:

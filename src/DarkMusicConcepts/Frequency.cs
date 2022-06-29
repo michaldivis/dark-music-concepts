@@ -16,4 +16,9 @@ public class Frequency : ValueOf<double, Frequency> {
             throw new ArgumentOutOfRangeException(nameof(Value), Value, "Frequency cannot be negative");
         }
     }
+
+    public override string ToString()
+    {
+        return $"{Value} Hz";
+    }
 }
