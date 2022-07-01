@@ -31,7 +31,7 @@ public class Note : IEquatable<Note?>
 
     private static string GetName(NotePitch basePitch, Octave octave)
     {
-        return $"{basePitch}{(int)octave}";
+        return $"{basePitch}{(int)octave}".Replace("Sharp", "#").Replace("Flat", "b");
     }
 
     private static int GetPitch(NotePitch basePitch, Octave octave)
