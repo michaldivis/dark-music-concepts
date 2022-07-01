@@ -1,6 +1,6 @@
 using FluentAssertions;
 
-namespace DarkMusicConcepts;
+namespace DarkMusicConcepts.Tests;
 
 public class NoteTests
 {
@@ -18,7 +18,7 @@ public class NoteTests
     [InlineData(NotePitch.A, Octave.OneLine, 69)]
     [InlineData(NotePitch.B, Octave.FourLine, 107)]
     [InlineData(NotePitch.G, Octave.SixLine, 127)]
-    public void MidiNumber_Tests(NotePitch notePitch, Octave octave, int expectedMidiNumber)
+    public void MidiNumber_ShouldBeCorrect(NotePitch notePitch, Octave octave, int expectedMidiNumber)
     {
         var note = new Note(notePitch, octave);
         note.MidiNumber.Value.Should().Be(expectedMidiNumber);
@@ -34,7 +34,7 @@ public class NoteTests
     [InlineData(NotePitch.E, Octave.TwoLine, 659.25)]
     [InlineData(NotePitch.B, Octave.ThreeLine, 1975.53)]
     [InlineData(NotePitch.A, Octave.FiveLine, 7040.00)]
-    public void Frequency_Tests(NotePitch notePitch, Octave octave, double expectedFrequency)
+    public void Frequency_ShouldBeCorrect(NotePitch notePitch, Octave octave, double expectedFrequency)
     {
         var note = new Note(notePitch, octave);
         note.Frequency.Value.Should().BeApproximately(expectedFrequency, 0.01d);
@@ -92,5 +92,36 @@ public class NoteTests
         var note2 = new Note(NotePitch.D, Octave.OneLine);
         var areNotEqual = note1 != note2;
         areNotEqual.Should().BeTrue();
+    }
+
+    [Fact]
+    public void AllNotesCanBeCreated()
+    {
+        try
+        {
+            foreach (var note in Note.AllNotes)
+            {
+                Console.WriteLine(note);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+    }
+
+    [Fact]
+    public void FindByFrequency_ShouldReturnCorrectNote_WhenFrequencyMatches()
+    {
+        var note = Note.FindByFrequency(440);
+        note.BasePitch.Should().Be(NotePitch.A);
+        note.Octave.Should().Be(Octave.OneLine);
+    }
+
+    [Fact]
+    public void FindByFrequency_ShouldThrow_WhenFrequencyDoesntMatch()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(441));
     }
 }

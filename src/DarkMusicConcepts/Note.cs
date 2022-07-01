@@ -46,7 +46,7 @@ public class Note : IEquatable<Note?>
         var power = (double)relativePitchToA4 / OctaveRange;
         var frequency = Math.Pow(2.0, power) * A4Frequency;
         return Frequency.From(frequency);
-    }    
+    }
 
     private static MidiNumber GetMidiNumber(int pitch)
     {
@@ -64,7 +64,7 @@ public class Note : IEquatable<Note?>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Note FindByMidiNumber(MidiNumber midiNumber)
     {
-        var note = _notes.FirstOrDefault(a => a.MidiNumber == midiNumber);
+        var note = AllNotes.FirstOrDefault(a => a.MidiNumber == midiNumber);
 
         if (note is null)
         {
@@ -83,7 +83,7 @@ public class Note : IEquatable<Note?>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Note FindByFrequency(Frequency frequency, double precision = 0.01)
     {
-        var note = _notes.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
+        var note = AllNotes.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
 
         if (note is null)
         {
@@ -297,7 +297,7 @@ public class Note : IEquatable<Note?>
     public static Note B8 { get; } = new(NotePitch.B, Octave.FiveLine);
     public static Note B9 { get; } = new(NotePitch.B, Octave.SixLine);
 
-    private static readonly List<Note> _notes = new()
+    public static List<Note> AllNotes { get; } = new()
     {
         C0,
         C1,

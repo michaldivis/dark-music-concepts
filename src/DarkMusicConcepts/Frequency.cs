@@ -23,4 +23,49 @@ public class Frequency : ValueOf<double, Frequency> {
     {
         return $"{Value} Hz";
     }
+
+    public static bool operator ==(Frequency frequency1, double frequency2)
+    {
+        if (frequency1 is null)
+        {
+            return false;
+        }
+
+        return frequency1.Value == frequency2;
+    }
+
+    public static bool operator !=(Frequency frequency1, double frequency2)
+    {
+        return !(frequency1 == frequency2);
+    }
+
+    public static bool operator ==(double frequency1, Frequency frequency2)
+    {
+        if (frequency2 is null)
+        {
+            return false;
+        }
+
+        return frequency2.Value == frequency1;
+    }
+
+    public static bool operator !=(double frequency1, Frequency frequency2)
+    {
+        return !(frequency2 == frequency1);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as Frequency);
+    }
+
+    public bool Equals(Frequency? other)
+    {
+        return other is not null && Value == other.Value;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Value);
+    }
 }

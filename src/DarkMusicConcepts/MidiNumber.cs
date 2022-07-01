@@ -16,11 +16,57 @@ public class MidiNumber : ValueOf<int, MidiNumber>
             throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI number cannot be negative");
         }
 
-        if (Value > 127)
-        {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI number cannot exceed 127");
-        }
+        //this validation is currently disabled because the library allows creating of notes from the 9th octave, which would reach MIDI numbers over 127
+        //if (Value > 127)
+        //{
+        //    throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI number cannot exceed 127");
+        //}
     }
 
     public static implicit operator MidiNumber(int value) => From(value);
+
+    public static bool operator ==(MidiNumber number1, int number2)
+    {
+        if (number1 is null)
+        {
+            return false;
+        }
+
+        return number1.Value == number2;
+    }
+
+    public static bool operator !=(MidiNumber number1, int number2)
+    {
+        return !(number1 == number2);
+    }
+
+    public static bool operator ==(int number1, MidiNumber number2)
+    {
+        if (number2 is null)
+        {
+            return false;
+        }
+
+        return number2.Value == number1;
+    }
+
+    public static bool operator !=(int number1, MidiNumber number2)
+    {
+        return !(number2 == number1);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as MidiNumber);
+    }
+
+    public bool Equals(MidiNumber? other)
+    {
+        return other is not null && Value == other.Value;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Value);
+    }
 }
