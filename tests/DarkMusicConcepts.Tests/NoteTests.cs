@@ -28,7 +28,7 @@ public class NoteTests
     [InlineData(NotePitch.C, Octave.SubContra, 16.35)]
     [InlineData(NotePitch.G, Octave.SubContra, 24.50)]
     [InlineData(NotePitch.E, Octave.Contra, 41.20)]
-    [InlineData(NotePitch.CSharp, Octave.Great, 69.30)]
+    [InlineData(NotePitch.CSharpOrDFlat, Octave.Great, 69.30)]
     [InlineData(NotePitch.F, Octave.Small, 174.61)]
     [InlineData(NotePitch.A, Octave.OneLine, 440.00)]
     [InlineData(NotePitch.E, Octave.TwoLine, 659.25)]
