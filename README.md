@@ -11,6 +11,15 @@ A code model for western music concepts.
 | Chord | ❌ |
 | Scale | ❌ |
 
+## Nuget
+[![Nuget](https://img.shields.io/nuget/v/Divis.DarkMusicConcepts?label=DarkMusicConcepts)](https://www.nuget.org/packages/Divis.DarkMusicConcepts/)
+
+DarkMusicConcepts is available using [nuget](https://www.nuget.org/packages/Divis.DarkMusicConcepts/). To install DarkMusicConcepts, run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
+
+```Powershell
+PM> Install-Package Divis.DarkMusicConcepts
+```
+
 # Note
 ```csharp
 using DarkMusicConcepts;
