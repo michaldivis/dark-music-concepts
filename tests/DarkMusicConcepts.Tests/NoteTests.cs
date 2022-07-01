@@ -112,16 +112,30 @@ public class NoteTests
     }
 
     [Fact]
-    public void FindByFrequency_ShouldReturnCorrectNote_WhenFrequencyMatches()
+    public void FindByFrequency_ShouldWork_ForAllNotes()
     {
-        var note = Note.FindByFrequency(440);
-        note.BasePitch.Should().Be(NotePitch.A);
-        note.Octave.Should().Be(Octave.OneLine);
+        foreach (var note in Note.AllNotes)
+        {
+            var foundNote = Note.FindByFrequency(note.Frequency);
+            foundNote.BasePitch.Should().Be(note.BasePitch);
+            foundNote.Octave.Should().Be(note.Octave);
+        }
     }
 
     [Fact]
     public void FindByFrequency_ShouldThrow_WhenFrequencyDoesntMatch()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(441));
+    }
+
+    [Fact]
+    public void FindByMidiNumber_ShouldWork_ForAllNotes()
+    {
+        foreach (var note in Note.AllNotes)
+        {
+            var foundNote = Note.FindByMidiNumber(note.MidiNumber);
+            foundNote.BasePitch.Should().Be(note.BasePitch);
+            foundNote.Octave.Should().Be(note.Octave);
+        }
     }
 }
