@@ -138,4 +138,24 @@ public class NoteTests
             foundNote.Octave.Should().Be(note.Octave);
         }
     }
+
+    [Fact]
+    public void Test()
+    {
+        var sb = new System.Text.StringBuilder();
+
+        var octaves = Enum.GetValues<Octave>();
+        var pitches = Enum.GetValues<NotePitch>();
+
+        foreach (var octave in octaves)
+        {
+            foreach (var pitch in pitches)
+            {
+                sb.AppendLine($"{pitch}{(int)octave},");
+            }
+        }
+
+        var text = sb.ToString();
+        Console.WriteLine(text);
+    }
 }
