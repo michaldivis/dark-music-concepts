@@ -151,6 +151,16 @@ public class ScaleFormula
         Interval.MinorSeventh
     );
 
+    public static readonly ScaleFormula PhrygianDominant = new(
+       Interval.Unisson,
+       Interval.MinorSecond,
+       Interval.MajorThird,
+       Interval.PerfectForth,
+       Interval.PerfectFifth,
+       Interval.MinorSixth,
+       Interval.MinorSeventh
+   );
+
     public static readonly ScaleFormula Mixolydianb6 = new(
         Interval.Unisson,
         Interval.MajorSecond,
