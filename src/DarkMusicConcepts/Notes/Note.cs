@@ -5,7 +5,7 @@
 /// </summary>
 public class Note : IEquatable<Note?>
 {
-    private const int MidiMiddleMidiNumber = 60;
+    private const int MidiMiddleCNumber = 60;
     private const double A4Frequency = 440.0;
     private const int OctaveRange = 12;
 
@@ -55,7 +55,7 @@ public class Note : IEquatable<Note?>
     {
         var middleCPitch = GetPitch(NotePitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
         var relativePitchToMiddleC = pitch - middleCPitch;
-        var midiNumber = MidiMiddleMidiNumber + relativePitchToMiddleC;
+        var midiNumber = MidiMiddleCNumber + relativePitchToMiddleC;
         return MidiNumber.From(midiNumber);
     }
 
