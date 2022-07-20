@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using DarkMusicConcepts.Notes;
+using FluentAssertions;
 
 namespace DarkMusicConcepts.Tests;
 public class MidiNumberTests

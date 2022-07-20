@@ -1,6 +1,6 @@
 ﻿using ValueOf;
 
-namespace DarkMusicConcepts;
+namespace DarkMusicConcepts.Notes;
 
 /// <summary>
 /// <para>MIDI number of a note.</para>

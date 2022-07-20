@@ -1,4 +1,4 @@
-﻿using DarkMusicConcepts;
+﻿using DarkMusicConcepts.Notes;
 
 //-------------------------------------------------------------
 // Note overview

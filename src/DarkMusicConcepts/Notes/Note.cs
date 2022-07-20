@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts;
+﻿namespace DarkMusicConcepts.Notes;
 
 /// <summary>
 /// Representation of a musical note
@@ -39,7 +39,7 @@ public class Note : IEquatable<Note?>
 
     private static int GetPitch(NotePitch basePitch, Octave octave)
     {
-        return (int)basePitch + (OctaveRange * (int)octave);
+        return (int)basePitch + OctaveRange * (int)octave;
     }
 
     private static Frequency GetFrequency(int pitch)
