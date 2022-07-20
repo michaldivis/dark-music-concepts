@@ -96,6 +96,18 @@ public class Note : IEquatable<Note?>
         return note;
     }
 
+    /// <summary>
+    /// Transpose a note by a specific internval
+    /// </summary>
+    /// <param name="interval">Interval to trasnpose by</param>
+    /// <returns>Transposed note</returns>
+    public Note Transpose(Interval interval)
+    {
+        var transposedMidiNumber = MidiNumber.Value + interval.Distance;
+        var transposedNote = FindByMidiNumber(transposedMidiNumber);
+        return transposedNote;
+    }
+
     public override bool Equals(object? obj)
     {
         return Equals(obj as Note);
@@ -127,6 +139,11 @@ public class Note : IEquatable<Note?>
     public static bool operator !=(Note note1, Note note2)
     {
         return !(note1 == note2);
+    }
+
+    public override string ToString()
+    {
+        return $"{BasePitch}{(int)Octave}";
     }
 
     public static Note C0 { get; } = new(NotePitch.C, Octave.SubContra);

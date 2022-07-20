@@ -1,4 +1,5 @@
 ﻿using DarkMusicConcepts.Notes;
+using DarkMusicConcepts.Scales;
 
 //-------------------------------------------------------------
 // Note overview
@@ -45,3 +46,23 @@ _ = a4.Equals(alsoA4); //true
 _ = a4 == b5; //false
 _ = a4 != b5; //true
 _ = a4.Equals(b5); //false
+
+//-------------------------------------------------------------
+// Intervals
+//-------------------------------------------------------------
+
+var minorSecond = Interval.MinorSecond;
+_ = minorSecond.Distance; //2
+_ = minorSecond.Name; //Minor Second
+_ = minorSecond.Accident; //Flat
+
+var g5 = Note.C5.Transpose(Interval.PerfectFifth); //returns G5
+var gSharpOrAFlat2 = Note.CSharpOrDFlat2.Transpose(Interval.PerfectFifth); //returns GSharpOrAFlat2
+
+//-------------------------------------------------------------
+// Scales
+//-------------------------------------------------------------
+
+var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(NotePitch.G);
+var gPhrygianNotes = gPhrygian.Notes;
+var gPhrygianFourth = gPhrygian.IV;
