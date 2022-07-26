@@ -9,9 +9,14 @@ A code model for western music concepts.
 | --- | --- |
 | Note | ✅ |
 | Chord | ❌ |
-| Scale | ❌ |
+| Scale | 🚧 (work in progress) |
 
 ## Nuget
+
+### The core package
+
+This is the main package. Contains all the music stuff, like notes, scales, etc.
+
 [![Nuget](https://img.shields.io/nuget/v/Divis.DarkMusicConcepts?label=DarkMusicConcepts)](https://www.nuget.org/packages/Divis.DarkMusicConcepts/)
 
 DarkMusicConcepts is available using [nuget](https://www.nuget.org/packages/Divis.DarkMusicConcepts/). To install DarkMusicConcepts, run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
@@ -20,10 +25,20 @@ DarkMusicConcepts is available using [nuget](https://www.nuget.org/packages/Divi
 PM> Install-Package Divis.DarkMusicConcepts
 ```
 
-# Note
-```csharp
-using DarkMusicConcepts;
+### Units package
 
+Units only. This tiny package only contains the `Frequency`, `MidiNumber` and `MidiVelocity` types.
+
+[![Nuget](https://img.shields.io/nuget/v/Divis.DarkMusicConcepts.Units?label=DarkMusicConcepts.Units)](https://www.nuget.org/packages/Divis.DarkMusicConcepts.Units/)
+
+DarkMusicConcepts.Units is available using [nuget](https://www.nuget.org/packages/Divis.DarkMusicConcepts.Units/). To install DarkMusicConcepts.Units, run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
+
+```Powershell
+PM> Install-Package Divis.DarkMusicConcepts.Units
+```
+
+# Notes
+```csharp
 var note = new Note(NotePitch.E, Octave.Great);
 
 Console.WriteLine($"Details about the note {note.Name}:");
@@ -63,4 +78,24 @@ _ = a4.Equals(alsoA4); //true
 _ = a4 == b5; //false
 _ = a4 != b5; //true
 _ = a4.Equals(b5); //false
+```
+
+# Intervals
+
+```csharp
+var minorSecond = Interval.MinorSecond;
+_ = minorSecond.Distance; //2
+_ = minorSecond.Name; //Minor Second
+_ = minorSecond.Accident; //Flat
+
+var g5 = Note.C5.Transpose(Interval.PerfectFifth); //returns G5
+var gSharpOrAFlat2 = Note.CSharpOrDFlat2.Transpose(Interval.PerfectFifth); //returns GSharpOrAFlat2
+```
+
+# Scales
+
+```csharp
+var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(NotePitch.G);
+var gPhrygianNotes = gPhrygian.Notes;
+var gPhrygianFourth = gPhrygian.IV;
 ```
