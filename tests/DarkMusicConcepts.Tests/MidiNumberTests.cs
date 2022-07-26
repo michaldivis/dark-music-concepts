@@ -1,4 +1,4 @@
-﻿using DarkMusicConcepts.Notes;
+﻿using DarkMusicConcepts.Units;
 using FluentAssertions;
 
 namespace DarkMusicConcepts.Tests;

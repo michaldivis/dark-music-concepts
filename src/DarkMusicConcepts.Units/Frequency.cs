@@ -1,6 +1,6 @@
 ﻿using ValueOf;
 
-namespace DarkMusicConcepts.Notes;
+namespace DarkMusicConcepts.Units;
 
 /// <summary>
 /// <para>A frequency of a note in Herz.</para>

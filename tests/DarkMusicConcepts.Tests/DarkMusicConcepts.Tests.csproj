@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj" />
     <ProjectReference Include="..\..\src\DarkMusicConcepts\DarkMusicConcepts.csproj" />
   </ItemGroup>
 

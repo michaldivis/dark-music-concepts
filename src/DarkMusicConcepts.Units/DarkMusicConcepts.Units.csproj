@@ -8,33 +8,29 @@
 
 	<PropertyGroup>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<PackageId>Divis.DarkMusicConcepts</PackageId>
+		<PackageId>Divis.DarkMusicConcepts.Units</PackageId>
 		<Version>0.6.0</Version>
 		<Authors>michaldivis</Authors>
 		<Company>Michal Diviš</Company>
-		<Product>Dark Music Concepts</Product>
-		<Description>A code model for western music concepts.</Description>
+		<Product>Dark Music Concepts Units</Product>
+		<Description>Western music units.</Description>
 		<PackageProjectUrl>https://github.com/michaldivis/dark-music-concepts</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
 		<RepositoryUrl>https://github.com/michaldivis/dark-music-concepts</RepositoryUrl>
-		<PackageTags>music, music theory, music-library</PackageTags>
+		<PackageTags>music, music theory, music-library, units</PackageTags>
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\..\assets\icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\..\assets\icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
     <PackageReference Include="ValueOf" Version="2.0.31" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj" />
   </ItemGroup>
 
 </Project>

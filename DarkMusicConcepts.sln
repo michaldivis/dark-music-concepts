@@ -3,16 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkMusicConcepts", "src\DarkMusicConcepts\DarkMusicConcepts.csproj", "{ABEB6E2E-4285-4DF6-A81D-ADCA9D75374E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkMusicConcepts", "src\DarkMusicConcepts\DarkMusicConcepts.csproj", "{ABEB6E2E-4285-4DF6-A81D-ADCA9D75374E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleConsoleApp", "sample\SampleConsoleApp\SampleConsoleApp.csproj", "{0737341F-ED4F-4B3A-92A0-D0A496ABF2BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleConsoleApp", "sample\SampleConsoleApp\SampleConsoleApp.csproj", "{0737341F-ED4F-4B3A-92A0-D0A496ABF2BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkMusicConcepts.Tests", "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj", "{6E6D0B94-A541-46F7-9361-4E67827D0643}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DarkMusicConcepts.Tests", "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj", "{6E6D0B94-A541-46F7-9361-4E67827D0643}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{12D1EC6F-158D-43AA-ACAB-B5105F41B759}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkMusicConcepts.Units", "src\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj", "{B5F287C9-8BCF-4756-8250-343289964A9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{6E6D0B94-A541-46F7-9361-4E67827D0643}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E6D0B94-A541-46F7-9361-4E67827D0643}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E6D0B94-A541-46F7-9361-4E67827D0643}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5F287C9-8BCF-4756-8250-343289964A9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F287C9-8BCF-4756-8250-343289964A9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F287C9-8BCF-4756-8250-343289964A9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F287C9-8BCF-4756-8250-343289964A9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

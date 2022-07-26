@@ -1,26 +1,27 @@
 ﻿using ValueOf;
 
-namespace DarkMusicConcepts.Notes;
+namespace DarkMusicConcepts.Units;
 
 /// <summary>
 /// <para>MIDI number of a note.</para>
 /// <para>In MIDI, each note is assigned a numeric value, which is transmitted with any Note-On/Off message. Middle C has a reference value of 60. The MIDI standard only says that the note number 60 is a C, it does not say of which octave.</para>
-/// <para>The octave of middle C can be configured using the <see cref="DarkMusicConceptsCore.Configure(DarkMusicConceptsSettings)"/> method to specify a custom <see cref="DarkMusicConceptsSettings.MidiMiddleCOctave"/> value. Default value is <see cref="Octave.OneLine"/></para>
 /// </summary>
 public class MidiNumber : ValueOf<int, MidiNumber>
 {
+    public const int Min = 0;
+    public const int Max = 127;
+
     protected override void Validate()
     {
-        if (Value < 0)
+        if (Value < Min)
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI number cannot be negative");
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"MIDI number cannot be smaller than {Min}");
         }
 
-        //this validation is currently disabled because the library allows creating of notes from the 9th octave, which would reach MIDI numbers over 127
-        //if (Value > 127)
-        //{
-        //    throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI number cannot exceed 127");
-        //}
+        if (Value > Max)
+        {
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"MIDI number cannot exceed {Max}");
+        }
     }
 
     public static implicit operator MidiNumber(int value) => From(value);
