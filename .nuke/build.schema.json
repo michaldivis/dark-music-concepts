@@ -66,12 +66,14 @@
             "enum": [
               "Clean",
               "CompileCore",
+              "CompileTests",
               "CompileUnits",
               "Pack",
               "PackCore",
               "PackUnits",
               "RestoreCore",
-              "RestoreUnits"
+              "RestoreUnits",
+              "RunTests"
             ]
           }
         },
@@ -87,12 +89,14 @@
             "enum": [
               "Clean",
               "CompileCore",
+              "CompileTests",
               "CompileUnits",
               "Pack",
               "PackCore",
               "PackUnits",
               "RestoreCore",
-              "RestoreUnits"
+              "RestoreUnits",
+              "RunTests"
             ]
           }
         },

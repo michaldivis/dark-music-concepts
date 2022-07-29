@@ -102,7 +102,7 @@ public class NoteTests
         {
             foreach (var note in Note.AllNotes)
             {
-                Console.WriteLine(note);
+                _ = note;
             }
         }
         catch (Exception ex)

@@ -15,6 +15,7 @@ class Build : NukeBuild
 
     private const string CoreProjectName = "DarkMusicConcepts";
     private const string UnitsProjectName = "DarkMusicConcepts.Units";
+    private const string TestProjectName = "DarkMusicConcepts.Tests";
 
     [Solution] readonly Solution Solution;
 
@@ -48,8 +49,31 @@ class Build : NukeBuild
                 .EnableNoRestore());
         });
 
-    Target PackCore => _ => _
+    Target CompileTests => _ => _
         .DependsOn(CompileCore)
+        .DependsOn(CompileUnits)
+        .Executes(() =>
+        {
+            DotNetBuild(s => s
+                .SetProjectFile(Solution.GetProject(TestProjectName))
+                .SetConfiguration(Configuration)
+                .EnableNoRestore());
+        });
+
+    Target RunTests => _ => _
+        .DependsOn(CompileTests)
+        .Executes(() =>
+        {
+            DotNetTest(s => s
+                .SetProjectFile(Solution.GetProject(TestProjectName))
+                .SetConfiguration(Configuration)
+                .EnableNoRestore()
+                .EnableNoBuild());
+        });
+
+
+    Target PackCore => _ => _
+        .DependsOn(RunTests)
         .Executes(() =>
         {
             DotNetPack(s => s
@@ -78,7 +102,7 @@ class Build : NukeBuild
         });
 
     Target PackUnits => _ => _
-        .DependsOn(CompileUnits)
+        .DependsOn(RunTests)
         .Executes(() =>
         {
             DotNetPack(s => s
