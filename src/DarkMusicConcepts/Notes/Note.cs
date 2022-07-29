@@ -9,6 +9,11 @@ public class Note : IEquatable<Note?>
     private const double A4Frequency = 440.0;
     private const int OctaveRange = 12;
 
+    /// <summary>
+    /// Internal representation of a Note's pitch
+    /// </summary>
+    private readonly int _pitch;
+
     public NotePitch BasePitch { get; }
     public Octave Octave { get; }
 
@@ -17,17 +22,17 @@ public class Note : IEquatable<Note?>
         BasePitch = basePitch;
         Octave = octave;
 
-        var pitch = GetPitch(basePitch, octave);
+        _pitch = GetPitch(basePitch, octave);
         Name = GetName(basePitch, octave);
-        Frequency = GetFrequency(pitch);
-        MidiNumber = GetMidiNumber(pitch);
+        Frequency = GetFrequency(_pitch);
+        MidiNumber = GetMidiNumber(_pitch);
     }
 
     public string Name { get; }
 
     public Frequency Frequency { get; }
 
-    public MidiNumber MidiNumber { get; }
+    public MidiNumber? MidiNumber { get; }
 
     private static string GetName(NotePitch basePitch, Octave octave)
     {
@@ -51,11 +56,22 @@ public class Note : IEquatable<Note?>
         return Frequency.From(frequency);
     }
 
-    private static MidiNumber GetMidiNumber(int pitch)
+    private static MidiNumber? GetMidiNumber(int pitch)
     {
         var middleCPitch = GetPitch(NotePitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
         var relativePitchToMiddleC = pitch - middleCPitch;
         var midiNumber = MidiMiddleCNumber + relativePitchToMiddleC;
+
+        if (midiNumber < MidiNumber.Min)
+        {
+            return null;
+        }
+
+        if (midiNumber > MidiNumber.Max)
+        {
+            return null;
+        }
+
         return MidiNumber.From(midiNumber);
     }
 
@@ -103,9 +119,21 @@ public class Note : IEquatable<Note?>
     /// <returns>Transposed note</returns>
     public Note Transpose(Interval interval)
     {
-        var transposedMidiNumber = MidiNumber.Value + interval.Distance;
-        var transposedNote = FindByMidiNumber(transposedMidiNumber);
+        var transposedPitch = _pitch + interval.Distance;
+        var transposedNote = FindByPitch(transposedPitch);
         return transposedNote;
+    }
+
+    private static Note FindByPitch(int pitch)
+    {
+        var note = AllNotes.FirstOrDefault(a => a._pitch == pitch);
+
+        if (note is null)
+        {
+            throw new ArgumentOutOfRangeException(nameof(pitch), pitch, "Note with this pitch was not found");
+        }
+
+        return note;
     }
 
     public override bool Equals(object? obj)

@@ -22,7 +22,7 @@ public class NoteTests
     public void MidiNumber_ShouldBeCorrect(NotePitch notePitch, Octave octave, int expectedMidiNumber)
     {
         var note = new Note(notePitch, octave);
-        note.MidiNumber.Value.Should().Be(expectedMidiNumber);
+        note.MidiNumber?.Value.Should().Be(expectedMidiNumber);
     }
 
     [Theory]
@@ -130,33 +130,14 @@ public class NoteTests
     }
 
     [Fact]
-    public void FindByMidiNumber_ShouldWork_ForAllNotes()
+    public void FindByMidiNumber_ShouldWork()
     {
-        foreach (var note in Note.AllNotes)
+        //only checking notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
+        foreach (var note in Note.AllNotes.Where(a => a.Octave <= Octave.FiveLine))
         {
-            var foundNote = Note.FindByMidiNumber(note.MidiNumber);
+            var foundNote = Note.FindByMidiNumber(note.MidiNumber!);
             foundNote.BasePitch.Should().Be(note.BasePitch);
             foundNote.Octave.Should().Be(note.Octave);
         }
-    }
-
-    [Fact]
-    public void Test()
-    {
-        var sb = new System.Text.StringBuilder();
-
-        var octaves = Enum.GetValues<Octave>();
-        var pitches = Enum.GetValues<NotePitch>();
-
-        foreach (var octave in octaves)
-        {
-            foreach (var pitch in pitches)
-            {
-                sb.AppendLine($"{pitch}{(int)octave},");
-            }
-        }
-
-        var text = sb.ToString();
-        Console.WriteLine(text);
     }
 }
