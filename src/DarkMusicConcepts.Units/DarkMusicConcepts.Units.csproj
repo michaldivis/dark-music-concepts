@@ -9,7 +9,7 @@
 	<PropertyGroup>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageId>Divis.DarkMusicConcepts.Units</PackageId>
-		<Version>0.7.0</Version>
+		<Version>0.6.0</Version>
 		<Authors>michaldivis</Authors>
 		<Company>Michal Diviš</Company>
 		<Product>Dark Music Concepts Units</Product>
