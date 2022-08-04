@@ -1,5 +1,8 @@
 ﻿namespace DarkMusicConcepts.Notes;
 
+/// <summary>
+/// In music theory, an interval is a difference in pitch between two sounds. An interval may be described as horizontal, linear, or melodic if it refers to successively sounding tones, such as two adjacent pitches in a melody, and vertical or harmonic if it pertains to simultaneously sounding tones, such as in a chord.
+/// </summary>
 public partial class Interval : IComparable<Interval>
 {
     public int Distance { get; }
