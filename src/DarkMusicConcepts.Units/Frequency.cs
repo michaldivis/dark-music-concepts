@@ -10,12 +10,24 @@ namespace DarkMusicConcepts.Units;
 /// </summary>
 public class Frequency : ValueOf<double, Frequency>
 {
+    public const double Min = 0;
+
     protected override void Validate()
     {
-        if (Value < 0)
+        if (Value < Min)
         {
             throw new ArgumentOutOfRangeException(nameof(Value), Value, "Frequency cannot be negative");
         }
+    }
+
+    protected override bool TryValidate()
+    {
+        if (Value < Min)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public static implicit operator Frequency(double value) => From(value);

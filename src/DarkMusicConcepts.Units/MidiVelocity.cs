@@ -24,6 +24,21 @@ public class MidiVelocity : ValueOf<int, MidiVelocity>
         }
     }
 
+    protected override bool TryValidate()
+    {
+        if (Value < Min)
+        {
+            return false;
+        }
+
+        if (Value > Max)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static implicit operator MidiVelocity(int value)
     {
         return From(value);

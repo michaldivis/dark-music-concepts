@@ -1,7 +1,6 @@
-using DarkMusicConcepts.Notes;
 using FluentAssertions;
 
-namespace DarkMusicConcepts.Tests;
+namespace DarkMusicConcepts.Notes.Tests;
 
 public class NoteTests
 {

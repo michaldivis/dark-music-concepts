@@ -1,13 +1,20 @@
-﻿using DarkMusicConcepts.Units;
-using FluentAssertions;
+﻿using FluentAssertions;
 
-namespace DarkMusicConcepts.Tests;
+namespace DarkMusicConcepts.Units.Tests;
 public class FrequencyTests
 {
     [Fact]
-    public void Creation_ShouldThrow_WhenLessThanZero()
+    public void From_ShouldThrow_WhenLessThanMin()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Frequency.From(-1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Frequency.From(Frequency.Min - 1));
+    }
+
+    [Fact]
+    public void TryFrom_ShouldFail_WhenLessThanMin()
+    {
+        var success = Frequency.TryFrom(Frequency.Min - 1, out var invalidFrequency);
+        success.Should().Be(false);
+        invalidFrequency.Should().Be(null);
     }
 
     [Fact]

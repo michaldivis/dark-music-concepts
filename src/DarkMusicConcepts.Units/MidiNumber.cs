@@ -25,6 +25,21 @@ public class MidiNumber : ValueOf<int, MidiNumber>
         }
     }
 
+    protected override bool TryValidate()
+    {
+        if (Value < Min)
+        {
+            return false;
+        }
+
+        if (Value > Max)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static implicit operator MidiNumber(int value) => From(value);
 
     public static bool operator ==(MidiNumber number1, int number2)

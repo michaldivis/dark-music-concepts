@@ -1,21 +1,35 @@
-﻿using DarkMusicConcepts.Units;
-using FluentAssertions;
+﻿using FluentAssertions;
 
-namespace DarkMusicConcepts.Tests;
+namespace DarkMusicConcepts.Units.Tests;
 public class MidiNumberTests
 {
     [Fact]
-    public void Creation_ShouldThrow_WhenLessThanZero()
+    public void From_ShouldThrow_WhenLessThanMin()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => MidiNumber.From(-1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => MidiNumber.From(MidiNumber.Min - 1));
     }
 
-    //this test is currently disabled because the library allows creating of notes from the 9th octave, which would reach MIDI numbers over 127
-    //[Fact]
-    //public void Creation_ShouldThrow_WhenGreaterThan127()
-    //{
-    //    Assert.Throws<ArgumentOutOfRangeException>(() => MidiNumber.From(128));
-    //}
+    [Fact]
+    public void From_ShouldThrow_WhenGreaterThanMax()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => MidiNumber.From(MidiNumber.Max + 1));
+    }
+
+    [Fact]
+    public void TryFrom_ShouldFail_WhenLessThanMin()
+    {
+        var success = MidiNumber.TryFrom(MidiNumber.Min - 1, out var invalidMidiNumber);
+        success.Should().Be(false);
+        invalidMidiNumber.Should().Be(null);
+    }
+
+    [Fact]
+    public void TryFrom_ShouldFail_WhenGreaterThanMax()
+    {
+        var success = MidiNumber.TryFrom(MidiNumber.Max + 1, out var invalidMidiNumber);
+        success.Should().Be(false);
+        invalidMidiNumber.Should().Be(null);
+    }
 
     [Fact]
     public void ImplicitCreation_ShouldWork_WithInt()
