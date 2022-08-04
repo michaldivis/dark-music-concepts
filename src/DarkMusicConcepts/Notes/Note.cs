@@ -79,18 +79,59 @@ public class Note : IEquatable<Note?>
     /// Find a note by MIDI number
     /// </summary>
     /// <param name="midiNumber">MIDI number to find the note by</param>
+    /// <param name="note">A found note that corresponds to that MIDI number</param>
+    /// <returns><see langword="true"/> if found</returns>
+    public static bool TryFindByMidiNumber(MidiNumber midiNumber, out Note? note)
+    {
+        var found = AllNotes.FirstOrDefault(a => a.MidiNumber == midiNumber);
+
+        if (found is null)
+        {
+            note = null;
+            return false;
+        }
+
+        note = found;
+        return true;
+    }
+
+    /// <summary>
+    /// Find a note by MIDI number
+    /// </summary>
+    /// <param name="midiNumber">MIDI number to find the note by</param>
     /// <returns>A note that corresponds to that MIDI number</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Note FindByMidiNumber(MidiNumber midiNumber)
     {
-        var note = AllNotes.FirstOrDefault(a => a.MidiNumber == midiNumber);
+        var success = TryFindByMidiNumber(midiNumber, out var note);
 
-        if (note is null)
+        if (!success)
         {
             throw new ArgumentOutOfRangeException(nameof(midiNumber), midiNumber, "Note with this MIDI number was not found");
         }
 
-        return note;
+        return note!;
+    }
+
+    /// <summary>
+    /// Find a note by frequency
+    /// </summary>
+    /// <param name="frequency">Frequency to find the note by</param>
+    /// <param name="precision">Comparison precision</param>
+    /// <param name="note">A note that corresponds to that frequency</param>
+    /// <returns><see langword="true"/> if found</returns>
+    public static bool TryFindByFrequency(Frequency frequency, out Note? note, double precision = 0.01)
+    {
+        var found = AllNotes.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
+
+        if (found is null)
+        {
+            note = null;
+            return false;
+        }
+
+        note = found;
+        return true;
     }
 
     /// <summary>
@@ -101,15 +142,15 @@ public class Note : IEquatable<Note?>
     /// <returns>A note that corresponds to that frequency</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static Note FindByFrequency(Frequency frequency, double precision = 0.01)
-    {
-        var note = AllNotes.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
+{
+        var success = TryFindByFrequency(frequency, out var note, precision);
 
-        if (note is null)
+        if (!success)
         {
             throw new ArgumentOutOfRangeException(nameof(frequency), frequency, "Note with this frequency was not found");
         }
 
-        return note;
+        return note!;
     }
 
     /// <summary>
