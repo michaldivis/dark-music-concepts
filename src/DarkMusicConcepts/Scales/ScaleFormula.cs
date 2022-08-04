@@ -4,13 +4,21 @@ public partial class ScaleFormula
 {
     private readonly IEnumerable<Interval> _intervals;
 
-    private ScaleFormula(params Interval[] intervals)
+    public string Name { get; }
+
+    private ScaleFormula(string name, params Interval[] intervals)
     {
+        Name = name;
         _intervals = intervals;
     }
 
     public Scale CreateForRoot(NotePitch root)
     {
-        return Scale.Create(_intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
+        return Scale.Create(root, Name, _intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
+    }
+
+    public override string ToString()
+    {
+        return Name;
     }
 }

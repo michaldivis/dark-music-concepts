@@ -4,7 +4,7 @@ public partial class Interval
     public static readonly Interval Unisson = new(0, "Unisson", Accident.None);
     public static readonly Interval MinorSecond = new(1, "Minor second", Accident.Flat);
     public static readonly Interval MajorSecond = new(2, "Major second", Accident.None);
-    public static readonly Interval AugmentedSecond = new(3, "Augmented Second", Accident.Sharp);
+    public static readonly Interval AugmentedSecond = new(3, "Augmented second", Accident.Sharp);
     public static readonly Interval MinorThird = new(3, "Minor third", Accident.Flat);
     public static readonly Interval MajorThird = new(4, "Major third", Accident.None);
     public static readonly Interval PerfectForth = new(5, "Perfect fourth", Accident.None);

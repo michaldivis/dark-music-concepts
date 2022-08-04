@@ -50,4 +50,9 @@ public partial class Interval : IComparable<Interval>
     {
         return Distance.CompareTo(other?.Distance);
     }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

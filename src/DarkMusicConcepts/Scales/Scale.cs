@@ -2,6 +2,9 @@
 
 public class Scale
 {
+    public NotePitch Root { get; }
+    public string Name { get; }
+
     /// <summary>
     /// Create a scale from notes
     /// </summary>
@@ -9,7 +12,7 @@ public class Scale
     /// <returns>A created scale</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
-    internal static Scale Create(IEnumerable<NotePitch> notes)
+    internal static Scale Create(NotePitch root, string name, IEnumerable<NotePitch> notes)
     {
         if(notes is null)
         {
@@ -21,11 +24,13 @@ public class Scale
             throw new ArgumentException("At least 5 notes are required to create a scale", nameof(notes));
         }
 
-        return new Scale(notes);
+        return new Scale(root, name, notes);
     }
      
-    private Scale(IEnumerable<NotePitch> notes)
+    private Scale(NotePitch root, string name, IEnumerable<NotePitch> notes)
     {
+        Root = root;
+        Name = name;
         Notes = notes;
     }
 
@@ -44,4 +49,9 @@ public class Scale
     public NotePitch? VI => Notes.ElementAtOrDefault(5);
 
     public NotePitch? VII => Notes.ElementAtOrDefault(6);
+
+    public override string ToString()
+    {
+        return $"{Root} {Name}";
+    }
 }
