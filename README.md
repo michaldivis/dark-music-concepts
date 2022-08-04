@@ -65,9 +65,11 @@ var a1 = Note.A1;
 
 //find note by frequency
 var e2 = Note.FindByFrequency(82.40);
+var foundE2 = Note.TryFindByFrequency(82.40, out var alsoE2);
 
 //find note by MIDI number
 var f2 = Note.FindByMidiNumber(41);
+var foundF2 = Note.TryFindByMidiNumber(41, out var alsoF2);
 ```
 
 Compare notes
