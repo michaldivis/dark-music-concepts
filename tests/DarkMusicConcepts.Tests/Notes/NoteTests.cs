@@ -134,7 +134,7 @@ public class NoteTests
         foreach (var note in Note.AllNotes)
         {
             var success = Note.TryFindByFrequency(note.Frequency, out var foundNote);
-            success.Should().Be(true);
+            success.Should().BeTrue();
             foundNote.Should().NotBeNull();
         }
     }
@@ -143,7 +143,7 @@ public class NoteTests
     public void TryFindByFrequency_ShouldFail_WhenFrequencyDoesntMatch()
     {
         var success = Note.TryFindByFrequency(441, out var note);
-        success.Should().Be(false);
+        success.Should().BeFalse();
         note.Should().BeNull();
     }
 
@@ -170,8 +170,41 @@ public class NoteTests
             }
 
             var success = Note.TryFindByMidiNumber(note.MidiNumber, out var foundNote);
-            success.Should().Be(true);
+            success.Should().BeTrue();
             foundNote.Should().NotBeNull();
         }
+    }
+
+    [Fact]
+    public void Transpose_ShouldWork_WhenTransposingInsidePossibleRange()
+    {
+        var note = Note.A4;
+        var transposed = note.Transpose(Interval.PerfectOctave);
+        transposed.Should().Be(Note.A5);
+    }
+
+    [Fact]
+    public void Transpose_ShouldThrow_WhenTransposingOutOfRange()
+    {
+        var maxNote = Note.B9;
+        Assert.Throws<ArgumentException>(() => maxNote.Transpose(Interval.MinorSecond));
+    }
+
+    [Fact]
+    public void TryTranspose_ShouldWork_WhenTransposingInsidePossibleRange()
+    {
+        var note = Note.A4;
+        var success = note.TryTranspose(Interval.PerfectOctave, out var transposed);
+        success.Should().BeTrue();
+        transposed.Should().Be(Note.A5);
+    }
+
+    [Fact]
+    public void TryTranspose_ShouldFail_WhenTransposingOutOfRange()
+    {
+        var maxNote = Note.B9;
+        var success = maxNote.TryTranspose(Interval.MinorSecond, out var note);
+        success.Should().BeFalse();
+        note.Should().BeNull();
     }
 }

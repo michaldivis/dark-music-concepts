@@ -59,6 +59,7 @@ _ = minorSecond.Name; //Minor Second
 _ = minorSecond.Accident; //Flat
 
 var g5 = Note.C5.Transpose(Interval.PerfectFifth); //returns G5
+var transposeToG5Success = Note.C5.TryTranspose(Interval.PerfectFifth, out var alsoG5); //returns G5
 var gSharpOrAFlat2 = Note.CSharpOrDFlat2.Transpose(Interval.PerfectFifth); //returns GSharpOrAFlat2
 
 //-------------------------------------------------------------

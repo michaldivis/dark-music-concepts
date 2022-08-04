@@ -158,23 +158,65 @@ public class Note : IEquatable<Note?>
     /// </summary>
     /// <param name="interval">Interval to trasnpose by</param>
     /// <returns>Transposed note</returns>
+    /// <exception cref="ArgumentException"></exception>
     public Note Transpose(Interval interval)
     {
+        var success = TryTranspose(interval, out var note);
+
+        if (!success)
+        {
+            throw new ArgumentException("Interval transposes the note out of possible range", nameof(interval));
+        }
+        
+        return note!;
+    }
+
+    /// <summary>
+    /// Tries to transpose a note by a specific internval
+    /// </summary>
+    /// <param name="interval">Interval to trasnpose by</param>
+    /// <param name="note">Transposed note</param>
+    /// <returns><see langword="true"/> if transposed succesfully</returns>
+    public bool TryTranspose(Interval interval, out Note? note)
+    {
         var transposedPitch = _pitch + interval.Distance;
-        var transposedNote = FindByPitch(transposedPitch);
-        return transposedNote;
+
+        var noteExists = TryFindByPitch(transposedPitch, out var found);
+
+        if (!noteExists)
+        {
+            note = null;
+            return false;
+        }
+
+        note = found;
+        return true;
+    }
+
+    private static bool TryFindByPitch(int pitch, out Note? note)
+    {
+        var found = AllNotes.FirstOrDefault(a => a._pitch == pitch);
+
+        if (found is null)
+        {
+            note = null;
+            return false;
+        }
+
+        note = found;
+        return true;
     }
 
     private static Note FindByPitch(int pitch)
     {
-        var note = AllNotes.FirstOrDefault(a => a._pitch == pitch);
+        var success = TryFindByPitch(pitch, out var note);
 
-        if (note is null)
+        if (!success)
         {
             throw new ArgumentOutOfRangeException(nameof(pitch), pitch, "Note with this pitch was not found");
         }
 
-        return note;
+        return note!;
     }
 
     public override bool Equals(object? obj)
