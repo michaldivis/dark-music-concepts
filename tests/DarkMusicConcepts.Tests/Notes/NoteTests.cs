@@ -111,15 +111,13 @@ public class NoteTests
         }
     }
 
-    [Fact]
-    public void FindByFrequency_ShouldWork_ForAllNotes()
+    [Theory]
+    [MemberData(nameof(AllNotes))]
+    public void FindByFrequency_ShouldWork_ForAllNotes(Note note)
     {
-        foreach (var note in Note.AllNotes)
-        {
-            var foundNote = Note.FindByFrequency(note.Frequency);
-            foundNote.BasePitch.Should().Be(note.BasePitch);
-            foundNote.Octave.Should().Be(note.Octave);
-        }
+        var foundNote = Note.FindByFrequency(note.Frequency);
+        foundNote.BasePitch.Should().Be(note.BasePitch);
+        foundNote.Octave.Should().Be(note.Octave);
     }
 
     [Fact]
@@ -128,15 +126,13 @@ public class NoteTests
         Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(441));
     }
 
-    [Fact]
-    public void TryFindByFrequency_ShouldWork_ForAllNotes()
+    [Theory]
+    [MemberData(nameof(AllNotes))]
+    public void TryFindByFrequency_ShouldWork_ForAllNotes(Note note)
     {
-        foreach (var note in Note.AllNotes)
-        {
-            var success = Note.TryFindByFrequency(note.Frequency, out var foundNote);
-            success.Should().BeTrue();
-            foundNote.Should().NotBeNull();
-        }
+        var success = Note.TryFindByFrequency(note.Frequency, out var foundNote);
+        success.Should().BeTrue();
+        foundNote.Should().NotBeNull();
     }
 
     [Fact]
@@ -147,32 +143,22 @@ public class NoteTests
         note.Should().BeNull();
     }
 
-    [Fact]
-    public void FindByMidiNumber_ShouldWork()
+    [Theory]
+    [MemberData(nameof(NotesUpTo8thOctave))]
+    public void FindByMidiNumber_ShouldWork_ForNotesUpTo8thOctave(Note note)
     {
-        //only checking notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
-        foreach (var note in Note.AllNotes.Where(a => a.Octave <= Octave.FiveLine))
-        {
-            var foundNote = Note.FindByMidiNumber(note.MidiNumber!);
-            foundNote.BasePitch.Should().Be(note.BasePitch);
-            foundNote.Octave.Should().Be(note.Octave);
-        }
+        var foundNote = Note.FindByMidiNumber(note.MidiNumber!);
+        foundNote.BasePitch.Should().Be(note.BasePitch);
+        foundNote.Octave.Should().Be(note.Octave);
     }
 
-    [Fact]
-    public void TryFindByMidiNumber_ShouldWork_ForAllNotes()
+    [Theory]
+    [MemberData(nameof(NotesUpTo8thOctave))]
+    public void TryFindByMidiNumber_ShouldWork_ForAllNotes(Note note)
     {
-        foreach (var note in Note.AllNotes)
-        {
-            if(note.MidiNumber is null)
-            {
-                continue;
-            }
-
-            var success = Note.TryFindByMidiNumber(note.MidiNumber, out var foundNote);
-            success.Should().BeTrue();
-            foundNote.Should().NotBeNull();
-        }
+        var success = Note.TryFindByMidiNumber(note.MidiNumber!, out var foundNote);
+        success.Should().BeTrue();
+        foundNote.Should().NotBeNull();
     }
 
     [Fact]
@@ -207,4 +193,9 @@ public class NoteTests
         success.Should().BeFalse();
         note.Should().BeNull();
     }
+
+    public static IEnumerable<object[]> AllNotes => Note.AllNotes.Select(a => new[] { a } );
+
+    //notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
+    public static IEnumerable<object[]> NotesUpTo8thOctave => Note.AllNotes.Where(a => a.Octave <= Octave.FiveLine).Select(a => new[] { a });    
 }

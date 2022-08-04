@@ -11,6 +11,6 @@ public partial class ScaleFormula
 
     public Scale CreateForRoot(NotePitch root)
     {
-        return new Scale(_intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
+        return Scale.Create(_intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
     }
 }

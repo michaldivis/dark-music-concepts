@@ -205,4 +205,29 @@ public partial class ScaleFormula
         Interval.AugmentedFifth,
         Interval.MinorSeventh
     );
+
+    public static IEnumerable<ScaleFormula> AllScaleFormulas { get; } = new[]
+    {
+        Ionian,
+        Dorian,
+        Phrygian,
+        Lydian,
+        Mixolydian,
+        Aolian,
+        Locrian,
+        MajorPentatonic,
+        MinorPentatonic,
+        Blues,
+        HarmonicMinor,
+        MelodicMinor,
+        Dorianb2,
+        LydianAugmented,
+        LydianDominant,
+        PhrygianDominant,
+        Mixolydianb6,
+        LocrianSharp2,
+        AlteredDominant,
+        HalfWholeDiminished,
+        WholeTone
+    };
 }

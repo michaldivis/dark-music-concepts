@@ -2,7 +2,29 @@
 
 public class Scale
 {
-    public Scale(IEnumerable<NotePitch> notes)
+    /// <summary>
+    /// Create a scale from notes
+    /// </summary>
+    /// <param name="notes">Notes to create the scale from</param>
+    /// <returns>A created scale</returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentException"></exception>
+    internal static Scale Create(IEnumerable<NotePitch> notes)
+    {
+        if(notes is null)
+        {
+            throw new ArgumentNullException(nameof(notes), "Notes cannot be null");
+        }
+
+        if(notes.Count() < 5)
+        {
+            throw new ArgumentException("At least 5 notes are required to create a scale", nameof(notes));
+        }
+
+        return new Scale(notes);
+    }
+     
+    private Scale(IEnumerable<NotePitch> notes)
     {
         Notes = notes;
     }
@@ -19,7 +41,7 @@ public class Scale
 
     public NotePitch V => Notes.ElementAt(4);
 
-    public NotePitch VI => Notes.ElementAt(5);
+    public NotePitch? VI => Notes.ElementAtOrDefault(5);
 
-    public NotePitch VII => Notes.ElementAt(6);
+    public NotePitch? VII => Notes.ElementAtOrDefault(6);
 }
