@@ -1,6 +1,4 @@
-﻿using DarkMusicConcepts.Notes;
-
-namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts.Scales;
 
 public class Scale
 {

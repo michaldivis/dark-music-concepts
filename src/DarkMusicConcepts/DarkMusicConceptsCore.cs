@@ -1,6 +1,4 @@
-﻿using DarkMusicConcepts.Notes;
-
-namespace DarkMusicConcepts;
+﻿namespace DarkMusicConcepts;
 
 public static class DarkMusicConceptsCore
 {
