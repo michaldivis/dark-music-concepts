@@ -12,7 +12,7 @@ public partial class ScaleFormula
         _intervals = intervals;
     }
 
-    public Scale CreateForRoot(NotePitch root)
+    public Scale CreateForRoot(Pitch root)
     {
         return Scale.Create(root, Name, _intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
     }

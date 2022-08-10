@@ -14,10 +14,10 @@ public partial class Note : IEquatable<Note?>
     /// </summary>
     private readonly int _absolutePitch;
 
-    public NotePitch BasePitch { get; }
+    public Pitch BasePitch { get; }
     public Octave Octave { get; }
 
-    public Note(NotePitch basePitch, Octave octave)
+    public Note(Pitch basePitch, Octave octave)
     {
         BasePitch = basePitch;
         Octave = octave;
@@ -34,7 +34,7 @@ public partial class Note : IEquatable<Note?>
 
     public MidiNumber? MidiNumber { get; }
 
-    private static string GetName(NotePitch basePitch, Octave octave)
+    private static string GetName(Pitch basePitch, Octave octave)
     {
         return $"{basePitch}{(int)octave}"
             .Replace("Or", "/")
@@ -42,14 +42,14 @@ public partial class Note : IEquatable<Note?>
             .Replace("Flat", "b");
     }
 
-    private static int GetAbsolutePitch(NotePitch basePitch, Octave octave)
+    private static int GetAbsolutePitch(Pitch basePitch, Octave octave)
     {
         return (int)basePitch + OctaveRange * (int)octave;
     }
 
     private static Frequency GetFrequency(int absolutePitch)
     {
-        var a4AbsolutePitch = GetAbsolutePitch(NotePitch.A, Octave.OneLine);
+        var a4AbsolutePitch = GetAbsolutePitch(Pitch.A, Octave.OneLine);
         var relativePitchToA4 = absolutePitch - a4AbsolutePitch;
         var power = (double)relativePitchToA4 / OctaveRange;
         var frequency = Math.Pow(2.0, power) * A4Frequency;
@@ -58,7 +58,7 @@ public partial class Note : IEquatable<Note?>
 
     private static MidiNumber? GetMidiNumber(int absolutePitch)
     {
-        var middleCPitch = GetAbsolutePitch(NotePitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
+        var middleCPitch = GetAbsolutePitch(Pitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
         var relativePitchToMiddleC = absolutePitch - middleCPitch;
         var midiNumber = MidiMiddleCNumber + relativePitchToMiddleC;
 

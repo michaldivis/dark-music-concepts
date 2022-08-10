@@ -7,9 +7,9 @@ using Console = Colorful.Console;
 
 PrintHeader("Note overview");
 
-var note = new Note(NotePitch.E, Octave.Great);
+var note = new Note(Pitch.E, Octave.Great);
 
-Print(new Note(NotePitch.E, Octave.Great));
+Print(new Note(Pitch.E, Octave.Great));
 Print(note.Name);
 Print(note.Frequency);
 Print(note.MidiNumber);
@@ -41,9 +41,9 @@ Print(alsoF2);
 
 PrintHeader("Note comparison");
 
-var a4 = new Note(NotePitch.A, Octave.OneLine);
-var alsoA4 = new Note(NotePitch.A, Octave.OneLine);
-var b5 = new Note(NotePitch.B, Octave.TwoLine);
+var a4 = new Note(Pitch.A, Octave.OneLine);
+var alsoA4 = new Note(Pitch.A, Octave.OneLine);
+var b5 = new Note(Pitch.B, Octave.TwoLine);
 
 Print(a4);
 Print(alsoA4);
@@ -75,7 +75,7 @@ Print(gSharpOrAFlat2);
 
 PrintHeader("Scales");
 
-var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(NotePitch.G);
+var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(Pitch.G);
 var gPhrygianNotes = gPhrygian.Notes;
 var gPhrygianFourth = gPhrygian.IV;
 
