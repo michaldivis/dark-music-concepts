@@ -43,7 +43,7 @@ PM> Install-Package Divis.DarkMusicConcepts.Units
 
 # Notes
 ```csharp
-var note = new Note(NotePitch.E, Octave.Great);
+var note = new Note(Pitch.E, Octave.Great);
 
 Console.WriteLine($"Details about the note {note.Name}:");
 Console.WriteLine($"Frequency is {note.Frequency}");
@@ -58,7 +58,7 @@ Console.WriteLine($"MIDI number is {note.MidiNumber}");
 Create or find a note
 ```csharp
 //create note
-var c0 = new Note(NotePitch.C, Octave.SubContra);
+var c0 = new Note(Pitch.C, Octave.SubContra);
 
 //get note by name
 var a1 = Note.A1;
@@ -74,9 +74,9 @@ var foundF2 = Note.TryFindByMidiNumber(41, out var alsoF2);
 
 Compare notes
 ```csharp
-var a4 = new Note(NotePitch.A, Octave.OneLine);
-var alsoA4 = new Note(NotePitch.A, Octave.OneLine);
-var b5 = new Note(NotePitch.B, Octave.TwoLine);
+var a4 = new Note(Pitch.A, Octave.OneLine);
+var alsoA4 = new Note(Pitch.A, Octave.OneLine);
+var b5 = new Note(Pitch.B, Octave.TwoLine);
 
 _ = a4 == alsoA4; //true
 _ = a4 != alsoA4; //false
@@ -93,16 +93,22 @@ var minorSecond = Interval.MinorSecond;
 _ = minorSecond.Distance; //2
 _ = minorSecond.Name; //Minor Second
 _ = minorSecond.Accident; //Flat
+```
 
-var g5 = Note.C5.Transpose(Interval.PerfectFifth); //returns G5
-var transposeToG5Success = Note.C5.TryTranspose(Interval.PerfectFifth, out var alsoG5); //returns G5
-var gSharpOrAFlat2 = Note.CSharpOrDFlat2.Transpose(Interval.PerfectFifth); //returns GSharpOrAFlat2
+Transpose up or down
+
+```csharp
+var g5 = Note.C5.TransposeUp(Interval.PerfectFifth); //returns G5
+var transposeToG5Success = Note.C5.TryTransposeUp(Interval.PerfectFifth, out var alsoG5); //returns G5
+
+var cSharp = Note.F4.TransposeDown(Interval.MajorThird); //returns CSharpOrDFlat4
+var transposeToFSharpSuccess = Note.C5.TryTransposeDown(Interval.AugmentedForth, out var fSharp); //returns FSharpOrGFlat4
 ```
 
 # Scales
 
 ```csharp
-var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(NotePitch.G);
-var gPhrygianNotes = gPhrygian.Notes;
-var gPhrygianFourth = gPhrygian.IV;
+var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(Pitch.G);
+var gPhrygianPitches = gPhrygian.Pitches; //G, GSharpOrAFlat, ASharpOrBFlat, C, D, DSharpOrEFlat, F
+var gPhrygianFourth = gPhrygian.IV; //C
 ```
