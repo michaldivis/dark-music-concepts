@@ -12,7 +12,7 @@ public partial class Note : IEquatable<Note?>
     /// <summary>
     /// Internal representation of a Note's pitch
     /// </summary>
-    private readonly int _pitch;
+    private readonly int _absolutePitch;
 
     public NotePitch BasePitch { get; }
     public Octave Octave { get; }
@@ -22,10 +22,10 @@ public partial class Note : IEquatable<Note?>
         BasePitch = basePitch;
         Octave = octave;
 
-        _pitch = GetPitch(basePitch, octave);
+        _absolutePitch = GetAbsolutePitch(basePitch, octave);
         Name = GetName(basePitch, octave);
-        Frequency = GetFrequency(_pitch);
-        MidiNumber = GetMidiNumber(_pitch);
+        Frequency = GetFrequency(_absolutePitch);
+        MidiNumber = GetMidiNumber(_absolutePitch);
     }
 
     public string Name { get; }
@@ -42,24 +42,24 @@ public partial class Note : IEquatable<Note?>
             .Replace("Flat", "b");
     }
 
-    private static int GetPitch(NotePitch basePitch, Octave octave)
+    private static int GetAbsolutePitch(NotePitch basePitch, Octave octave)
     {
         return (int)basePitch + OctaveRange * (int)octave;
     }
 
-    private static Frequency GetFrequency(int pitch)
+    private static Frequency GetFrequency(int absolutePitch)
     {
-        var a4Pitch = GetPitch(NotePitch.A, Octave.OneLine);
-        var relativePitchToA4 = pitch - a4Pitch;
+        var a4AbsolutePitch = GetAbsolutePitch(NotePitch.A, Octave.OneLine);
+        var relativePitchToA4 = absolutePitch - a4AbsolutePitch;
         var power = (double)relativePitchToA4 / OctaveRange;
         var frequency = Math.Pow(2.0, power) * A4Frequency;
         return Frequency.From(frequency);
     }
 
-    private static MidiNumber? GetMidiNumber(int pitch)
+    private static MidiNumber? GetMidiNumber(int absolutePitch)
     {
-        var middleCPitch = GetPitch(NotePitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
-        var relativePitchToMiddleC = pitch - middleCPitch;
+        var middleCPitch = GetAbsolutePitch(NotePitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
+        var relativePitchToMiddleC = absolutePitch - middleCPitch;
         var midiNumber = MidiMiddleCNumber + relativePitchToMiddleC;
 
         if (midiNumber < MidiNumber.Min)
@@ -179,9 +179,9 @@ public partial class Note : IEquatable<Note?>
     /// <returns><see langword="true"/> if transposed succesfully</returns>
     public bool TryTranspose(Interval interval, out Note? note)
     {
-        var transposedPitch = _pitch + interval.Distance;
+        var transposedPitch = _absolutePitch + interval.Distance;
 
-        var noteExists = TryFindByPitch(transposedPitch, out var found);
+        var noteExists = TryFindByAbsolutePitch(transposedPitch, out var found);
 
         if (!noteExists)
         {
@@ -193,9 +193,9 @@ public partial class Note : IEquatable<Note?>
         return true;
     }
 
-    private static bool TryFindByPitch(int pitch, out Note? note)
+    private static bool TryFindByAbsolutePitch(int pitch, out Note? note)
     {
-        var found = AllNotes.FirstOrDefault(a => a._pitch == pitch);
+        var found = AllNotes.FirstOrDefault(a => a._absolutePitch == pitch);
 
         if (found is null)
         {
@@ -207,13 +207,13 @@ public partial class Note : IEquatable<Note?>
         return true;
     }
 
-    private static Note FindByPitch(int pitch)
+    private static Note FindByAbsolutePitch(int absolutePitch)
     {
-        var success = TryFindByPitch(pitch, out var note);
+        var success = TryFindByAbsolutePitch(absolutePitch, out var note);
 
         if (!success)
         {
-            throw new ArgumentOutOfRangeException(nameof(pitch), pitch, "Note with this pitch was not found");
+            throw new ArgumentOutOfRangeException(nameof(absolutePitch), absolutePitch, "Note with this pitch was not found");
         }
 
         return note!;
