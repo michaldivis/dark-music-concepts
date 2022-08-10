@@ -11,47 +11,47 @@ public class Scale
     /// <summary>
     /// Create a scale from notes
     /// </summary>
-    /// <param name="notes">Notes to create the scale from</param>
+    /// <param name="pitches">Notes to create the scale from</param>
     /// <returns>A created scale</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
-    internal static Scale Create(Pitch root, string name, IEnumerable<Pitch> notes)
+    internal static Scale Create(Pitch root, string name, IEnumerable<Pitch> pitches)
     {
-        if(notes is null)
+        if(pitches is null)
         {
-            throw new ArgumentNullException(nameof(notes), "Notes cannot be null");
+            throw new ArgumentNullException(nameof(pitches), "Pitches cannot be null");
         }
 
-        if(notes.Count() < 5)
+        if(pitches.Count() < 5)
         {
-            throw new ArgumentException("At least 5 notes are required to create a scale", nameof(notes));
+            throw new ArgumentException("At least 5 pitches are required to create a scale", nameof(pitches));
         }
 
-        return new Scale(root, name, notes);
+        return new Scale(root, name, pitches);
     }
      
-    private Scale(Pitch root, string name, IEnumerable<Pitch> notes)
+    private Scale(Pitch root, string name, IEnumerable<Pitch> pitches)
     {
         Root = root;
         Name = name;
-        Notes = notes;
+        Pitches = pitches;
     }
 
-    public IEnumerable<Pitch> Notes { get; }
+    public IEnumerable<Pitch> Pitches { get; }
 
-    public Pitch I => Notes.ElementAt(0);
+    public Pitch I => Pitches.ElementAt(0);
 
-    public Pitch II => Notes.ElementAt(1);
+    public Pitch II => Pitches.ElementAt(1);
 
-    public Pitch III => Notes.ElementAt(2);
+    public Pitch III => Pitches.ElementAt(2);
 
-    public Pitch IV => Notes.ElementAt(3);
+    public Pitch IV => Pitches.ElementAt(3);
 
-    public Pitch V => Notes.ElementAt(4);
+    public Pitch V => Pitches.ElementAt(4);
 
-    public Pitch? VI => Notes.ElementAtOrDefault(5);
+    public Pitch? VI => Pitches.ElementAtOrDefault(5);
 
-    public Pitch? VII => Notes.ElementAtOrDefault(6);
+    public Pitch? VII => Pitches.ElementAtOrDefault(6);
 
     public override string ToString()
     {

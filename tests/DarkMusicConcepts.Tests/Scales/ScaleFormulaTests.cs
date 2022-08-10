@@ -24,7 +24,7 @@ public class ScaleFormulaTests
         aPhrygian.VI.Should().Be(Pitch.F);
         aPhrygian.VII.Should().Be(Pitch.G);
 
-        aPhrygian.Notes.Should().ContainInOrder(new[] {
+        aPhrygian.Pitches.Should().ContainInOrder(new[] {
             Pitch.A,
             Pitch.ASharpOrBFlat,
             Pitch.C,

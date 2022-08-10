@@ -82,7 +82,7 @@ Print(fSharp);
 PrintHeader("Scales");
 
 var gPhrygian = ScaleFormula.Phrygian.CreateForRoot(Pitch.G);
-var gPhrygianNotes = gPhrygian.Notes;
+var gPhrygianNotes = gPhrygian.Pitches;
 var gPhrygianFourth = gPhrygian.IV;
 
 Print(gPhrygian);
