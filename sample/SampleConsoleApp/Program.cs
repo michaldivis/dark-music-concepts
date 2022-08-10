@@ -64,14 +64,20 @@ Print(minorSecond.Distance); //2
 Print(minorSecond.Name); //Minor Second
 Print(minorSecond.Accident); //Flat
 
-var g5 = Note.C5.Transpose(Interval.PerfectFifth); //returns G5
-var transposeToG5Success = Note.C5.TryTranspose(Interval.PerfectFifth, out var alsoG5); //returns G5
-var gSharpOrAFlat2 = Note.CSharpOrDFlat2.Transpose(Interval.PerfectFifth); //returns GSharpOrAFlat2
+PrintSubHeader("Transpose up or down");
+
+var g5 = Note.C5.TransposeUp(Interval.PerfectFifth); //returns G5
+var transposeToG5Success = Note.C5.TryTransposeUp(Interval.PerfectFifth, out var alsoG5); //returns G5
+
+var cSharp = Note.F4.TransposeDown(Interval.MajorThird); //returns CSharpOrDFlat4
+var transposeToFSharpSuccess = Note.C5.TryTransposeDown(Interval.AugmentedForth, out var fSharp); //returns FSharpOrGFlat4
 
 Print(g5);
 Print(transposeToG5Success);
 Print(alsoG5);
-Print(gSharpOrAFlat2);
+Print(cSharp);
+Print(transposeToFSharpSuccess);
+Print(fSharp);
 
 PrintHeader("Scales");
 

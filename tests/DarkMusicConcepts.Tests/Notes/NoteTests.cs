@@ -162,34 +162,67 @@ public class NoteTests
     }
 
     [Fact]
-    public void Transpose_ShouldWork_WhenTransposingInsidePossibleRange()
+    public void TransposeUp_ShouldWork_WhenTransposingInsidePossibleRange()
     {
         var note = Note.A4;
-        var transposed = note.Transpose(Interval.PerfectOctave);
+        var transposed = note.TransposeUp(Interval.PerfectOctave);
         transposed.Should().Be(Note.A5);
     }
 
     [Fact]
-    public void Transpose_ShouldThrow_WhenTransposingOutOfRange()
+    public void TransposeUp_ShouldThrow_WhenTransposingOutOfRange()
     {
         var maxNote = Note.B9;
-        Assert.Throws<ArgumentException>(() => maxNote.Transpose(Interval.MinorSecond));
+        Assert.Throws<ArgumentException>(() => maxNote.TransposeUp(Interval.MinorSecond));
     }
 
     [Fact]
-    public void TryTranspose_ShouldWork_WhenTransposingInsidePossibleRange()
+    public void TryTransposeUp_ShouldWork_WhenTransposingInsidePossibleRange()
     {
         var note = Note.A4;
-        var success = note.TryTranspose(Interval.PerfectOctave, out var transposed);
+        var success = note.TryTransposeUp(Interval.PerfectOctave, out var transposed);
         success.Should().BeTrue();
         transposed.Should().Be(Note.A5);
     }
 
     [Fact]
-    public void TryTranspose_ShouldFail_WhenTransposingOutOfRange()
+    public void TryTransposeUp_ShouldFail_WhenTransposingOutOfRange()
     {
         var maxNote = Note.B9;
-        var success = maxNote.TryTranspose(Interval.MinorSecond, out var note);
+        var success = maxNote.TryTransposeUp(Interval.MinorSecond, out var note);
+        success.Should().BeFalse();
+        note.Should().BeNull();
+    }
+
+    [Fact]
+    public void TransposeDown_ShouldWork_WhenTransposingInsidePossibleRange()
+    {
+        var note = Note.A4;
+        var transposed = note.TransposeDown(Interval.PerfectOctave);
+        transposed.Should().Be(Note.A3);
+    }
+
+    [Fact]
+    public void TransposeDown_ShouldThrow_WhenTransposingOutOfRange()
+    {
+        var minNote = Note.C0;
+        Assert.Throws<ArgumentException>(() => minNote.TransposeDown(Interval.MinorSecond));
+    }
+
+    [Fact]
+    public void TryTransposeDown_ShouldWork_WhenTransposingInsidePossibleRange()
+    {
+        var note = Note.A4;
+        var success = note.TryTransposeDown(Interval.PerfectOctave, out var transposed);
+        success.Should().BeTrue();
+        transposed.Should().Be(Note.A3);
+    }
+
+    [Fact]
+    public void TryTransposeDown_ShouldFail_WhenTransposingOutOfRange()
+    {
+        var minNote = Note.C0;
+        var success = minNote.TryTransposeDown(Interval.MinorSecond, out var note);
         success.Should().BeFalse();
         note.Should().BeNull();
     }

@@ -11,7 +11,7 @@ public static class NoteUtils
     public static Pitch TransposePitch(Pitch pitch, Interval interval)
     {
         var note = new Note(pitch, Octave.OneLine);
-        var transposedNote = note.Transpose(interval);
+        var transposedNote = note.TransposeUp(interval);
         return transposedNote.BasePitch;
     }
 }

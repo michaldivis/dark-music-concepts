@@ -154,32 +154,66 @@ public partial class Note : IEquatable<Note?>
     }
 
     /// <summary>
-    /// Transpose a note by a specific internval
+    /// Transpose a note up by a specific internval
     /// </summary>
     /// <param name="interval">Interval to trasnpose by</param>
     /// <returns>Transposed note</returns>
     /// <exception cref="ArgumentException"></exception>
-    public Note Transpose(Interval interval)
+    public Note TransposeUp(Interval interval)
     {
-        var success = TryTranspose(interval, out var note);
+        var success = TryTransposeUp(interval, out var note);
 
         if (!success)
         {
             throw new ArgumentException("Interval transposes the note out of possible range", nameof(interval));
         }
-        
+
         return note!;
     }
 
     /// <summary>
-    /// Tries to transpose a note by a specific internval
+    /// Tries to transpose a note up by a specific internval
     /// </summary>
     /// <param name="interval">Interval to trasnpose by</param>
     /// <param name="note">Transposed note</param>
     /// <returns><see langword="true"/> if transposed succesfully</returns>
-    public bool TryTranspose(Interval interval, out Note? note)
+    public bool TryTransposeUp(Interval interval, out Note? note)
     {
-        var transposedPitch = _absolutePitch + interval.Distance;
+        return TryTranspose(interval.Distance, out note);
+    }
+
+    /// <summary>
+    /// Transpose a note down by a specific internval
+    /// </summary>
+    /// <param name="interval">Interval to trasnpose by</param>
+    /// <returns>Transposed note</returns>
+    /// <exception cref="ArgumentException"></exception>
+    public Note TransposeDown(Interval interval)
+    {
+        var success = TryTransposeDown(interval, out var note);
+
+        if (!success)
+        {
+            throw new ArgumentException("Interval transposes the note out of possible range", nameof(interval));
+        }
+
+        return note!;
+    }
+
+    /// <summary>
+    /// Tries to transpose a note down by a specific internval
+    /// </summary>
+    /// <param name="interval">Interval to trasnpose by</param>
+    /// <param name="note">Transposed note</param>
+    /// <returns><see langword="true"/> if transposed succesfully</returns>
+    public bool TryTransposeDown(Interval interval, out Note? note)
+    {
+        return TryTranspose(-interval.Distance, out note);
+    }
+
+    private bool TryTranspose(int distance, out Note? note)
+    {
+        var transposedPitch = _absolutePitch + distance;
 
         var noteExists = TryFindByAbsolutePitch(transposedPitch, out var found);
 
