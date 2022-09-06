@@ -1,4 +1,5 @@
 ﻿using Colorful;
+using DarkMusicConcepts.Chords;
 using DarkMusicConcepts.Notes;
 using DarkMusicConcepts.Scales;
 using System.Drawing;
@@ -88,6 +89,14 @@ var gPhrygianFourth = gPhrygian.IV;
 Print(gPhrygian);
 Print(string.Join(", ", gPhrygianNotes));
 Print(gPhrygianFourth);
+
+PrintHeader("Chords");
+
+var aMinorSevenFlatFive = new Chord(Note.A3, ChordFunction.Minor7b5);
+var aMinorSevenFlatFiveNotes = aMinorSevenFlatFive.Notes;
+
+Print(aMinorSevenFlatFive);
+Print(string.Join(", ", aMinorSevenFlatFiveNotes));
 
 static void PrintHeader(string headerText)
 {

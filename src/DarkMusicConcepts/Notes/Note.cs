@@ -253,6 +253,13 @@ public partial class Note : IEquatable<Note?>
         return note!;
     }
 
+    public Interval IntervalWithOther(Note note)
+    {
+        var distance = Math.Abs(_absolutePitch - note._absolutePitch);
+        var interval = Interval.CreateIntervalFromDistance(distance);
+        return interval;
+    }
+
     public override bool Equals(object? obj)
     {
         return Equals(obj as Note);

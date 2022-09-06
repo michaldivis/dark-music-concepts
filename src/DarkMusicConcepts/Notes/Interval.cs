@@ -20,7 +20,14 @@ public partial class Interval : IComparable<Interval>
 
     public static Interval CreateIntervalFromDistance(int distance)
     {
-        return UniqueIntervals.Single(interval => interval.Distance == distance);
+        var safeDistance = GetDistanceWithinOneOctave(distance);
+        return UniqueIntervals.Single(interval => interval.Distance == safeDistance);
+    }
+
+    private static int GetDistanceWithinOneOctave(int distance)
+    {
+        var safeDistance = Math.Abs(distance % 12);
+        return safeDistance;
     }
 
     public static Interval operator -(Interval intervalA, Interval intervalB)
