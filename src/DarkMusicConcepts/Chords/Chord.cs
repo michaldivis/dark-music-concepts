@@ -36,6 +36,7 @@ public class Chord
 
     public override string ToString()
     {
-        return Name;
+        var noteNames = string.Join(", ", Notes);
+        return $"{Name} ({noteNames})";
     }
 }

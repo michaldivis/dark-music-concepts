@@ -2,9 +2,13 @@
 using DarkMusicConcepts.Chords;
 using DarkMusicConcepts.Notes;
 using DarkMusicConcepts.Scales;
+using SampleConsoleApp;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Console = Colorful.Console;
+
+var random = new Random(123);
 
 PrintHeader("Note overview");
 
@@ -93,10 +97,14 @@ Print(gPhrygianFourth);
 PrintHeader("Chords");
 
 var aMinorSevenFlatFive = new Chord(Note.A3, ChordFunction.Minor7b5);
-var aMinorSevenFlatFiveNotes = aMinorSevenFlatFive.Notes;
-
 Print(aMinorSevenFlatFive);
-Print(string.Join(", ", aMinorSevenFlatFiveNotes));
+
+PrintSubHeader("Chord pattern generation");
+
+var chordPatternGenerator = new ChordPatternGenerator(random);
+var randomChords = chordPatternGenerator.CreateRandomChords(6, gPhrygian, Octave.Great);
+var strigifiedRandomChords = StrigifyCollection(randomChords);
+Print(strigifiedRandomChords);
 
 static void PrintHeader(string headerText)
 {
@@ -119,4 +127,18 @@ static void Print(object? expression, [CallerArgumentExpression("expression")] s
     };
 
     Console.WriteLineFormatted("{0} => {1}", Color.LightGray, parts);
+}
+
+static string StrigifyCollection<T>(IEnumerable<T> items)
+{
+    var sb = new StringBuilder();
+
+    sb.AppendLine();
+
+    foreach (var item in items)
+    {
+        sb.AppendLine(item?.ToString());
+    }
+
+    return sb.ToString();
 }

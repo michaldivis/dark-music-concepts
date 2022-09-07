@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿using DarkMusicConcepts.Notes;
+
+namespace DarkMusicConcepts.Chords;
 
 public class ChordFunction
 {
@@ -55,4 +57,19 @@ public class ChordFunction
         MinorMaj7,
         Augmented7
     };
+
+    public static IEnumerable<ChordFunction> GetFunctionsForScale(Scale scale)
+    {
+        var root = new Note(scale.Root, Octave.OneLine);
+
+        foreach (var function in Functions)
+        {
+            var allPitchesAreContainedInScale = function.Intervals.All(a => scale.Pitches.Contains(root.TransposeUp(a).BasePitch));
+
+            if (allPitchesAreContainedInScale)
+            {
+                yield return function;
+            }
+        }
+    }
 }
