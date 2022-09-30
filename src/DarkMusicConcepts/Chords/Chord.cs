@@ -5,27 +5,27 @@ public class Chord
 
     public IEnumerable<Note> Notes => _chordNotes.Select(n => n.Note);
 
-    public Chord(Note root, ChordFunction function)
+    public Chord(Note root, ChordFormula function)
     {
-        _chordNotes.Add(new ChordNote(root, Function.Root));
+        _chordNotes.Add(new ChordNote(root, ChordFunction.Root));
 
         foreach (var interval in function.Intervals)
         {
-            var note = new ChordNote(root.TransposeUp(interval), Function.FunctionForInterval(interval));
+            var note = new ChordNote(root.TransposeUp(interval), ChordFunction.FunctionForInterval(interval));
             _chordNotes.Add(note);
         }
     }
 
-    public string Name => NoteForFunction(Function.Root).Name + ChordFunction.FunctionForIntervals(Intervals()).AbreviatedName;
+    public string Name => NoteForFunction(ChordFunction.Root).Name + ChordFormula.FunctionForIntervals(Intervals()).AbreviatedName;
 
-    private Note NoteForFunction(Function function)
+    private Note NoteForFunction(ChordFunction function)
     {
         return _chordNotes.First(n => n.Function == function).Note;
     }
 
     private IEnumerable<Interval> Intervals()
     {
-        var root = NoteForFunction(Function.Root);
+        var root = NoteForFunction(ChordFunction.Root);
 
         return Notes
             .Select(note => root.IntervalWithOther(note))

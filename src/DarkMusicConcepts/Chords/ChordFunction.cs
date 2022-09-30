@@ -1,75 +1,38 @@
-﻿using DarkMusicConcepts.Notes;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts.Chords;
 
 public class ChordFunction
 {
-    public static readonly ChordFunction Major = new("Maj", Interval.MajorThird, Interval.PerfectFifth);
-    public static readonly ChordFunction Augmented = new("Aug", Interval.MajorThird, Interval.AugmentedFifth);
-    public static readonly ChordFunction Minor = new("Min", Interval.MinorThird, Interval.PerfectFifth);
-    public static readonly ChordFunction Diminished = new("Dim", Interval.MinorThird, Interval.DiminishedFifth);
-    public static readonly ChordFunction Sus2 = new("Sus2", Interval.MajorSecond, Interval.PerfectFifth);
-    public static readonly ChordFunction Sus2Diminished = new("Sus2Dim", Interval.MajorSecond, Interval.DiminishedFifth);
-    public static readonly ChordFunction Sus2Augmented = new("Sus2Aug", Interval.MajorSecond, Interval.AugmentedFifth);
-    public static readonly ChordFunction Sus4 = new("Sus4", Interval.PerfectForth, Interval.PerfectFifth);
-    public static readonly ChordFunction Sus4Diminished = new("Sus4Dim", Interval.PerfectForth, Interval.DiminishedFifth);
-    public static readonly ChordFunction Sus4Augmented = new("Sus4Aug", Interval.PerfectForth, Interval.AugmentedFifth);
-    public static readonly ChordFunction Major7 = new("Maj7", Interval.MajorThird, Interval.PerfectFifth, Interval.MajorSeventh);
-    public static readonly ChordFunction Dominant7 = new("Dom7", Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh);
-    public static readonly ChordFunction Minor7b5 = new("Min7b5", Interval.MinorThird, Interval.DiminishedFifth, Interval.MinorSeventh);
-    public static readonly ChordFunction Diminished7 = new("Dim7", Interval.MinorThird, Interval.DiminishedFifth, Interval.MajorSixth);
-    public static readonly ChordFunction Minor7 = new("Min7", Interval.MinorThird, Interval.PerfectFifth, Interval.MinorSeventh);
-    public static readonly ChordFunction MinorMaj7 = new("MinMaj7", Interval.MinorThird, Interval.PerfectFifth, Interval.MajorSeventh);
-    public static readonly ChordFunction Augmented7 = new("Aug7", Interval.MajorThird, Interval.AugmentedFifth, Interval.MajorSeventh);
+    public static readonly ChordFunction Root = new("R", Interval.Unisson);
+    public static readonly ChordFunction Third = new("3", Interval.MajorThird, Interval.MinorThird);
+    public static readonly ChordFunction Fifth = new("5", Interval.PerfectFifth, Interval.AugmentedFifth, Interval.DiminishedFifth);
+    public static readonly ChordFunction Seventh = new("7", Interval.MinorSeventh, Interval.MajorSeventh);
+    public static readonly ChordFunction Ninth = new("9", Interval.MinorSecond, Interval.MajorSecond);
+    public static readonly ChordFunction Eleventh = new("11", Interval.PerfectForth);
+    public static readonly ChordFunction Thirteenth = new("13", Interval.MajorSixth);
 
-    private ChordFunction(string abreviatedName, params Interval[] intervals)
+    private readonly IList<Interval> _distanceFromRoot;
+
+    public string Name { get; }
+
+    private ChordFunction(string name, params Interval[] distanceFromRoot)
     {
-        AbreviatedName = abreviatedName;
-        Intervals = intervals;
+        Name = name;
+        _distanceFromRoot = distanceFromRoot;
     }
 
-    public string AbreviatedName { get; }
-
-    public IEnumerable<Interval> Intervals { get; }
-
-    public static ChordFunction FunctionForIntervals(IEnumerable<Interval> intervals)
+    public static IEnumerable<ChordFunction> Functions { get; } = new[]
     {
-        return Functions.First(f => f.Intervals.SequenceEqual(intervals));
-    }
-
-    private static IEnumerable<ChordFunction> Functions { get; } = new[]
-    {
-        Major,
-        Augmented,
-        Minor,
-        Diminished,
-        Sus2,
-        Sus2Diminished,
-        Sus2Augmented,
-        Sus4,
-        Sus4Diminished,
-        Sus4Augmented,
-        Major7,
-        Dominant7,
-        Minor7b5,
-        Diminished7,
-        Minor7,
-        MinorMaj7,
-        Augmented7
+        Root,
+        Third,
+        Fifth,
+        Seventh,
+        Ninth,
+        Eleventh,
+        Thirteenth
     };
 
-    public static IEnumerable<ChordFunction> GetFunctionsForScale(Scale scale)
+    public static ChordFunction FunctionForInterval(Interval interval)
     {
-        var root = new Note(scale.Root, Octave.OneLine);
-
-        foreach (var function in Functions)
-        {
-            var allPitchesAreContainedInScale = function.Intervals.All(a => scale.Pitches.Contains(root.TransposeUp(a).BasePitch));
-
-            if (allPitchesAreContainedInScale)
-            {
-                yield return function;
-            }
-        }
+        return Functions.First(f => f._distanceFromRoot.Contains(interval));
     }
 }

@@ -4,9 +4,9 @@ public class ChordNote
 {
     public Note Note { get; }
 
-    public Function Function { get; }
+    public ChordFunction Function { get; }
 
-    public ChordNote(Note note, Function function)
+    public ChordNote(Note note, ChordFunction function)
     {
         Function = function;
         Note = note;

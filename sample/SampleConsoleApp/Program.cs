@@ -96,7 +96,7 @@ Print(gPhrygianFourth);
 
 PrintHeader("Chords");
 
-var aMinorSevenFlatFive = new Chord(Note.A3, ChordFunction.Minor7b5);
+var aMinorSevenFlatFive = new Chord(Note.A3, ChordFormula.Minor7b5);
 Print(aMinorSevenFlatFive);
 
 PrintSubHeader("Chord pattern generation");
