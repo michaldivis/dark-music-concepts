@@ -1,6 +1,7 @@
 ﻿using Colorful;
 using DarkMusicConcepts.Chords;
 using DarkMusicConcepts.Notes;
+using DarkMusicConcepts.Rhytms;
 using DarkMusicConcepts.Scales;
 using SampleConsoleApp;
 using System.Drawing;
@@ -105,6 +106,18 @@ var chordPatternGenerator = new ChordPatternGenerator(random);
 var randomChords = chordPatternGenerator.CreateRandomChords(6, gPhrygian, Octave.Great);
 var strigifiedRandomChords = StrigifyCollection(randomChords);
 Print(strigifiedRandomChords);
+
+PrintHeader("Rhythms");
+var durationTime = TimeUnit.QuarterNote.GetDuration(Bpm.From(155));
+var midiTicks = TimeUnit.QuarterNote.Ticks;
+var threeQuarterNotes = TimeUnit.QuarterNote * 3;
+
+Print(TimeUnit.QuarterNote);
+Print(TimeUnit.WholeNote);
+Print(TimeUnit.Bar);
+Print(durationTime);
+Print(midiTicks);
+Print(threeQuarterNotes);
 
 static void PrintHeader(string headerText)
 {
