@@ -13,30 +13,20 @@ public class MidiVelocity : ValueOf<int, MidiVelocity>
 
     protected override void Validate()
     {
-        if (Value < Min)
+        if (!IsValidMidiVelocityValue(Value))
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI velocity cannot be negative");
-        }
-
-        if (Value > Max)
-        {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, "MIDI velocity cannot exceed 127");
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {Min}-{Max}");
         }
     }
 
     protected override bool TryValidate()
     {
-        if (Value < Min)
-        {
-            return false;
-        }
+        return IsValidMidiVelocityValue(Value);
+    }
 
-        if (Value > Max)
-        {
-            return false;
-        }
-
-        return true;
+    private static bool IsValidMidiVelocityValue(int velocity)
+    {
+        return velocity >= Min && velocity <= Max;
     }
 
     public static implicit operator MidiVelocity(int value)

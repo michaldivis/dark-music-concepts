@@ -11,23 +11,24 @@ namespace DarkMusicConcepts.Units;
 public class Frequency : ValueOf<double, Frequency>
 {
     public const double Min = 0;
+    public const double Max = double.MaxValue;
 
     protected override void Validate()
     {
-        if (Value < Min)
+        if (!IsValidFrequencyValue(Value))
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, "Frequency cannot be negative");
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {Min}-{Max}");
         }
     }
 
     protected override bool TryValidate()
     {
-        if (Value < Min)
-        {
-            return false;
-        }
+        return IsValidFrequencyValue(Value);
+    }
 
-        return true;
+    private static bool IsValidFrequencyValue(double frequency)
+    {
+        return frequency >= Min && frequency <= Max;
     }
 
     public static implicit operator Frequency(double value) => From(value);

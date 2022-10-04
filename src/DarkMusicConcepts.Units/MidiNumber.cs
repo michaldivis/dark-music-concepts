@@ -14,30 +14,20 @@ public class MidiNumber : ValueOf<int, MidiNumber>
 
     protected override void Validate()
     {
-        if (Value < Min)
+        if (!IsValidMidiNumberValue(Value))
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"MIDI number cannot be smaller than {Min}");
-        }
-
-        if (Value > Max)
-        {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"MIDI number cannot exceed {Max}");
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {Min}-{Max}");
         }
     }
 
     protected override bool TryValidate()
     {
-        if (Value < Min)
-        {
-            return false;
-        }
+        return IsValidMidiNumberValue(Value);
+    }
 
-        if (Value > Max)
-        {
-            return false;
-        }
-
-        return true;
+    private static bool IsValidMidiNumberValue(int midiNumber)
+    {
+        return midiNumber >= Min && midiNumber <= Max;
     }
 
     public static implicit operator MidiNumber(int value) => From(value);

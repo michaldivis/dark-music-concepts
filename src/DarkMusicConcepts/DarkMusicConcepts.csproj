@@ -37,4 +37,8 @@
     <ProjectReference Include="..\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Rhytms\" />
+  </ItemGroup>
+
 </Project>

@@ -5,23 +5,24 @@ namespace DarkMusicConcepts.Units;
 public class Bpm : ValueOf<int, Bpm>
 {
     public const int Min = 1;
+    public const int Max = int.MaxValue;
 
     protected override void Validate()
     {
-        if (Value < Min)
+        if (!IsValidBpmValue(Value))
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, "BPM cannot be less than 1");
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {Min}-{Max}");
         }
     }
 
     protected override bool TryValidate()
     {
-        if (Value < Min)
-        {
-            return false;
-        }
+        return IsValidBpmValue(Value);
+    }
 
-        return true;
+    private static bool IsValidBpmValue(int bpm)
+    {
+        return bpm >= Min && bpm <= Max;
     }
 
     public static implicit operator Bpm(int value)
