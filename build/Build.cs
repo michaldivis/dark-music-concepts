@@ -29,14 +29,14 @@ class Build : NukeBuild
     [Parameter] readonly string NugetApiKey;
 
     Target Clean => _ => _
-        .Before(RestoreCore)
-        .Before(RestoreUnits)
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
+            EnsureCleanDirectory(ArtifactsDirectory);
         });
 
     Target RestoreCore => _ => _
+        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s
