@@ -7,8 +7,8 @@ public partial class Interval
     public static readonly Interval AugmentedSecond = new(3, "Augmented second", Accident.Sharp);
     public static readonly Interval MinorThird = new(3, "Minor third", Accident.Flat);
     public static readonly Interval MajorThird = new(4, "Major third", Accident.None);
-    public static readonly Interval PerfectForth = new(5, "Perfect fourth", Accident.None);
-    public static readonly Interval AugmentedForth = new(6, "Augmented fourth", Accident.Sharp);
+    public static readonly Interval PerfectFourth = new(5, "Perfect fourth", Accident.None);
+    public static readonly Interval AugmentedFourth = new(6, "Augmented fourth", Accident.Sharp);
     public static readonly Interval DiminishedFifth = new(6, "Diminished fifth", Accident.Flat);
     public static readonly Interval PerfectFifth = new(7, "Perfect fifth", Accident.None);
     public static readonly Interval AugmentedFifth = new(8, "Augmented fifth", Accident.Sharp);
@@ -26,8 +26,8 @@ public partial class Interval
         AugmentedSecond,
         MinorThird,
         MajorThird,
-        PerfectForth,
-        AugmentedForth,
+        PerfectFourth,
+        AugmentedFourth,
         DiminishedFifth,
         PerfectFifth,
         AugmentedFifth,
@@ -45,7 +45,7 @@ public partial class Interval
         MajorSecond,
         MinorThird,
         MajorThird,
-        PerfectForth,
+        PerfectFourth,
         DiminishedFifth,
         PerfectFifth,
         AugmentedFifth,

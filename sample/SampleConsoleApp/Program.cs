@@ -76,7 +76,7 @@ var g5 = Note.C5.TransposeUp(Interval.PerfectFifth); //returns G5
 var transposeToG5Success = Note.C5.TryTransposeUp(Interval.PerfectFifth, out var alsoG5); //returns G5
 
 var cSharp = Note.F4.TransposeDown(Interval.MajorThird); //returns CSharpOrDFlat4
-var transposeToFSharpSuccess = Note.C5.TryTransposeDown(Interval.AugmentedForth, out var fSharp); //returns FSharpOrGFlat4
+var transposeToFSharpSuccess = Note.C5.TryTransposeDown(Interval.AugmentedFourth, out var fSharp); //returns FSharpOrGFlat4
 
 Print(g5);
 Print(transposeToG5Success);

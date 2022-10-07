@@ -5,7 +5,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MajorSeventh
@@ -15,7 +15,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MinorSeventh
@@ -25,7 +25,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MinorSixth,
         Interval.MinorSeventh
@@ -35,7 +35,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
-        Interval.AugmentedForth,
+        Interval.AugmentedFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MajorSeventh
@@ -45,7 +45,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MinorSeventh
@@ -55,7 +55,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MinorSixth,
         Interval.MinorSeventh
@@ -65,7 +65,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.DiminishedFifth,
         Interval.MinorSixth,
         Interval.MinorSeventh
@@ -82,7 +82,7 @@ public partial class ScaleFormula
     public static readonly ScaleFormula MinorPentatonic = new("Minor pentatonic",
         Interval.Unisson,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MinorSeventh
     );
@@ -90,7 +90,7 @@ public partial class ScaleFormula
     public static readonly ScaleFormula Blues = new("Blues",
         Interval.Unisson,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.DiminishedFifth,
         Interval.PerfectFifth,
         Interval.MinorSeventh
@@ -100,7 +100,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MinorSixth,
         Interval.MajorSeventh
@@ -110,7 +110,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MajorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MinorSixth,
         Interval.MajorSeventh
@@ -120,7 +120,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MajorSeventh
@@ -130,7 +130,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MinorSeventh
@@ -140,7 +140,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
-        Interval.AugmentedForth,
+        Interval.AugmentedFourth,
         Interval.AugmentedFifth,
         Interval.MajorSixth,
         Interval.MajorSeventh
@@ -150,7 +150,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
-        Interval.AugmentedForth,
+        Interval.AugmentedFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MinorSeventh
@@ -160,7 +160,7 @@ public partial class ScaleFormula
        Interval.Unisson,
        Interval.MinorSecond,
        Interval.MajorThird,
-       Interval.PerfectForth,
+       Interval.PerfectFourth,
        Interval.PerfectFifth,
        Interval.MinorSixth,
        Interval.MinorSeventh
@@ -170,7 +170,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.PerfectFifth,
         Interval.MinorSixth,
         Interval.MinorSeventh
@@ -180,7 +180,7 @@ public partial class ScaleFormula
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
-        Interval.PerfectForth,
+        Interval.PerfectFourth,
         Interval.DiminishedFifth,
         Interval.MinorSixth,
         Interval.MinorSeventh
@@ -201,7 +201,7 @@ public partial class ScaleFormula
         Interval.MinorSecond,
         Interval.MinorThird,
         Interval.MajorThird,
-        Interval.AugmentedForth,
+        Interval.AugmentedFourth,
         Interval.PerfectFifth,
         Interval.MajorSixth,
         Interval.MinorSeventh

@@ -11,9 +11,9 @@ public class ChordFormula
     public static readonly ChordFormula Sus2 = new("Sus2", Interval.MajorSecond, Interval.PerfectFifth);
     public static readonly ChordFormula Sus2Diminished = new("Sus2Dim", Interval.MajorSecond, Interval.DiminishedFifth);
     public static readonly ChordFormula Sus2Augmented = new("Sus2Aug", Interval.MajorSecond, Interval.AugmentedFifth);
-    public static readonly ChordFormula Sus4 = new("Sus4", Interval.PerfectForth, Interval.PerfectFifth);
-    public static readonly ChordFormula Sus4Diminished = new("Sus4Dim", Interval.PerfectForth, Interval.DiminishedFifth);
-    public static readonly ChordFormula Sus4Augmented = new("Sus4Aug", Interval.PerfectForth, Interval.AugmentedFifth);
+    public static readonly ChordFormula Sus4 = new("Sus4", Interval.PerfectFourth, Interval.PerfectFifth);
+    public static readonly ChordFormula Sus4Diminished = new("Sus4Dim", Interval.PerfectFourth, Interval.DiminishedFifth);
+    public static readonly ChordFormula Sus4Augmented = new("Sus4Aug", Interval.PerfectFourth, Interval.AugmentedFifth);
     public static readonly ChordFormula Major7 = new("Maj7", Interval.MajorThird, Interval.PerfectFifth, Interval.MajorSeventh);
     public static readonly ChordFormula Dominant7 = new("Dom7", Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh);
     public static readonly ChordFormula Minor7b5 = new("Min7b5", Interval.MinorThird, Interval.DiminishedFifth, Interval.MinorSeventh);

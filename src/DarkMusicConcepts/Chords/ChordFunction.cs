@@ -7,7 +7,7 @@ public class ChordFunction
     public static readonly ChordFunction Fifth = new("5", Interval.PerfectFifth, Interval.AugmentedFifth, Interval.DiminishedFifth);
     public static readonly ChordFunction Seventh = new("7", Interval.MinorSeventh, Interval.MajorSeventh);
     public static readonly ChordFunction Ninth = new("9", Interval.MinorSecond, Interval.MajorSecond);
-    public static readonly ChordFunction Eleventh = new("11", Interval.PerfectForth);
+    public static readonly ChordFunction Eleventh = new("11", Interval.PerfectFourth);
     public static readonly ChordFunction Thirteenth = new("13", Interval.MajorSixth);
 
     private readonly IList<Interval> _distanceFromRoot;
