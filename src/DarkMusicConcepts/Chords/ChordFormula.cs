@@ -56,9 +56,9 @@ public class ChordFormula
         Augmented7
     };
 
-    public static IEnumerable<ChordFormula> GetFormulasForScale(Scale scale)
+    public static IEnumerable<ChordFormula> GetFormulasForScale(Scale scale, Pitch chordRoot)
     {
-        var root = new Note(scale.Root, Octave.OneLine);
+        var root = new Note(chordRoot, Octave.OneLine);
 
         foreach (var function in Formulas)
         {

@@ -15,13 +15,13 @@ public class ChordPatternGenerator
     public Chord[] CreateRandomChords(int amount, Scale scale, Octave octave)
     {
         var chords = new Chord[amount];
-        var availableChordFunctions = ChordFormula.GetFormulasForScale(scale).ToList();
 
         for (int i = 0; i < amount; i++)
         {
-            var chordFunction = availableChordFunctions[_random.Next(0, availableChordFunctions.Count)];
-            var rootPitch = (Pitch)_random.Next(0, 12);
-            var root = new Note(rootPitch, octave);
+            var chordRoot = (Pitch)_random.Next(12);
+            var availableChordFunctions = ChordFormula.GetFormulasForScale(scale, chordRoot);
+            var chordFunction = availableChordFunctions.ElementAt(_random.Next(availableChordFunctions.Count()));
+            var root = new Note(chordRoot, octave);
             var chord = new Chord(root, chordFunction);
             chords[i] = chord;
         }
