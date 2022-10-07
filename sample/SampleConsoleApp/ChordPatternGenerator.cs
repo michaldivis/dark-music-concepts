@@ -15,7 +15,7 @@ public class ChordPatternGenerator
     public Chord[] CreateRandomChords(int amount, Scale scale, Octave octave)
     {
         var chords = new Chord[amount];
-        var availableChordFunctions = ChordFormula.GetFunctionsForScale(scale).ToList();
+        var availableChordFunctions = ChordFormula.GetFormulasForScale(scale).ToList();
 
         for (int i = 0; i < amount; i++)
         {
