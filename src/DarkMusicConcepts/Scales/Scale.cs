@@ -6,7 +6,7 @@
 public class Scale
 {
     public Pitch Root { get; }
-    public string Name { get; }
+    public ScaleFormula Formula { get; }
 
     /// <summary>
     /// Create a scale from notes
@@ -15,7 +15,7 @@ public class Scale
     /// <returns>A created scale</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
-    internal static Scale Create(Pitch root, string name, IEnumerable<Pitch> pitches)
+    internal static Scale Create(Pitch root, ScaleFormula formula, IEnumerable<Pitch> pitches)
     {
         if(pitches is null)
         {
@@ -27,13 +27,13 @@ public class Scale
             throw new ArgumentException("At least 5 pitches are required to create a scale", nameof(pitches));
         }
 
-        return new Scale(root, name, pitches);
+        return new Scale(root, formula, pitches);
     }
      
-    private Scale(Pitch root, string name, IEnumerable<Pitch> pitches)
+    private Scale(Pitch root, ScaleFormula formula, IEnumerable<Pitch> pitches)
     {
         Root = root;
-        Name = name;
+        Formula = formula;
         Pitches = pitches;
     }
 
@@ -55,6 +55,6 @@ public class Scale
 
     public override string ToString()
     {
-        return $"{Root} {Name}";
+        return $"{Root} {Formula.Name}";
     }
 }

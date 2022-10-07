@@ -14,7 +14,7 @@ public partial class ScaleFormula
 
     public Scale CreateForRoot(Pitch root)
     {
-        return Scale.Create(root, Name, _intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
+        return Scale.Create(root, this, _intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
     }
 
     public override string ToString()

@@ -1,6 +1,4 @@
-﻿using DarkMusicConcepts.Notes;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts.Chords;
 
 public class ChordFormula
 {
@@ -34,10 +32,10 @@ public class ChordFormula
 
     public static ChordFormula FunctionForIntervals(IEnumerable<Interval> intervals)
     {
-        return Functions.First(f => f.Intervals.SequenceEqual(intervals));
+        return Formulas.First(f => f.Intervals.SequenceEqual(intervals));
     }
 
-    private static IEnumerable<ChordFormula> Functions { get; } = new[]
+    private static IEnumerable<ChordFormula> Formulas { get; } = new[]
     {
         Major,
         Augmented,
@@ -62,7 +60,7 @@ public class ChordFormula
     {
         var root = new Note(scale.Root, Octave.OneLine);
 
-        foreach (var function in Functions)
+        foreach (var function in Formulas)
         {
             var allPitchesAreContainedInScale = function.Intervals.All(a => scale.Pitches.Contains(root.TransposeUp(a).BasePitch));
 
