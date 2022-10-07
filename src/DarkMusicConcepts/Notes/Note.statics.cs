@@ -1,6 +1,18 @@
 ﻿namespace DarkMusicConcepts.Notes;
 public partial class Note
 {
+    public static Note CMinus1 { get; } = new(Pitch.C, Octave.SubSubContra);
+    public static Note CSharpOrDFlatMinus1 { get; } = new(Pitch.CSharpOrDFlat, Octave.SubSubContra);
+    public static Note DMinus1 { get; } = new(Pitch.D, Octave.SubSubContra);
+    public static Note DSharpOrEFlatMinus1 { get; } = new(Pitch.DSharpOrEFlat, Octave.SubSubContra);
+    public static Note EMinus1 { get; } = new(Pitch.E, Octave.SubSubContra);
+    public static Note FMinus1 { get; } = new(Pitch.F, Octave.SubSubContra);
+    public static Note FSharpOrGFlatMinus1 { get; } = new(Pitch.FSharpOrGFlat, Octave.SubSubContra);
+    public static Note GMinus1 { get; } = new(Pitch.G, Octave.SubSubContra);
+    public static Note GSharpOrAFlatMinus1 { get; } = new(Pitch.GSharpOrAFlat, Octave.SubSubContra);
+    public static Note AMinus1 { get; } = new(Pitch.A, Octave.SubSubContra);
+    public static Note ASharpOrBFlatMinus1 { get; } = new(Pitch.ASharpOrBFlat, Octave.SubSubContra);
+    public static Note BMinus1 { get; } = new(Pitch.B, Octave.SubSubContra);
     public static Note C0 { get; } = new(Pitch.C, Octave.SubContra);
     public static Note CSharpOrDFlat0 { get; } = new(Pitch.CSharpOrDFlat, Octave.SubContra);
     public static Note D0 { get; } = new(Pitch.D, Octave.SubContra);
@@ -124,6 +136,18 @@ public partial class Note
 
     public static List<Note> AllNotes { get; } = new()
     {
+        CMinus1,
+        CSharpOrDFlatMinus1,
+        DMinus1,
+        DSharpOrEFlatMinus1,
+        EMinus1,
+        FMinus1,
+        FSharpOrGFlatMinus1,
+        GMinus1,
+        GSharpOrAFlatMinus1,
+        AMinus1,
+        ASharpOrBFlatMinus1,
+        BMinus1,
         C0,
         CSharpOrDFlat0,
         D0,

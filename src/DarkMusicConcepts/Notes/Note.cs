@@ -44,7 +44,7 @@ public partial class Note : IEquatable<Note?>
 
     private static int GetAbsolutePitch(Pitch basePitch, Octave octave)
     {
-        return (int)basePitch + OctaveRange * (int)octave;
+        return (int)basePitch + OctaveRange * ((int)octave + 1);
     }
 
     private static Frequency GetFrequency(int absolutePitch)

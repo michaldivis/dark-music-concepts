@@ -8,6 +8,7 @@
 /// </summary>
 public enum Octave
 {
+    SubSubContra = -1,
     SubContra = 0,
     Contra = 1,
     Great = 2,

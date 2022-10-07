@@ -111,6 +111,28 @@ public class NoteTests
         }
     }
 
+    [Fact]
+    public void AllNotesCanBeCreated_WhenMiddleCIsC3()
+    {
+        DarkMusicConceptsCore.Configure(new DarkMusicConceptsSettings
+        {
+            MidiMiddleCOctave = Octave.Small //middle C = C3
+        });
+
+        try
+        {
+            foreach (var note in Note.AllNotes)
+            {
+                _ = note;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+    }
+
     [Theory]
     [MemberData(nameof(AllNotes))]
     public void FindByFrequency_ShouldWork_ForAllNotes(Note note)
@@ -205,7 +227,7 @@ public class NoteTests
     [Fact]
     public void TransposeDown_ShouldThrow_WhenTransposingOutOfRange()
     {
-        var minNote = Note.C0;
+        var minNote = Note.CMinus1;
         Assert.Throws<ArgumentException>(() => minNote.TransposeDown(Interval.MinorSecond));
     }
 
@@ -221,7 +243,7 @@ public class NoteTests
     [Fact]
     public void TryTransposeDown_ShouldFail_WhenTransposingOutOfRange()
     {
-        var minNote = Note.C0;
+        var minNote = Note.CMinus1;
         var success = minNote.TryTransposeDown(Interval.MinorSecond, out var note);
         success.Should().BeFalse();
         note.Should().BeNull();
