@@ -106,6 +106,16 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
+    public static readonly ScaleFormula DoubleHarmonicMinor = new("Double Harmonic minor",
+        Interval.Unisson,
+        Interval.MinorSecond,
+        Interval.MajorThird,
+        Interval.PerfectForth,
+        Interval.PerfectFifth,
+        Interval.MinorSixth,
+        Interval.MajorSeventh
+    );
+
     public static readonly ScaleFormula MelodicMinor = new("Melodic minor",
         Interval.Unisson,
         Interval.MajorSecond,
@@ -219,6 +229,7 @@ public partial class ScaleFormula
         MinorPentatonic,
         Blues,
         HarmonicMinor,
+        DoubleHarmonicMinor,
         MelodicMinor,
         Dorianb2,
         LydianAugmented,
