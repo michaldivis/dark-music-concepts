@@ -18,7 +18,7 @@ public partial class Interval
     public static readonly Interval MajorSeventh = new(11, "Major seventh", Accident.Sharp);
     public static readonly Interval PerfectOctave = new(12, "Perfect octave", Accident.None);
 
-    public static IEnumerable<Interval> AllIntervals { get; } = new[]
+    public static IReadOnlyList<Interval> AllIntervals { get; } = new[]
     {
         Unisson,
         MinorSecond,
@@ -38,7 +38,7 @@ public partial class Interval
         PerfectOctave
     };
 
-    private static IEnumerable<Interval> UniqueIntervals { get; } = new[]
+    private static IReadOnlyList<Interval> UniqueIntervals { get; } = new[]
     {
         Unisson,
         MinorSecond,

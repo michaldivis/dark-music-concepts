@@ -20,7 +20,7 @@ public class ChordFunction
         _distanceFromRoot = distanceFromRoot;
     }
 
-    public static IEnumerable<ChordFunction> Functions { get; } = new[]
+    public static IReadOnlyList<ChordFunction> Functions { get; } = new[]
     {
         Root,
         Third,

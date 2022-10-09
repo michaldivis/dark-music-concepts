@@ -216,7 +216,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static IEnumerable<ScaleFormula> AllScaleFormulas { get; } = new[]
+    public static IReadOnlyList<ScaleFormula> AllScaleFormulas { get; } = new[]
     {
         Ionian,
         Dorian,

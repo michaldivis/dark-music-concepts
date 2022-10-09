@@ -34,20 +34,20 @@ public class Scale
     {
         Root = root;
         Formula = formula;
-        Pitches = pitches;
+        Pitches = pitches.ToList();
     }
 
-    public IEnumerable<Pitch> Pitches { get; }
+    public IReadOnlyList<Pitch> Pitches { get; }
 
-    public Pitch I => Pitches.ElementAt(0);
+    public Pitch I => Pitches[0];
 
-    public Pitch II => Pitches.ElementAt(1);
+    public Pitch II => Pitches[1];
 
-    public Pitch III => Pitches.ElementAt(2);
+    public Pitch III => Pitches[2];
 
-    public Pitch IV => Pitches.ElementAt(3);
+    public Pitch IV => Pitches[3];
 
-    public Pitch V => Pitches.ElementAt(4);
+    public Pitch V => Pitches[4];
 
     public Pitch? VI => Pitches.ElementAtOrDefault(5);
 

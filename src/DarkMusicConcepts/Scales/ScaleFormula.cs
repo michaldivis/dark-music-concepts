@@ -2,7 +2,7 @@
 
 public partial class ScaleFormula
 {
-    private readonly IEnumerable<Interval> _intervals;
+    private readonly Interval[] _intervals;
 
     public string Name { get; }
 

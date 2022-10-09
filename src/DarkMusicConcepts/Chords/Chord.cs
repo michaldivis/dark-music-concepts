@@ -3,7 +3,7 @@ public class Chord
 {
     private readonly List<ChordNote> _chordNotes = new();
 
-    public IEnumerable<Note> Notes => _chordNotes.Select(n => n.Note);
+    public IReadOnlyList<Note> Notes { get; }
 
     public Chord(Note root, ChordFormula function)
     {
@@ -14,6 +14,10 @@ public class Chord
             var note = new ChordNote(root.TransposeUp(interval), ChordFunction.FunctionForInterval(interval));
             _chordNotes.Add(note);
         }
+
+        Notes = _chordNotes
+            .Select(n => n.Note)
+            .ToList();
     }
 
     public string Name => NoteForFunction(ChordFunction.Root).Name + ChordFormula.FunctionForIntervals(Intervals()).AbreviatedName;

@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿using System.Collections.ObjectModel;
+
+namespace DarkMusicConcepts.Chords;
 
 public class ChordFormula
 {
@@ -28,14 +30,14 @@ public class ChordFormula
 
     public string AbreviatedName { get; }
 
-    public IEnumerable<Interval> Intervals { get; }
+    public IReadOnlyList<Interval> Intervals { get; }
 
     public static ChordFormula FunctionForIntervals(IEnumerable<Interval> intervals)
     {
         return Formulas.First(f => f.Intervals.SequenceEqual(intervals));
     }
 
-    private static IEnumerable<ChordFormula> Formulas { get; } = new[]
+    private static IReadOnlyList<ChordFormula> Formulas { get; } = new[]
     {
         Major,
         Augmented,
