@@ -5,6 +5,11 @@ namespace DarkMusicConcepts.Notes.Tests;
 
 public class NoteTests
 {
+    public static IEnumerable<object[]> AllNotes => Note.AllNotes.Select(a => new[] { a });
+
+    //notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
+    public static IEnumerable<object[]> NotesUpTo8thOctave => Note.AllNotes.Where(a => a.Octave <= Octave.FiveLine).Select(a => new[] { a });
+
     public NoteTests()
     {
         DarkMusicConceptsCore.Configure(new DarkMusicConceptsSettings
@@ -39,60 +44,6 @@ public class NoteTests
     {
         var note = new Note(notePitch, octave);
         note.Frequency.Value.Should().BeApproximately(expectedFrequency, 0.01d);
-    }
-
-    [Fact]
-    public void ComparisonEqualsOperator_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
-    {
-        var note1 = new Note(Pitch.C, Octave.Contra);
-        var note2 = new Note(Pitch.C, Octave.Contra);
-        var areEqual = note1 == note2;
-        areEqual.Should().BeTrue();
-    }
-
-    [Fact]
-    public void ComparisonEqualsOperator_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
-    {
-        var note1 = new Note(Pitch.C, Octave.Contra);
-        var note2 = new Note(Pitch.D, Octave.OneLine);
-        var areEqual = note1 == note2;
-        areEqual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComparisonEquals_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
-    {
-        var note1 = new Note(Pitch.C, Octave.Contra);
-        var note2 = new Note(Pitch.C, Octave.Contra);
-        var areEqual = note1.Equals(note2);
-        areEqual.Should().BeTrue();
-    }
-
-    [Fact]
-    public void ComparisonEquals_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
-    {
-        var note1 = new Note(Pitch.C, Octave.Contra);
-        var note2 = new Note(Pitch.D, Octave.OneLine);
-        var areEqual = note1.Equals(note2);
-        areEqual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComparisonNotEqualOperator_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
-    {
-        var note1 = new Note(Pitch.C, Octave.Contra);
-        var note2 = new Note(Pitch.C, Octave.Contra);
-        var areNotEqual = note1 != note2;
-        areNotEqual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComparisonNotEqualOperator_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
-    {
-        var note1 = new Note(Pitch.C, Octave.Contra);
-        var note2 = new Note(Pitch.D, Octave.OneLine);
-        var areNotEqual = note1 != note2;
-        areNotEqual.Should().BeTrue();
     }
 
     [Fact]
@@ -250,8 +201,284 @@ public class NoteTests
         note.Should().BeNull();
     }
 
-    public static IEnumerable<object[]> AllNotes => Note.AllNotes.Select(a => new[] { a } );
+    #region Equality
 
-    //notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
-    public static IEnumerable<object[]> NotesUpTo8thOctave => Note.AllNotes.Where(a => a.Octave <= Octave.FiveLine).Select(a => new[] { a });    
+    [Fact]
+    public void Equals_ShouldWork()
+    {
+        Note nullItem = null!;
+        var item1 = new Note(Pitch.C, Octave.OneLine);
+        var item2 = new Note(Pitch.C, Octave.OneLine);
+        var item3 = new Note(Pitch.G, Octave.Small);
+
+        (item1.Equals(item2)).Should().BeTrue();
+        (item2.Equals(item1)).Should().BeTrue();
+
+        (item1.Equals(item3)).Should().BeFalse();
+        (item1.Equals(nullItem)).Should().BeFalse();
+    }
+
+    [Fact]
+    public void EqualOperator_ShouldWork()
+    {
+        Note nullItem = null!;
+        var item1 = new Note(Pitch.C, Octave.OneLine);
+        var item2 = new Note(Pitch.C, Octave.OneLine);
+        var item3 = new Note(Pitch.G, Octave.Small);
+
+        (item1 == item2).Should().BeTrue();
+        (item2 == item1).Should().BeTrue();
+
+        (item1 == item3).Should().BeFalse();
+        (item1 == nullItem).Should().BeFalse();
+        (nullItem == item1).Should().BeFalse();
+    }
+
+    [Fact]
+    public void NotEqualOperator_ShouldWork()
+    {
+        Note nullItem = null!;
+        var item1 = new Note(Pitch.C, Octave.OneLine);
+        var item2 = new Note(Pitch.C, Octave.OneLine);
+        var item3 = new Note(Pitch.G, Octave.Small);
+
+        (item1 != item2).Should().BeFalse();
+        (item2 != item1).Should().BeFalse();
+
+        (item1 != item3).Should().BeTrue();
+        (item1 != nullItem).Should().BeTrue();
+        (nullItem != item1).Should().BeTrue();
+    }
+
+    #endregion
+
+    #region Comparison
+
+    [Fact]
+    public void CompareTo_ShouldWork()
+    {
+        var normal = new Note(Pitch.C, Octave.OneLine);
+
+        Note nullItem = null!;
+        var little = new Note(Pitch.F, Octave.Contra);
+        var alsoNormal = new Note(Pitch.C, Octave.OneLine);
+        var large = new Note(Pitch.G, Octave.ThreeLine);
+
+        normal.CompareTo(nullItem).Should().Be(1);
+        normal.CompareTo(little).Should().Be(1);
+        normal.CompareTo(alsoNormal).Should().Be(0);
+        normal.CompareTo(large).Should().Be(-1);
+    }
+
+    [Fact]
+    public void GreaterThanOperator_ShouldWork()
+    {
+        var normal = new Note(Pitch.C, Octave.OneLine);
+
+        Note nullItem = null!;
+        var little = new Note(Pitch.F, Octave.Contra);
+        var alsoNormal = new Note(Pitch.C, Octave.OneLine);
+        var large = new Note(Pitch.G, Octave.ThreeLine);
+
+        (normal > nullItem).Should().BeTrue();
+        (normal > little).Should().BeTrue();
+        (normal > alsoNormal).Should().BeFalse();
+        (normal > large).Should().BeFalse();
+        (nullItem > normal).Should().BeFalse();
+    }
+
+    [Fact]
+    public void GreaterThanOrEqualOperator_ShouldWork()
+    {
+        var normal = new Note(Pitch.C, Octave.OneLine);
+
+        Note nullItem = null!;
+        var little = new Note(Pitch.F, Octave.Contra);
+        var alsoNormal = new Note(Pitch.C, Octave.OneLine);
+        var large = new Note(Pitch.G, Octave.ThreeLine);
+
+        (normal >= nullItem).Should().BeTrue();
+        (normal >= little).Should().BeTrue();
+        (normal >= alsoNormal).Should().BeTrue();
+        (normal >= large).Should().BeFalse();
+        (nullItem >= normal).Should().BeFalse();
+    }
+
+    [Fact]
+    public void SmallerThanOperator_ShouldWork()
+    {
+        var normal = new Note(Pitch.C, Octave.OneLine);
+
+        Note nullItem = null!;
+        var little = new Note(Pitch.F, Octave.Contra);
+        var alsoNormal = new Note(Pitch.C, Octave.OneLine);
+        var large = new Note(Pitch.G, Octave.ThreeLine);
+
+        (normal < nullItem).Should().BeFalse();
+        (normal < little).Should().BeFalse();
+        (normal < alsoNormal).Should().BeFalse();
+        (normal < large).Should().BeTrue();
+        (nullItem < normal).Should().BeTrue();
+    }
+
+    [Fact]
+    public void SmallerThanOrEqualOperator_ShouldWork()
+    {
+        var normal = new Note(Pitch.C, Octave.OneLine);
+
+        Note nullItem = null!;
+        var little = new Note(Pitch.F, Octave.Contra);
+        var alsoNormal = new Note(Pitch.C, Octave.OneLine);
+        var large = new Note(Pitch.G, Octave.ThreeLine);
+
+        (normal <= nullItem).Should().BeFalse();
+        (normal <= little).Should().BeFalse();
+        (normal <= alsoNormal).Should().BeTrue();
+        (normal <= large).Should().BeTrue();
+        (nullItem <= normal).Should().BeTrue();
+    }
+
+    #endregion   
+}
+
+public class IntervalTests
+{
+    #region Equality
+
+    [Fact]
+    public void Equals_ShouldWork()
+    {
+        Interval nullItem = null!;
+        var item1 = Interval.MinorSecond;
+        var item2 = Interval.MinorSecond;
+        var item3 = Interval.MajorThird;
+
+        (item1.Equals(item2)).Should().BeTrue();
+        (item2.Equals(item1)).Should().BeTrue();
+
+        (item1.Equals(item3)).Should().BeFalse();
+        (item1.Equals(nullItem)).Should().BeFalse();
+    }
+
+    [Fact]
+    public void EqualOperator_ShouldWork()
+    {
+        Interval nullItem = null!;
+        var item1 = Interval.MinorSecond;
+        var item2 = Interval.MinorSecond;
+        var item3 = Interval.MajorThird;
+
+        (item1 == item2).Should().BeTrue();
+        (item2 == item1).Should().BeTrue();
+
+        (item1 == item3).Should().BeFalse();
+        (item1 == nullItem).Should().BeFalse();
+        (nullItem == item1).Should().BeFalse();
+    }
+
+    [Fact]
+    public void NotEqualOperator_ShouldWork()
+    {
+        Interval nullItem = null!;
+        var item1 = Interval.MinorSecond;
+        var item2 = Interval.MinorSecond;
+        var item3 = Interval.MajorThird;
+
+        (item1 != item2).Should().BeFalse();
+        (item2 != item1).Should().BeFalse();
+
+        (item1 != item3).Should().BeTrue();
+        (item1 != nullItem).Should().BeTrue();
+        (nullItem != item1).Should().BeTrue();
+    }
+
+    #endregion
+
+    #region Comparison
+
+    [Fact]
+    public void CompareTo_ShouldWork()
+    {
+        var normal = Interval.PerfectFifth;
+
+        Interval nullItem = null!;
+        var little = Interval.MajorSecond;
+        var alsoNormal = Interval.PerfectFifth;
+        var large = Interval.MinorSeventh;
+
+        normal.CompareTo(nullItem).Should().Be(1);
+        normal.CompareTo(little).Should().Be(1);
+        normal.CompareTo(alsoNormal).Should().Be(0);
+        normal.CompareTo(large).Should().Be(-1);
+    }
+
+    [Fact]
+    public void GreaterThanOperator_ShouldWork()
+    {
+        var normal = Interval.PerfectFifth;
+
+        Interval nullItem = null!;
+        var little = Interval.MajorSecond;
+        var alsoNormal = Interval.PerfectFifth;
+        var large = Interval.MinorSeventh;
+
+        (normal > nullItem).Should().BeTrue();
+        (normal > little).Should().BeTrue();
+        (normal > alsoNormal).Should().BeFalse();
+        (normal > large).Should().BeFalse();
+        (nullItem > normal).Should().BeFalse();
+    }
+
+    [Fact]
+    public void GreaterThanOrEqualOperator_ShouldWork()
+    {
+        var normal = Interval.PerfectFifth;
+
+        Interval nullItem = null!;
+        var little = Interval.MajorSecond;
+        var alsoNormal = Interval.PerfectFifth;
+        var large = Interval.MinorSeventh;
+
+        (normal >= nullItem).Should().BeTrue();
+        (normal >= little).Should().BeTrue();
+        (normal >= alsoNormal).Should().BeTrue();
+        (normal >= large).Should().BeFalse();
+        (nullItem >= normal).Should().BeFalse();
+    }
+
+    [Fact]
+    public void SmallerThanOperator_ShouldWork()
+    {
+        var normal = Interval.PerfectFifth;
+
+        Interval nullItem = null!;
+        var little = Interval.MajorSecond;
+        var alsoNormal = Interval.PerfectFifth;
+        var large = Interval.MinorSeventh;
+
+        (normal < nullItem).Should().BeFalse();
+        (normal < little).Should().BeFalse();
+        (normal < alsoNormal).Should().BeFalse();
+        (normal < large).Should().BeTrue();
+        (nullItem < normal).Should().BeTrue();
+    }
+
+    [Fact]
+    public void SmallerThanOrEqualOperator_ShouldWork()
+    {
+        var normal = Interval.PerfectFifth;
+
+        Interval nullItem = null!;
+        var little = Interval.MajorSecond;
+        var alsoNormal = Interval.PerfectFifth;
+        var large = Interval.MinorSeventh;
+
+        (normal <= nullItem).Should().BeFalse();
+        (normal <= little).Should().BeFalse();
+        (normal <= alsoNormal).Should().BeTrue();
+        (normal <= large).Should().BeTrue();
+        (nullItem <= normal).Should().BeTrue();
+    }
+
+    #endregion   
 }

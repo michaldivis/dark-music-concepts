@@ -3,7 +3,7 @@
 /// <summary>
 /// In music, a note is a symbol denoting a musical sound. In English usage, a note is also the sound itself. Notes can represent the pitch and duration of a sound in musical notation. A note can also represent a pitch class.
 /// </summary>
-public partial class Note : IEquatable<Note?>
+public partial class Note : IEquatable<Note>, IComparable<Note>
 {
     private const int MidiMiddleCNumber = 60;
     private const double A4Frequency = 440.0;
@@ -260,37 +260,117 @@ public partial class Note : IEquatable<Note?>
         return interval;
     }
 
-    public override bool Equals(object? obj)
+    #region Equality
+
+    private static bool EqualsInternal(Note? a, Note? b)
     {
-        return Equals(obj as Note);
+        if (a is null && b is null)
+        {
+            return true;
+        }
+
+        if (a is null || b is null)
+        {
+            return false;
+        }
+
+        return a._absolutePitch.Equals(b._absolutePitch);
     }
 
     public bool Equals(Note? other)
     {
-        return other is not null &&
-               BasePitch == other.BasePitch &&
-               Octave == other.Octave;
+        if (other is null)
+        {
+            return false;
+        }
+
+        return EqualsInternal(this, other);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj is not Note other)
+        {
+            return false;
+        }
+
+        return EqualsInternal(this, other);
+    }
+
+    public static bool operator ==(Note? a, Note? b)
+    {
+        return EqualsInternal(a, b);
+    }
+
+    public static bool operator !=(Note? a, Note? b)
+    {
+        return !EqualsInternal(a, b);
+    }
+
+    #endregion
+
+    #region Comparison
+
+    private static int CompareToInteral(Note? a, Note? b)
+    {
+        if (a is null && b is null)
+        {
+            return 0;
+        }
+
+        if (a is null)
+        {
+            return -1;
+        }
+
+        if (b is null)
+        {
+            return 1;
+        }
+
+        return a._absolutePitch.CompareTo(b._absolutePitch);
+    }
+
+    public int CompareTo(Note? other)
+    {
+        return CompareToInteral(this, other);
+    }
+
+    public static bool operator >(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) > 0;
+    }
+
+    public static bool operator <(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) < 0;
+    }
+
+    public static bool operator >=(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) >= 0;
+    }
+
+    public static bool operator <=(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) <= 0;
+    }
+
+    #endregion
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(BasePitch, Octave);
-    }
-
-    public static bool operator ==(Note note1, Note note2)
-    {
-        if (ReferenceEquals(note1, note2))
-            return true;
-        if (ReferenceEquals(note1, null))
-            return false;
-        if (ReferenceEquals(note2, null))
-            return false;
-        return note1.Equals(note2);
-    }
-
-    public static bool operator !=(Note note1, Note note2)
-    {
-        return !(note1 == note2);
+        return _absolutePitch.GetHashCode();
     }
 
     public override string ToString()

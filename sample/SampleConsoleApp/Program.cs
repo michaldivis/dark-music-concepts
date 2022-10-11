@@ -62,6 +62,9 @@ Print(a4 == b5); //false
 Print(a4 != b5); //true
 Print(a4.Equals(b5)); //false
 
+Print(a4 > b5); //false
+Print(b5 >= a4); //true
+
 PrintHeader("Intervals");
 
 var minorSecond = Interval.MinorSecond;
@@ -69,6 +72,8 @@ var minorSecond = Interval.MinorSecond;
 Print(minorSecond.Distance); //2
 Print(minorSecond.Name); //Minor Second
 Print(minorSecond.Accident); //Flat
+
+Print(Interval.MajorSeventh > Interval.PerfectFourth); //true
 
 PrintSubHeader("Transpose up or down");
 
