@@ -1,3 +1,4 @@
+using DarkMusicConcepts.Units;
 using FluentAssertions;
 
 namespace DarkMusicConcepts.Notes.Tests;
@@ -145,7 +146,7 @@ public class NoteTests
     [Fact]
     public void FindByFrequency_ShouldThrow_WhenFrequencyDoesntMatch()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(441));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(Frequency.From(441)));
     }
 
     [Theory]
@@ -160,7 +161,7 @@ public class NoteTests
     [Fact]
     public void TryFindByFrequency_ShouldFail_WhenFrequencyDoesntMatch()
     {
-        var success = Note.TryFindByFrequency(441, out var note);
+        var success = Note.TryFindByFrequency(Frequency.From(441), out var note);
         success.Should().BeFalse();
         note.Should().BeNull();
     }

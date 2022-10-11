@@ -1,35 +1,14 @@
-﻿using ValueOf;
-
-namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts.Units;
 /// <summary>
 /// Representation of musical time, the (<see cref="Value"/>) is stored in MIDI ticks
 /// </summary>
-public class Time : ValueOf<int, Time>
+public class Time : Unit<int, Time>
 {
-    #region Validation
-
     public const int Min = 0;
     public const int Max = int.MaxValue;
 
-    protected override void Validate()
-    {
-        if (!IsValidTimeValue(Value))
-        {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {Min}-{Max}");
-        }
-    }
-
-    protected override bool TryValidate()
-    {
-        return IsValidTimeValue(Value);
-    }
-
-    private static bool IsValidTimeValue(int ticks)
-    {
-        return ticks >= Min && ticks <= Max;
-    }
-
-    #endregion
+    protected override int MinValue { get; } = Min;
+    protected override int MaxValue { get; } = Max;
 
     private const int TicksPerQuarterNote = 960;
     private const int TicksPerSixteenthNote = TicksPerQuarterNote / 4;
@@ -92,7 +71,7 @@ public class Time : ValueOf<int, Time>
     public static Time FromThirtySecondNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted / 2);
     public static Time FromSixtyForthNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted / 4);
 
-    public static readonly Time Zero = From(Min);
+    public static readonly Time Zero = From(0);
 
     public static readonly Time Bar = FromBars(1);
 
@@ -122,7 +101,7 @@ public class Time : ValueOf<int, Time>
 
     #endregion
 
-    #region Operator overloads
+    #region Aritmetic operator overloads
 
     public static Time operator +(Time a, Time b)
     {
@@ -135,6 +114,11 @@ public class Time : ValueOf<int, Time>
     }
 
     public static Time operator *(Time a, int multiplier)
+    {
+        return From(a.Ticks * multiplier);
+    }
+
+    public static Time operator *(int multiplier, Time a)
     {
         return From(a.Ticks * multiplier);
     }

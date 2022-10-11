@@ -30,19 +30,19 @@ Print(Note.A1);
 
 PrintSubHeader("Find note by frequency");
 
-var e2 = Note.FindByFrequency(82.40);
-var foundE2 = Note.TryFindByFrequency(82.40, out var alsoE2);
+var e2 = Note.FindByFrequency(Frequency.From(82.40));
+var foundE2 = Note.TryFindByFrequency(Frequency.From(82.40), out var alsoE2);
 
-Print(Note.FindByFrequency(82.40));
-Print(Note.TryFindByFrequency(82.40, out var alsoAlsoE2));
+Print(Note.FindByFrequency(Frequency.From(82.40)));
+Print(Note.TryFindByFrequency(Frequency.From(82.40), out var alsoAlsoE2));
 Print(alsoAlsoE2);
 
 PrintSubHeader("Find note by MIDI number");
 
-var f2 = Note.FindByMidiNumber(41);
+var f2 = Note.FindByMidiNumber(MidiNumber.From(41));
 
-Print(Note.FindByMidiNumber(41));
-Print(Note.TryFindByMidiNumber(41, out var alsoF2));
+Print(Note.FindByMidiNumber(MidiNumber.From(41)));
+Print(Note.TryFindByMidiNumber(MidiNumber.From(41), out var alsoF2));
 Print(alsoF2);
 
 PrintHeader("Note comparison");
