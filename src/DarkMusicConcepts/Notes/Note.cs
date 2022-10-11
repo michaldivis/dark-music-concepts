@@ -10,9 +10,9 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
     private const int OctaveRange = 12;
 
     /// <summary>
-    /// Internal representation of a Note's pitch
+    /// Internal representation of Note's absolute pitch. Is always valid unlike <see cref="MidiNumber"/> which can be <see langword="null"/>
     /// </summary>
-    private readonly int _absolutePitch;
+    private int AbsolutePitch { get; }
 
     public Pitch BasePitch { get; }
     public Octave Octave { get; }
@@ -22,10 +22,10 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
         BasePitch = basePitch;
         Octave = octave;
 
-        _absolutePitch = GetAbsolutePitch(basePitch, octave);
+        AbsolutePitch = GetAbsolutePitch(basePitch, octave);
         Name = GetName(basePitch, octave);
-        Frequency = GetFrequency(_absolutePitch);
-        MidiNumber = GetMidiNumber(_absolutePitch);
+        Frequency = GetFrequency(AbsolutePitch);
+        MidiNumber = GetMidiNumber(AbsolutePitch);
     }
 
     public string Name { get; }
@@ -213,7 +213,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
 
     private bool TryTranspose(int distance, out Note? note)
     {
-        var transposedPitch = _absolutePitch + distance;
+        var transposedPitch = AbsolutePitch + distance;
 
         var noteExists = TryFindByAbsolutePitch(transposedPitch, out var found);
 
@@ -229,7 +229,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
 
     private static bool TryFindByAbsolutePitch(int pitch, out Note? note)
     {
-        var found = AllNotes.FirstOrDefault(a => a._absolutePitch == pitch);
+        var found = AllNotes.FirstOrDefault(a => a.AbsolutePitch == pitch);
 
         if (found is null)
         {
@@ -255,7 +255,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
 
     public Interval IntervalWithOther(Note note)
     {
-        var distance = Math.Abs(_absolutePitch - note._absolutePitch);
+        var distance = Math.Abs(AbsolutePitch - note.AbsolutePitch);
         var interval = Interval.CreateIntervalFromDistance(distance);
         return interval;
     }
@@ -274,7 +274,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
             return false;
         }
 
-        return a._absolutePitch.Equals(b._absolutePitch);
+        return a.AbsolutePitch.Equals(b.AbsolutePitch);
     }
 
     public bool Equals(Note? other)
@@ -338,7 +338,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
             return 1;
         }
 
-        return a._absolutePitch.CompareTo(b._absolutePitch);
+        return a.AbsolutePitch.CompareTo(b.AbsolutePitch);
     }
 
     public int CompareTo(Note? other)
@@ -370,7 +370,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
 
     public override int GetHashCode()
     {
-        return _absolutePitch.GetHashCode();
+        return AbsolutePitch.GetHashCode();
     }
 
     public override string ToString()
