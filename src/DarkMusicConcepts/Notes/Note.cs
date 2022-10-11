@@ -12,8 +12,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
     /// <summary>
     /// Internal representation of Note's absolute pitch. Is always valid unlike <see cref="MidiNumber"/> which can be <see langword="null"/>
     /// </summary>
-    private int AbsolutePitch { get; }
-
+    public int AbsolutePitch { get; }
     public Pitch BasePitch { get; }
     public Octave Octave { get; }
 

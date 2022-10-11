@@ -87,6 +87,14 @@ public class NoteTests
 
     [Theory]
     [MemberData(nameof(AllNotes))]
+    public void AbsolutePitch_ShouldBeUnique(Note note)
+    {
+        var isAbsolutePitchUnique = Note.AllNotes.All(a => a == note || a.AbsolutePitch != note.AbsolutePitch);
+        isAbsolutePitchUnique.Should().BeTrue();
+    }
+
+    [Theory]
+    [MemberData(nameof(AllNotes))]
     public void FindByFrequency_ShouldWork_ForAllNotes(Note note)
     {
         var foundNote = Note.FindByFrequency(note.Frequency);
@@ -480,5 +488,5 @@ public class IntervalTests
         (nullItem <= normal).Should().BeTrue();
     }
 
-    #endregion   
+    #endregion
 }
