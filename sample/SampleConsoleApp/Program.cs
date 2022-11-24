@@ -105,6 +105,12 @@ PrintHeader("Chords");
 var aMinorSevenFlatFive = new Chord(Note.A3, ChordFormula.Minor7b5);
 Print(aMinorSevenFlatFive);
 
+var cMajor = new Chord(Note.C2, ChordFormula.Major);
+Print(cMajor);
+
+var invertedCMajor = cMajor.Invert();
+Print(invertedCMajor);
+
 PrintSubHeader("Chord pattern generation");
 
 var chordPatternGenerator = new ChordPatternGenerator(random);
