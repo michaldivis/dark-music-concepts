@@ -22,7 +22,7 @@ public class ChordPatternGenerator
             var availableChordFunctions = ChordFormula.GetFormulasForScale(scale, chordRoot);
             var chordFunction = availableChordFunctions.ElementAt(_random.Next(availableChordFunctions.Count()));
             var root = new Note(chordRoot, octave);
-            var chord = new Chord(root, chordFunction);
+            var chord = Chord.Create(root, chordFunction);
             chords[i] = chord;
         }
 

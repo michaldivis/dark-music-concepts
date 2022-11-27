@@ -1,71 +1,79 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿using DarkMusicConcepts.Utils;
+
+namespace DarkMusicConcepts.Chords;
 public class Chord
 {
     private readonly List<ChordNote> _chordNotes = new();
+    private readonly Note _rootBeforeInversion;
 
+    public ChordFormula Formula { get; }
+    public int Inversion { get; }
+    public string Name { get; }
+    public Note Bass { get; }
+    public Note Lead { get; }
     public IReadOnlyList<Note> Notes { get; }
 
-    private Chord(IEnumerable<Note> notes)
+    private Chord(IReadOnlyList<Note> notes, Note rootBeforeInversion, ChordFormula chordFormula, int inversion)
     {
-        var root = notes.First();
+        _rootBeforeInversion = rootBeforeInversion;
+
+        Notes = notes;
+        Inversion = inversion;
+        Formula = chordFormula;
+
+        var root = notes[0];
+
         _chordNotes.Add(new ChordNote(root, ChordFunction.Root));
 
-        foreach (var note in notes.Skip(1))
+        foreach (var note in notes)
         {
             var interval = root.IntervalWithOther(note);
             var chordNote = new ChordNote(note, ChordFunction.FunctionForInterval(interval));
             _chordNotes.Add(chordNote);
         }
 
-        Notes = _chordNotes
-            .Select(n => n.Note)
-            .ToList();
+        Name = GetName(_rootBeforeInversion, chordFormula, inversion);
+
+        Bass = notes[0];
+        Lead = notes[notes.Count - 1];
     }
 
-    public Chord(Note root, ChordFormula function)
+    public static Chord Create(Note root, ChordFormula formula)
     {
-        _chordNotes.Add(new ChordNote(root, ChordFunction.Root));
+        var notes = new List<Note>();
 
-        foreach (var interval in function.Intervals)
+        notes.Add(root);
+
+        foreach (var interval in formula.Intervals)
         {
-            var note = new ChordNote(root.TransposeUp(interval), ChordFunction.FunctionForInterval(interval));
-            _chordNotes.Add(note);
+            notes.Add(root.TransposeUp(interval));
         }
 
-        Notes = _chordNotes
-            .Select(n => n.Note)
-            .ToList();
-    }
-
-    public Note Bass => Notes[0];
-    public Note Lead => Notes[Notes.Count - 1];
-
-    public string Name => NoteForFunction(ChordFunction.Root).Name + ChordFormula.FunctionForIntervals(Intervals()).AbreviatedName;
-
-    private Note NoteForFunction(ChordFunction function)
-    {
-        return _chordNotes.First(n => n.Function == function).Note;
-    }
-
-    private IEnumerable<Interval> Intervals()
-    {
-        var root = NoteForFunction(ChordFunction.Root);
-
-        return Notes
-            .Select(note => root.IntervalWithOther(note))
-            .OrderBy(i => i.Distance)
-            .Skip(1)
-            .ToList();
+        return new Chord(notes, root, formula, 0);
     }
 
     public Chord Invert()
     {
-        var notesExceptRoot = Notes
-            .Skip(1)
-            .ToList();
-        var rootOctaveAbove = Notes[0].TransposeUp(Interval.PerfectOctave);
-        notesExceptRoot.Add(rootOctaveAbove);
-        return new Chord(notesExceptRoot);
+        var invertedNotes = Notes.Skip(1).ToList();
+
+        invertedNotes.Add(Notes[0].TransposeUp(Interval.PerfectOctave));
+
+        if(Inversion >= invertedNotes.Count - 1)
+        {
+            return new Chord(invertedNotes, _rootBeforeInversion.TransposeUp(Interval.PerfectOctave), Formula, 0);
+        }
+
+        return new Chord(invertedNotes, _rootBeforeInversion, Formula, Inversion + 1);   
+    }
+
+    private static string GetName(Note root, ChordFormula formula, int inversion)
+    {
+        if(inversion == 0)
+        {
+            return root.Name + formula.AbreviatedName;
+        }
+
+        return $"{root.Name}{formula.AbreviatedName} ({Humanizer.AddOrdinal(inversion)} inversion)";
     }
 
     public override string ToString()

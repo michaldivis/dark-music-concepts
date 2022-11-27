@@ -102,14 +102,23 @@ Print(gPhrygianFourth);
 
 PrintHeader("Chords");
 
-var aMinorSevenFlatFive = new Chord(Note.A3, ChordFormula.Minor7b5);
+var aMinorSevenFlatFive = Chord.Create(Note.A3, ChordFormula.Minor7b5);
 Print(aMinorSevenFlatFive);
 
-var cMajor = new Chord(Note.C2, ChordFormula.Major);
+var cMajor = Chord.Create(Note.C2, ChordFormula.Major);
 Print(cMajor);
 
-var invertedCMajor = cMajor.Invert();
-Print(invertedCMajor);
+var cMajor1stInversion = cMajor.Invert();
+Print(cMajor1stInversion);
+
+var cMajor2ndInversion = cMajor1stInversion.Invert();
+Print(cMajor2ndInversion);
+
+var cMajor3rdInversion = cMajor2ndInversion.Invert();
+Print(cMajor3rdInversion);
+
+var cMajor4thInversion = cMajor3rdInversion.Invert();
+Print(cMajor4thInversion);
 
 PrintSubHeader("Chord pattern generation");
 

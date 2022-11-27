@@ -32,9 +32,55 @@ public class ChordFormula
 
     public IReadOnlyList<Interval> Intervals { get; }
 
-    public static ChordFormula FunctionForIntervals(IEnumerable<Interval> intervals)
+    public static ChordFormula FunctionForIntervals(IEnumerable<Interval> intervals, int inversion)
     {
-        return Formulas.First(f => f.Intervals.SequenceEqual(intervals));
+        if(inversion < 0 || inversion > intervals.Count())
+        {
+            throw new ArgumentOutOfRangeException(nameof(inversion), inversion, "Inversion number is invalid");
+        }
+
+        foreach (var formula in Formulas)
+        {
+            if(intervals.Count() != formula.Intervals.Count)
+            {
+                continue;
+            }
+
+            if(IsIntervalSequenceEqual(intervals, formula.Intervals, inversion))
+            {
+                return formula;
+            }
+        }
+
+        //TODO handle this case better
+        throw new ArgumentException("No matching formula found for these intervals and inversion");
+    }
+
+    private static bool IsIntervalSequenceEqual(IEnumerable<Interval> source, IReadOnlyList<Interval> target, int sourceInversion)
+    {
+        static int GetInvertedIndex(int index, int count, int inversion)
+        {
+            var wantedIndex = index + inversion;
+
+            if (wantedIndex > count - 1)
+            {
+                return wantedIndex - count;
+            }
+
+            return wantedIndex;
+        }
+
+        for (int i = 0; i < target.Count; i++)
+        {
+            var index = GetInvertedIndex(i, target.Count, sourceInversion);
+
+            if (source.ElementAt(index) != target[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private static IReadOnlyList<ChordFormula> Formulas { get; } = new[]
