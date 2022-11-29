@@ -29,9 +29,9 @@ public partial class Interval
     public static Interval MajorNinth { get; } = new(14, "Major 9th", Accident.None);
     public static Interval AugmentedNinth { get; } = new(15, "Augmented 9th", Accident.Sharp);
 
-    public static Interval DiminishedEleventh { get; } = new(17, "Diminished 11th", Accident.Flat);
+    public static Interval DiminishedEleventh { get; } = new(16, "Diminished 11th", Accident.Flat);
     public static Interval PerfectEleventh { get; } = new(17, "Perfect 11th", Accident.None);
-    public static Interval AugmentedEleventh { get; } = new(17, "Augmented 11th", Accident.Sharp);
+    public static Interval AugmentedEleventh { get; } = new(18, "Augmented 11th", Accident.Sharp);
 
     public static Interval MinorThirteenth { get; } = new(20, "Minor 13th", Accident.Flat);
     public static Interval MajorThirteenth { get; } = new(21, "Major 13th", Accident.None);
