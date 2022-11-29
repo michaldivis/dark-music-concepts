@@ -21,7 +21,7 @@ public partial class Interval : IEquatable<Interval>, IComparable<Interval>
     public static Interval CreateIntervalFromDistance(int distance)
     {
         var safeDistance = GetDistanceWithinOneOctave(distance);
-        return UniqueIntervals.Single(interval => interval.Distance == safeDistance);
+        return AllIntervals.First(interval => interval.Distance == safeDistance);
     }
 
     private static int GetDistanceWithinOneOctave(int distance)
