@@ -1,26 +1,24 @@
-﻿using System.Collections.ObjectModel;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts.Chords;
 
 public class ChordFormula
 {
-    public static readonly ChordFormula Major = new("Maj", Interval.MajorThird, Interval.PerfectFifth);
-    public static readonly ChordFormula Augmented = new("Aug", Interval.MajorThird, Interval.AugmentedFifth);
-    public static readonly ChordFormula Minor = new("Min", Interval.MinorThird, Interval.PerfectFifth);
-    public static readonly ChordFormula Diminished = new("Dim", Interval.MinorThird, Interval.DiminishedFifth);
-    public static readonly ChordFormula Sus2 = new("Sus2", Interval.MajorSecond, Interval.PerfectFifth);
-    public static readonly ChordFormula Sus2Diminished = new("Sus2Dim", Interval.MajorSecond, Interval.DiminishedFifth);
-    public static readonly ChordFormula Sus2Augmented = new("Sus2Aug", Interval.MajorSecond, Interval.AugmentedFifth);
-    public static readonly ChordFormula Sus4 = new("Sus4", Interval.PerfectFourth, Interval.PerfectFifth);
-    public static readonly ChordFormula Sus4Diminished = new("Sus4Dim", Interval.PerfectFourth, Interval.DiminishedFifth);
-    public static readonly ChordFormula Sus4Augmented = new("Sus4Aug", Interval.PerfectFourth, Interval.AugmentedFifth);
-    public static readonly ChordFormula Major7 = new("Maj7", Interval.MajorThird, Interval.PerfectFifth, Interval.MajorSeventh);
-    public static readonly ChordFormula Dominant7 = new("Dom7", Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh);
-    public static readonly ChordFormula Minor7b5 = new("Min7b5", Interval.MinorThird, Interval.DiminishedFifth, Interval.MinorSeventh);
-    public static readonly ChordFormula Diminished7 = new("Dim7", Interval.MinorThird, Interval.DiminishedFifth, Interval.MajorSixth);
-    public static readonly ChordFormula Minor7 = new("Min7", Interval.MinorThird, Interval.PerfectFifth, Interval.MinorSeventh);
-    public static readonly ChordFormula MinorMaj7 = new("MinMaj7", Interval.MinorThird, Interval.PerfectFifth, Interval.MajorSeventh);
-    public static readonly ChordFormula Augmented7 = new("Aug7", Interval.MajorThird, Interval.AugmentedFifth, Interval.MajorSeventh);
+    public static ChordFormula Major { get; } = new("Maj", Interval.MajorThird, Interval.PerfectFifth);
+    public static ChordFormula Augmented { get; } = new("Aug", Interval.MajorThird, Interval.AugmentedFifth);
+    public static ChordFormula Minor { get; } = new("Min", Interval.MinorThird, Interval.PerfectFifth);
+    public static ChordFormula Diminished { get; } = new("Dim", Interval.MinorThird, Interval.DiminishedFifth);
+    public static ChordFormula Sus2 { get; } = new("Sus2", Interval.MajorSecond, Interval.PerfectFifth);
+    public static ChordFormula Sus2Diminished { get; } = new("Sus2Dim", Interval.MajorSecond, Interval.DiminishedFifth);
+    public static ChordFormula Sus2Augmented { get; } = new("Sus2Aug", Interval.MajorSecond, Interval.AugmentedFifth);
+    public static ChordFormula Sus4 { get; } = new("Sus4", Interval.PerfectFourth, Interval.PerfectFifth);
+    public static ChordFormula Sus4Diminished { get; } = new("Sus4Dim", Interval.PerfectFourth, Interval.DiminishedFifth);
+    public static ChordFormula Sus4Augmented { get; } = new("Sus4Aug", Interval.PerfectFourth, Interval.AugmentedFifth);
+    public static ChordFormula Major7 { get; } = new("Maj7", Interval.MajorThird, Interval.PerfectFifth, Interval.MajorSeventh);
+    public static ChordFormula Dominant7 { get; } = new("Dom7", Interval.MajorThird, Interval.PerfectFifth, Interval.MinorSeventh);
+    public static ChordFormula Minor7b5 { get; } = new("Min7b5", Interval.MinorThird, Interval.DiminishedFifth, Interval.MinorSeventh);
+    public static ChordFormula Diminished7 { get; } = new("Dim7", Interval.MinorThird, Interval.DiminishedFifth, Interval.MajorSixth);
+    public static ChordFormula Minor7 { get; } = new("Min7", Interval.MinorThird, Interval.PerfectFifth, Interval.MinorSeventh);
+    public static ChordFormula MinorMaj7 { get; } = new("MinMaj7", Interval.MinorThird, Interval.PerfectFifth, Interval.MajorSeventh);
+    public static ChordFormula Augmented7 { get; } = new("Aug7", Interval.MajorThird, Interval.AugmentedFifth, Interval.MajorSeventh);
 
     private ChordFormula(string abreviatedName, params Interval[] intervals)
     {
@@ -39,7 +37,7 @@ public class ChordFormula
             throw new ArgumentOutOfRangeException(nameof(inversion), inversion, "Inversion number is invalid");
         }
 
-        foreach (var formula in Formulas)
+        foreach (var formula in AllFormulas)
         {
             if(intervals.Count() != formula.Intervals.Count)
             {
@@ -83,7 +81,22 @@ public class ChordFormula
         return true;
     }
 
-    private static IReadOnlyList<ChordFormula> Formulas { get; } = new[]
+    public static IEnumerable<ChordFormula> GetFormulasForScale(Scale scale, Pitch chordRoot)
+    {
+        var root = new Note(chordRoot, Octave.OneLine);
+
+        foreach (var function in AllFormulas)
+        {
+            var allPitchesAreContainedInScale = function.Intervals.All(a => scale.Pitches.Contains(root.TransposeUp(a).BasePitch));
+
+            if (allPitchesAreContainedInScale)
+            {
+                yield return function;
+            }
+        }
+    }
+
+    public static IReadOnlyList<ChordFormula> AllFormulas { get; } = new[]
     {
         Major,
         Augmented,
@@ -103,19 +116,4 @@ public class ChordFormula
         MinorMaj7,
         Augmented7
     };
-
-    public static IEnumerable<ChordFormula> GetFormulasForScale(Scale scale, Pitch chordRoot)
-    {
-        var root = new Note(chordRoot, Octave.OneLine);
-
-        foreach (var function in Formulas)
-        {
-            var allPitchesAreContainedInScale = function.Intervals.All(a => scale.Pitches.Contains(root.TransposeUp(a).BasePitch));
-
-            if (allPitchesAreContainedInScale)
-            {
-                yield return function;
-            }
-        }
-    }
 }

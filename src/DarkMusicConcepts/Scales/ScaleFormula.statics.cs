@@ -1,7 +1,7 @@
 ﻿namespace DarkMusicConcepts.Scales;
 public partial class ScaleFormula
 {
-    public static readonly ScaleFormula Ionian = new("Ionian",
+    public static ScaleFormula Ionian { get; } = new("Ionian",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -11,7 +11,7 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
-    public static readonly ScaleFormula Dorian = new("Dorian",
+    public static ScaleFormula Dorian { get; } = new("Dorian",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
@@ -21,7 +21,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula Phrygian = new("Phrygian",
+    public static ScaleFormula Phrygian { get; } = new("Phrygian",
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
@@ -31,7 +31,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula Lydian = new("Lydian",
+    public static ScaleFormula Lydian { get; } = new("Lydian",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -41,7 +41,7 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
-    public static readonly ScaleFormula Mixolydian = new("Mixolydian",
+    public static ScaleFormula Mixolydian { get; } = new("Mixolydian",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -51,7 +51,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula Aolian = new("Aolian",
+    public static ScaleFormula Aolian { get; } = new("Aolian",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
@@ -61,7 +61,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula Locrian = new("Locrian",
+    public static ScaleFormula Locrian { get; } = new("Locrian",
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
@@ -71,7 +71,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula MajorPentatonic = new("Major pentatonic",
+    public static ScaleFormula MajorPentatonic { get; } = new("Major pentatonic",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -79,7 +79,7 @@ public partial class ScaleFormula
         Interval.MajorSixth
     );
 
-    public static readonly ScaleFormula MinorPentatonic = new("Minor pentatonic",
+    public static ScaleFormula MinorPentatonic { get; } = new("Minor pentatonic",
         Interval.Unisson,
         Interval.MinorThird,
         Interval.PerfectFourth,
@@ -87,7 +87,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula Blues = new("Blues",
+    public static ScaleFormula Blues { get; } = new("Blues",
         Interval.Unisson,
         Interval.MinorThird,
         Interval.PerfectFourth,
@@ -96,7 +96,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula HarmonicMinor = new("Harmonic minor",
+    public static ScaleFormula HarmonicMinor { get; } = new("Harmonic minor",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
@@ -106,7 +106,7 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
-    public static readonly ScaleFormula DoubleHarmonicMinor = new("Double Harmonic minor",
+    public static ScaleFormula DoubleHarmonicMinor { get; } = new("Double Harmonic minor",
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MajorThird,
@@ -116,7 +116,7 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
-    public static readonly ScaleFormula MelodicMinor = new("Melodic minor",
+    public static ScaleFormula MelodicMinor { get; } = new("Melodic minor",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
@@ -126,7 +126,7 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
-    public static readonly ScaleFormula Dorianb2 = new("Dorian b2",
+    public static ScaleFormula Dorianb2 { get; } = new("Dorian b2",
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
@@ -136,7 +136,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula LydianAugmented = new("Lydian augmented",
+    public static ScaleFormula LydianAugmented { get; } = new("Lydian augmented",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -146,7 +146,7 @@ public partial class ScaleFormula
         Interval.MajorSeventh
     );
 
-    public static readonly ScaleFormula LydianDominant = new("Lydian dominant",
+    public static ScaleFormula LydianDominant { get; } = new("Lydian dominant",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -156,7 +156,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula PhrygianDominant = new("Phrygian dominant",
+    public static ScaleFormula PhrygianDominant { get; } = new("Phrygian dominant",
        Interval.Unisson,
        Interval.MinorSecond,
        Interval.MajorThird,
@@ -166,7 +166,7 @@ public partial class ScaleFormula
        Interval.MinorSeventh
    );
 
-    public static readonly ScaleFormula Mixolydianb6 = new("Mixolydian b6",
+    public static ScaleFormula Mixolydianb6 { get; } = new("Mixolydian b6",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,
@@ -176,7 +176,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula LocrianSharp2 = new("Locrian #2",
+    public static ScaleFormula LocrianSharp2 { get; } = new("Locrian #2",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MinorThird,
@@ -186,7 +186,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula AlteredDominant = new("Altered dominant",
+    public static ScaleFormula AlteredDominant { get; } = new("Altered dominant",
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.AugmentedSecond,
@@ -196,7 +196,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula HalfWholeDiminished = new("Half whole diminished",
+    public static ScaleFormula HalfWholeDiminished { get; } = new("Half whole diminished",
         Interval.Unisson,
         Interval.MinorSecond,
         Interval.MinorThird,
@@ -207,7 +207,7 @@ public partial class ScaleFormula
         Interval.MinorSeventh
     );
 
-    public static readonly ScaleFormula WholeTone = new("Whole tone",
+    public static ScaleFormula WholeTone { get; } = new("Whole tone",
         Interval.Unisson,
         Interval.MajorSecond,
         Interval.MajorThird,

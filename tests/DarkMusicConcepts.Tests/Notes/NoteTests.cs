@@ -1,3 +1,4 @@
+using DarkMusicConcepts.Tests;
 using DarkMusicConcepts.Units;
 using FluentAssertions;
 using System.Reflection;
@@ -352,12 +353,8 @@ public class NoteTests
     [Fact]
     public void AllNotes_ShouldActuallyContainAllTheNotes()
     {
-        var foundNotes = typeof(Note)
-            .GetProperties(BindingFlags.Public | BindingFlags.Static)
-            .Where(x => x.PropertyType == typeof(Note))
-            .Select(x => x.GetValue(null))
-            .Cast<Note>();
-
-        Note.AllNotes.Count.Should().Be(foundNotes.Count());
+        var found = ReflectionUtils.GetPublicStaticProperties<Note, Note>();
+        Note.AllNotes.Count.Should().Be(found.Count());
+        Note.AllNotes.Should().Contain(found);
     }
 }

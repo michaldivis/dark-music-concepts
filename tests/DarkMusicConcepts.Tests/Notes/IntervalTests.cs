@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using DarkMusicConcepts.Tests;
+using FluentAssertions;
 
 namespace DarkMusicConcepts.Notes.Tests;
 
@@ -142,4 +143,12 @@ public class IntervalTests
     }
 
     #endregion
+
+    [Fact]
+    public void AllIntervals_ShouldActuallyContainAllTheIntervals()
+    {
+        var found = ReflectionUtils.GetPublicStaticProperties<Interval, Interval>();
+        Interval.AllIntervals.Count.Should().Be(found.Count());
+        Interval.AllIntervals.Should().Contain(found);
+    }
 }

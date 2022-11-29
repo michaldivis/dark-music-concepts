@@ -1,4 +1,5 @@
 ﻿using DarkMusicConcepts.Notes;
+using DarkMusicConcepts.Tests;
 using FluentAssertions;
 
 namespace DarkMusicConcepts.Scales.Tests;
@@ -33,6 +34,14 @@ public class ScaleFormulaTests
             Pitch.F,
             Pitch.G
         });
+    }
+
+    [Fact]
+    public void AllScaleFormulas_ShouldActuallyContainAllTheScaleFormulas()
+    {
+        var found = ReflectionUtils.GetPublicStaticProperties<ScaleFormula, ScaleFormula>();
+        ScaleFormula.AllScaleFormulas.Count.Should().Be(found.Count());
+        ScaleFormula.AllScaleFormulas.Should().Contain(found);
     }
 
     public static IEnumerable<object[]> AllScaleFormulasAndRoots => GetAllScaleFormulasAndRoots();
