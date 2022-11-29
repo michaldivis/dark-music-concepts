@@ -54,9 +54,10 @@ public class Chord
 
     public Chord Invert()
     {
-        var invertedNotes = Notes.Skip(1).ToList();
-
+        var invertedNotes = new List<Note>();
+        invertedNotes.AddRange(Notes.Skip(1));
         invertedNotes.Add(Notes[0].TransposeUp(Interval.PerfectOctave));
+        invertedNotes.Sort();
 
         if(Inversion >= invertedNotes.Count - 1)
         {
