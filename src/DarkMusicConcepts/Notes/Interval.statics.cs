@@ -33,9 +33,13 @@ public partial class Interval
     public static Interval PerfectEleventh { get; } = new(17, "Perfect 11th", Accident.None);
     public static Interval AugmentedEleventh { get; } = new(18, "Augmented 11th", Accident.Sharp);
 
+    public static Interval PerfectTwelfth { get; } = new(19, "Perfect 12th", Accident.None);
+
     public static Interval MinorThirteenth { get; } = new(20, "Minor 13th", Accident.Flat);
     public static Interval MajorThirteenth { get; } = new(21, "Major 13th", Accident.None);
     public static Interval AugmentedThirteenth { get; } = new(22, "Augmented 13th", Accident.Sharp);
+
+    public static Interval DoubleOctave { get; } = new(24, "Double Octave", Accident.None);
 
     public static IReadOnlyList<Interval> AllIntervals { get; } = new[]
     {
@@ -61,8 +65,10 @@ public partial class Interval
         DiminishedEleventh,
         PerfectEleventh,
         AugmentedEleventh,
+        PerfectTwelfth,
         MinorThirteenth,
         MajorThirteenth,
-        AugmentedThirteenth
+        AugmentedThirteenth,
+        DoubleOctave
     };
 }

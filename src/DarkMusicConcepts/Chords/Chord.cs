@@ -1,16 +1,42 @@
 ﻿using DarkMusicConcepts.Utils;
 
 namespace DarkMusicConcepts.Chords;
+/// <summary>
+/// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
+/// </summary>
 public class Chord
 {
     private readonly List<ChordNote> _chordNotes = new();
     private readonly Note _rootBeforeInversion;
 
+    /// <summary>
+    /// The formula used to created the chord
+    /// </summary>
     public ChordFormula Formula { get; }
+
+    /// <summary>
+    /// The inversion. This will be 0 if the chord hasn't been inverted, or greater than 0 if it has.
+    /// </summary>
     public int Inversion { get; }
+
+    /// <summary>
+    /// The name of the chord containing the note name and number + the type/quality
+    /// </summary>
     public string Name { get; }
+
+    /// <summary>
+    /// The root note of the chord
+    /// </summary>
     public Note Bass { get; }
+
+    /// <summary>
+    /// The leading (highest) note of the chord
+    /// </summary>
     public Note Lead { get; }
+
+    /// <summary>
+    /// All the notes contained in the chord
+    /// </summary>
     public IReadOnlyList<Note> Notes { get; }
 
     private Chord(IReadOnlyList<Note> notes, Note rootBeforeInversion, ChordFormula chordFormula, int inversion)
@@ -52,6 +78,10 @@ public class Chord
         return new Chord(notes, root, formula, 0);
     }
 
+    /// <summary>
+    /// Perform a chord inversion 
+    /// </summary>
+    /// <returns>Returns the next inversion of the chord, or if the maximum number of inversions has been reached, returns the base chord but an octave up</returns>
     public Chord Invert()
     {
         var invertedNotes = new List<Note>();
