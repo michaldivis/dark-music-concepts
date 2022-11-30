@@ -4,13 +4,13 @@ using FluentAssertions;
 
 namespace DarkMusicConcepts.Notes.Tests;
 
-public class ChordFormulaTests
+public class ChordFormulasTests
 {
     [Fact]
-    public void AllFormulas_ShouldActuallyContainAllTheFormulas()
+    public void All_ShouldActuallyContainAllTheFormulas()
     {
-        var found = ReflectionUtils.GetPublicStaticProperties<ChordFormula, ChordFormula>();
-        ChordFormula.AllFormulas.Count.Should().Be(found.Count());
-        ChordFormula.AllFormulas.Should().Contain(found);
+        var found = ReflectionUtils.GetPublicStaticProperties<ChordFormula>(typeof(ChordFormulas));
+        ChordFormulas.All.Count.Should().Be(found.Count());
+        ChordFormulas.All.Should().Contain(found);
     }
 }

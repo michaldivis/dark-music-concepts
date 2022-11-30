@@ -3,9 +3,9 @@
 namespace DarkMusicConcepts.Tests;
 internal static class ReflectionUtils
 {
-    public static IEnumerable<TProperty> GetPublicStaticProperties<TParent, TProperty>()
+    public static IEnumerable<TProperty> GetPublicStaticProperties<TProperty>(Type containingType)
     {
-        var foundItems = typeof(TParent)
+        var foundItems = containingType
             .GetProperties(BindingFlags.Public | BindingFlags.Static)
             .Where(x => x.PropertyType == typeof(TProperty))
             .Select(x => x.GetValue(null))

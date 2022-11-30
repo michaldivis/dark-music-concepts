@@ -30,7 +30,7 @@ public class NoteUtilsTests
     {
         foreach (var notePitch in Enum.GetValues<Pitch>())
         {
-            foreach (var interval in Interval.AllIntervals)
+            foreach (var interval in Intervals.All)
             {
                 _ = NoteUtils.TransposePitch(notePitch, interval);
             }

@@ -49,7 +49,7 @@ public class Chord
 
         var root = notes[0];
 
-        _chordNotes.Add(new ChordNote(root, ChordFunction.Root));
+        _chordNotes.Add(new ChordNote(root, ChordFunctions.Root));
 
         foreach (var note in notes)
         {
@@ -86,12 +86,12 @@ public class Chord
     {
         var invertedNotes = new List<Note>();
         invertedNotes.AddRange(Notes.Skip(1));
-        invertedNotes.Add(Notes[0].TransposeUp(Interval.PerfectOctave));
+        invertedNotes.Add(Notes[0].TransposeUp(Intervals.PerfectOctave));
         invertedNotes.Sort();
 
         if(Inversion >= invertedNotes.Count - 1)
         {
-            return new Chord(invertedNotes, _rootBeforeInversion.TransposeUp(Interval.PerfectOctave), Formula, 0);
+            return new Chord(invertedNotes, _rootBeforeInversion.TransposeUp(Intervals.PerfectOctave), Formula, 0);
         }
 
         return new Chord(invertedNotes, _rootBeforeInversion, Formula, Inversion + 1);   

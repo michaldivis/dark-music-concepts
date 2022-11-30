@@ -1,12 +1,12 @@
 ﻿namespace DarkMusicConcepts.Scales;
 
-public partial class ScaleFormula
+public class ScaleFormula
 {
     private readonly Interval[] _intervals;
 
     public string Name { get; }
 
-    private ScaleFormula(string name, params Interval[] intervals)
+    internal ScaleFormula(string name, params Interval[] intervals)
     {
         Name = name;
         _intervals = intervals;

@@ -1,5 +1,4 @@
 ﻿using DarkMusicConcepts.Notes;
-using DarkMusicConcepts.Tests;
 using FluentAssertions;
 
 namespace DarkMusicConcepts.Scales.Tests;
@@ -15,7 +14,7 @@ public class ScaleFormulaTests
     [Fact]
     public void CreateForRoot_ShouldCreateAValidScale()
     {
-        var aPhrygian = ScaleFormula.Phrygian.CreateForRoot(Pitch.A);
+        var aPhrygian = ScaleFormulas.Phrygian.CreateForRoot(Pitch.A);
 
         aPhrygian.I.Should().Be(Pitch.A);
         aPhrygian.II.Should().Be(Pitch.ASharpOrBFlat);
@@ -36,19 +35,11 @@ public class ScaleFormulaTests
         });
     }
 
-    [Fact]
-    public void AllScaleFormulas_ShouldActuallyContainAllTheScaleFormulas()
-    {
-        var found = ReflectionUtils.GetPublicStaticProperties<ScaleFormula, ScaleFormula>();
-        ScaleFormula.AllScaleFormulas.Count.Should().Be(found.Count());
-        ScaleFormula.AllScaleFormulas.Should().Contain(found);
-    }
-
     public static IEnumerable<object[]> AllScaleFormulasAndRoots => GetAllScaleFormulasAndRoots();
 
     private static IEnumerable<object[]> GetAllScaleFormulasAndRoots()
     {
-        foreach (var scaleFormula in ScaleFormula.AllScaleFormulas)
+        foreach (var scaleFormula in ScaleFormulas.All)
         {
             foreach (var root in Enum.GetValues<Pitch>())
             {

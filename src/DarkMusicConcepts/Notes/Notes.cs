@@ -1,5 +1,5 @@
 ﻿namespace DarkMusicConcepts.Notes;
-public partial class Note
+public static class Notes
 {
     public static Note CMinus1 { get; } = new(Pitch.C, Octave.SubSubContra);
     public static Note CSharpOrDFlatMinus1 { get; } = new(Pitch.CSharpOrDFlat, Octave.SubSubContra);
@@ -134,7 +134,7 @@ public partial class Note
     public static Note ASharpOrBFlat9 { get; } = new(Pitch.ASharpOrBFlat, Octave.SixLine);
     public static Note B9 { get; } = new(Pitch.B, Octave.SixLine);
 
-    public static List<Note> AllNotes { get; } = new()
+    public static List<Note> All { get; } = new()
     {
         CMinus1,
         CSharpOrDFlatMinus1,

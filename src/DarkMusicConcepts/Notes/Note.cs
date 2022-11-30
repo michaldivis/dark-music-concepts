@@ -3,7 +3,7 @@
 /// <summary>
 /// In music, a note is a symbol denoting a musical sound. In English usage, a note is also the sound itself. Notes can represent the pitch and duration of a sound in musical notation. A note can also represent a pitch class.
 /// </summary>
-public partial class Note : IEquatable<Note>, IComparable<Note>
+public class Note : IEquatable<Note>, IComparable<Note>
 {
     private const int MidiMiddleCNumber = 60;
     private const double A4Frequency = 440.0;
@@ -82,7 +82,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
     /// <returns><see langword="true"/> if found</returns>
     public static bool TryFindByMidiNumber(MidiNumber midiNumber, out Note? note)
     {
-        var found = AllNotes.FirstOrDefault(a => a.MidiNumber == midiNumber);
+        var found = Notes.All.FirstOrDefault(a => a.MidiNumber == midiNumber);
 
         if (found is null)
         {
@@ -121,7 +121,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
     /// <returns><see langword="true"/> if found</returns>
     public static bool TryFindByFrequency(Frequency frequency, out Note? note, double precision = 0.01)
     {
-        var found = AllNotes.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
+        var found = Notes.All.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
 
         if (found is null)
         {
@@ -228,7 +228,7 @@ public partial class Note : IEquatable<Note>, IComparable<Note>
 
     private static bool TryFindByAbsolutePitch(int pitch, out Note? note)
     {
-        var found = AllNotes.FirstOrDefault(a => a.AbsolutePitch == pitch);
+        var found = Notes.All.FirstOrDefault(a => a.AbsolutePitch == pitch);
 
         if (found is null)
         {

@@ -3,7 +3,7 @@
 /// <summary>
 /// In music theory, an interval is a difference in pitch between two sounds. An interval may be described as horizontal, linear, or melodic if it refers to successively sounding tones, such as two adjacent pitches in a melody, and vertical or harmonic if it pertains to simultaneously sounding tones, such as in a chord.
 /// </summary>
-public partial class Interval : IEquatable<Interval>, IComparable<Interval>
+public class Interval : IEquatable<Interval>, IComparable<Interval>
 {
     public int Distance { get; }
 
@@ -11,7 +11,7 @@ public partial class Interval : IEquatable<Interval>, IComparable<Interval>
 
     public Accident Accident { get; }
 
-    private Interval(int distance, string name, Accident accident)
+    internal Interval(int distance, string name, Accident accident)
     {
         Distance = distance;
         Name = name;
@@ -21,7 +21,7 @@ public partial class Interval : IEquatable<Interval>, IComparable<Interval>
     public static Interval CreateIntervalFromDistance(int distance)
     {
         var safeDistance = GetDistanceWithinOneOctave(distance);
-        return AllIntervals.First(interval => interval.Distance == safeDistance);
+        return Intervals.All.First(interval => interval.Distance == safeDistance);
     }
 
     private static int GetDistanceWithinOneOctave(int distance)

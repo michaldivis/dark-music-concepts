@@ -1,5 +1,4 @@
-﻿using DarkMusicConcepts.Tests;
-using FluentAssertions;
+﻿using FluentAssertions;
 
 namespace DarkMusicConcepts.Notes.Tests;
 
@@ -11,9 +10,9 @@ public class IntervalTests
     public void Equals_ShouldWork()
     {
         Interval nullItem = null!;
-        var item1 = Interval.MinorSecond;
-        var item2 = Interval.MinorSecond;
-        var item3 = Interval.MajorThird;
+        var item1 = Intervals.MinorSecond;
+        var item2 = Intervals.MinorSecond;
+        var item3 = Intervals.MajorThird;
 
         (item1.Equals(item2)).Should().BeTrue();
         (item2.Equals(item1)).Should().BeTrue();
@@ -26,9 +25,9 @@ public class IntervalTests
     public void EqualOperator_ShouldWork()
     {
         Interval nullItem = null!;
-        var item1 = Interval.MinorSecond;
-        var item2 = Interval.MinorSecond;
-        var item3 = Interval.MajorThird;
+        var item1 = Intervals.MinorSecond;
+        var item2 = Intervals.MinorSecond;
+        var item3 = Intervals.MajorThird;
 
         (item1 == item2).Should().BeTrue();
         (item2 == item1).Should().BeTrue();
@@ -42,9 +41,9 @@ public class IntervalTests
     public void NotEqualOperator_ShouldWork()
     {
         Interval nullItem = null!;
-        var item1 = Interval.MinorSecond;
-        var item2 = Interval.MinorSecond;
-        var item3 = Interval.MajorThird;
+        var item1 = Intervals.MinorSecond;
+        var item2 = Intervals.MinorSecond;
+        var item3 = Intervals.MajorThird;
 
         (item1 != item2).Should().BeFalse();
         (item2 != item1).Should().BeFalse();
@@ -61,12 +60,12 @@ public class IntervalTests
     [Fact]
     public void CompareTo_ShouldWork()
     {
-        var normal = Interval.PerfectFifth;
+        var normal = Intervals.PerfectFifth;
 
         Interval nullItem = null!;
-        var little = Interval.MajorSecond;
-        var alsoNormal = Interval.PerfectFifth;
-        var large = Interval.MinorSeventh;
+        var little = Intervals.MajorSecond;
+        var alsoNormal = Intervals.PerfectFifth;
+        var large = Intervals.MinorSeventh;
 
         normal.CompareTo(nullItem).Should().Be(1);
         normal.CompareTo(little).Should().Be(1);
@@ -77,12 +76,12 @@ public class IntervalTests
     [Fact]
     public void GreaterThanOperator_ShouldWork()
     {
-        var normal = Interval.PerfectFifth;
+        var normal = Intervals.PerfectFifth;
 
         Interval nullItem = null!;
-        var little = Interval.MajorSecond;
-        var alsoNormal = Interval.PerfectFifth;
-        var large = Interval.MinorSeventh;
+        var little = Intervals.MajorSecond;
+        var alsoNormal = Intervals.PerfectFifth;
+        var large = Intervals.MinorSeventh;
 
         (normal > nullItem).Should().BeTrue();
         (normal > little).Should().BeTrue();
@@ -94,12 +93,12 @@ public class IntervalTests
     [Fact]
     public void GreaterThanOrEqualOperator_ShouldWork()
     {
-        var normal = Interval.PerfectFifth;
+        var normal = Intervals.PerfectFifth;
 
         Interval nullItem = null!;
-        var little = Interval.MajorSecond;
-        var alsoNormal = Interval.PerfectFifth;
-        var large = Interval.MinorSeventh;
+        var little = Intervals.MajorSecond;
+        var alsoNormal = Intervals.PerfectFifth;
+        var large = Intervals.MinorSeventh;
 
         (normal >= nullItem).Should().BeTrue();
         (normal >= little).Should().BeTrue();
@@ -111,12 +110,12 @@ public class IntervalTests
     [Fact]
     public void SmallerThanOperator_ShouldWork()
     {
-        var normal = Interval.PerfectFifth;
+        var normal = Intervals.PerfectFifth;
 
         Interval nullItem = null!;
-        var little = Interval.MajorSecond;
-        var alsoNormal = Interval.PerfectFifth;
-        var large = Interval.MinorSeventh;
+        var little = Intervals.MajorSecond;
+        var alsoNormal = Intervals.PerfectFifth;
+        var large = Intervals.MinorSeventh;
 
         (normal < nullItem).Should().BeFalse();
         (normal < little).Should().BeFalse();
@@ -128,12 +127,12 @@ public class IntervalTests
     [Fact]
     public void SmallerThanOrEqualOperator_ShouldWork()
     {
-        var normal = Interval.PerfectFifth;
+        var normal = Intervals.PerfectFifth;
 
         Interval nullItem = null!;
-        var little = Interval.MajorSecond;
-        var alsoNormal = Interval.PerfectFifth;
-        var large = Interval.MinorSeventh;
+        var little = Intervals.MajorSecond;
+        var alsoNormal = Intervals.PerfectFifth;
+        var large = Intervals.MinorSeventh;
 
         (normal <= nullItem).Should().BeFalse();
         (normal <= little).Should().BeFalse();
@@ -143,12 +142,4 @@ public class IntervalTests
     }
 
     #endregion
-
-    [Fact]
-    public void AllIntervals_ShouldActuallyContainAllTheIntervals()
-    {
-        var found = ReflectionUtils.GetPublicStaticProperties<Interval, Interval>();
-        Interval.AllIntervals.Count.Should().Be(found.Count());
-        Interval.AllIntervals.Should().Contain(found);
-    }
 }

@@ -1,5 +1,5 @@
 ﻿namespace DarkMusicConcepts.Notes;
-public partial class Interval
+public static class Intervals
 {
     public static Interval Unisson { get; } = new(0, "Unisson", Accident.None);
 
@@ -41,7 +41,7 @@ public partial class Interval
 
     public static Interval DoubleOctave { get; } = new(24, "Double Octave", Accident.None);
 
-    public static IReadOnlyList<Interval> AllIntervals { get; } = new[]
+    public static IReadOnlyList<Interval> All { get; } = new[]
     {
         Unisson,
         MinorSecond,
