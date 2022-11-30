@@ -6,7 +6,7 @@ internal class NotesDemo : Demo
 {
     public override void Run()
     {
-        PrintHeader("Note overview");
+        PrintHeader("Notes");
 
         var note = new Note(Pitch.E, Octave.Great);
 
@@ -15,32 +15,23 @@ internal class NotesDemo : Demo
         Print(note.Frequency);
         Print(note.MidiNumber);
 
-        PrintHeader("Note creation");
-
         PrintSubHeader("Get note by name");
-
-        var a1 = Notes.A1;
 
         Print(Notes.A1);
 
         PrintSubHeader("Find note by frequency");
 
-        var e2 = Note.FindByFrequency(Frequency.From(82.40));
-        var foundE2 = Note.TryFindByFrequency(Frequency.From(82.40), out var alsoE2);
-
         Print(Note.FindByFrequency(Frequency.From(82.40)));
-        Print(Note.TryFindByFrequency(Frequency.From(82.40), out var alsoAlsoE2));
-        Print(alsoAlsoE2);
+        Print(Note.TryFindByFrequency(Frequency.From(82.40), out var alsoE2));
+        Print(alsoE2);
 
         PrintSubHeader("Find note by MIDI number");
-
-        var f2 = Note.FindByMidiNumber(MidiNumber.From(41));
 
         Print(Note.FindByMidiNumber(MidiNumber.From(41)));
         Print(Note.TryFindByMidiNumber(MidiNumber.From(41), out var alsoF2));
         Print(alsoF2);
 
-        PrintHeader("Note comparison");
+        PrintSubHeader("Note comparison");
 
         var a4 = new Note(Pitch.A, Octave.OneLine);
         var alsoA4 = new Note(Pitch.A, Octave.OneLine);

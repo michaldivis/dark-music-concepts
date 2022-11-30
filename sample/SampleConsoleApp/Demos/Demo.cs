@@ -1,8 +1,6 @@
-﻿using Colorful;
-using System.Drawing;
+﻿using Spectre.Console;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Console = Colorful.Console;
 
 namespace SampleConsoleApp.Demos;
 internal abstract class Demo
@@ -11,25 +9,23 @@ internal abstract class Demo
 
     protected void PrintHeader(string headerText)
     {
-        Console.WriteLine();
-        Console.WriteLine($"*** {headerText.ToUpper()} ***", Color.Gray);
-        Console.WriteLine();
+        AnsiConsole.Write(new FigletText(headerText.ToUpper()));
     }
 
     protected void PrintSubHeader(string subHeaderText)
     {
-        Console.WriteLine($"--- {subHeaderText}", Color.Gray);
+        var pad = new Padder(
+            new Text(subHeaderText, new Style(decoration: Decoration.Bold)))
+            .Padding(2, 1, 0, 1);
+        AnsiConsole.Write(pad);
     }
 
     protected void Print(object? expression, [CallerArgumentExpression("expression")] string expressionText = null!)
     {
-        var parts = new Formatter[]
-        {
-        new Formatter(expressionText, Color.LightGreen),
-        new Formatter(expression, Color.White)
-        };
-
-        Console.WriteLineFormatted("{0} => {1}", Color.LightGray, parts);
+        var pad = new Padder(
+            new Markup($"[green]{expressionText}[/] => {expression}"))
+            .Padding(4, 0, 0, 0);
+        AnsiConsole.Write(pad);
     }
 
     protected string StrigifyCollection<T>(IEnumerable<T> items)
