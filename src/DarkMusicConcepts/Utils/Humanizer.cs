@@ -26,4 +26,15 @@ internal static class Humanizer
             _ => num + "th",
         };
     }
+
+    public static string Humanize(Accident accident)
+    {
+        return accident switch
+        {
+            Accident.Flat => "b",
+            Accident.None => "",
+            Accident.Sharp => "#",
+            _ => throw new NotImplementedException()
+        };
+    }
 }
