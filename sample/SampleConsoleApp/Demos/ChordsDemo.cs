@@ -43,7 +43,7 @@ internal class ChordsDemo : Demo
 
         var random = new Random(123);
         var chordPatternGenerator = new ChordPatternGenerator(random);
-        var randomChords = chordPatternGenerator.CreateRandomChords(6, ScaleFormulas.Phrygian.CreateForRoot(Pitch.G), Octave.Great);
+        var randomChords = chordPatternGenerator.CreateRandomChords(6, ScaleFormulas.Phrygian.Create(Pitch.G), Octave.Great);
         var strigifiedRandomChords = StrigifyCollection(randomChords);
         Print(strigifiedRandomChords);
     }

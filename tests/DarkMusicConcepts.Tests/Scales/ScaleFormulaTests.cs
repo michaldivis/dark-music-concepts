@@ -6,15 +6,15 @@ public class ScaleFormulaTests
 {
     [Theory]
     [MemberData(nameof(AllScaleFormulasAndRoots))]
-    public void CreateForRoot_ShouldWorkForAllScalesAndRoots(ScaleFormula scaleFormula, Pitch root)
+    public void Create_ShouldWorkForAllScalesAndRoots(ScaleFormula scaleFormula, Pitch root)
     {
-        _ = scaleFormula.CreateForRoot(root);
+        _ = scaleFormula.Create(root);
     }
 
     [Fact]
-    public void CreateForRoot_ShouldCreateAValidScale()
+    public void Create_ShouldCreateAValidScale()
     {
-        var aPhrygian = ScaleFormulas.Phrygian.CreateForRoot(Pitch.A);
+        var aPhrygian = ScaleFormulas.Phrygian.Create(Pitch.A);
 
         aPhrygian.I.Should().Be(Pitch.A);
         aPhrygian.II.Should().Be(Pitch.ASharpOrBFlat);
