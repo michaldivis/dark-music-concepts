@@ -1,6 +1,4 @@
-﻿using DarkMusicConcepts.Utils;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts.Chords;
 /// <summary>
 /// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
 /// </summary>
@@ -64,11 +62,18 @@ public class Chord
         Lead = notes[notes.Count - 1];
     }
 
+    /// <summary>
+    /// Creates a chord based on an existing formula
+    /// </summary>
+    /// <param name="root">Root note of the chord</param>
+    /// <param name="formula">The existing formula</param>
+    /// <returns>A chord created from the root note and formula</returns>
     public static Chord Create(Note root, ChordFormula formula)
     {
-        var notes = new List<Note>();
-
-        notes.Add(root);
+        var notes = new List<Note>
+        {
+            root
+        };
 
         foreach (var interval in formula.Intervals)
         {
@@ -76,6 +81,16 @@ public class Chord
         }
 
         return new Chord(notes, root, formula, 0);
+    }
+
+    /// <summary>
+    /// Creates a chord definition that can be manipulated to build a custom chord using the <see cref="ChordDefinition.With(ChordFunction, Accident)"/> and <see cref="ChordDefinition.Build"/> methods
+    /// </summary>
+    /// <param name="root">Root note of the chord</param>
+    /// <returns>A chord definition that can be manipulated to build a custom chord</returns>
+    public static ChordDefinition CreateCustom(Note root)
+    {
+        return new ChordDefinition(root);
     }
 
     /// <summary>
