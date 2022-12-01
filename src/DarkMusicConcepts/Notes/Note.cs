@@ -16,7 +16,7 @@ public class Note : IEquatable<Note>, IComparable<Note>
     public Pitch BasePitch { get; }
     public Octave Octave { get; }
 
-    public Note(Pitch basePitch, Octave octave)
+    private Note(Pitch basePitch, Octave octave)
     {
         BasePitch = basePitch;
         Octave = octave;
@@ -25,6 +25,11 @@ public class Note : IEquatable<Note>, IComparable<Note>
         Name = GetName(basePitch, octave);
         Frequency = GetFrequency(AbsolutePitch);
         MidiNumber = GetMidiNumber(AbsolutePitch);
+    }
+
+    public static Note Create(Pitch basePitch, Octave octave)
+    {
+        return new Note(basePitch, octave);
     }
 
     public string Name { get; }

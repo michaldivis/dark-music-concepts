@@ -8,9 +8,9 @@ internal class NotesDemo : Demo
     {
         PrintHeader("Notes");
 
-        var note = new Note(Pitch.E, Octave.Great);
+        var note = Note.Create(Pitch.E, Octave.Great);
 
-        Print(new Note(Pitch.E, Octave.Great));
+        Print(Note.Create(Pitch.E, Octave.Great));
         Print(note.Name);
         Print(note.Frequency);
         Print(note.MidiNumber);
@@ -33,9 +33,9 @@ internal class NotesDemo : Demo
 
         PrintSubHeader("Note comparison");
 
-        var a4 = new Note(Pitch.A, Octave.OneLine);
-        var alsoA4 = new Note(Pitch.A, Octave.OneLine);
-        var b5 = new Note(Pitch.B, Octave.TwoLine);
+        var a4 = Note.Create(Pitch.A, Octave.OneLine);
+        var alsoA4 = Note.Create(Pitch.A, Octave.OneLine);
+        var b5 = Note.Create(Pitch.B, Octave.TwoLine);
 
         Print(a4);
         Print(alsoA4);

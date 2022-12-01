@@ -43,7 +43,7 @@ PM> Install-Package Divis.DarkMusicConcepts.Units
 
 # Notes
 ```csharp
-var note = new Note(Pitch.E, Octave.Great);
+var note = Note.Create(Pitch.E, Octave.Great);
 
 Console.WriteLine($"Details about the note {note.Name}:");
 Console.WriteLine($"Frequency is {note.Frequency}");
@@ -58,7 +58,7 @@ Console.WriteLine($"MIDI number is {note.MidiNumber}");
 Create or find a note
 ```csharp
 //create note
-var c0 = new Note(Pitch.C, Octave.SubContra);
+var c0 = Note.Create(Pitch.C, Octave.SubContra);
 
 //get note by name
 var a1 = Note.A1;
@@ -74,9 +74,9 @@ var foundF2 = Note.TryFindByMidiNumber(41, out var alsoF2);
 
 Compare notes
 ```csharp
-var a4 = new Note(Pitch.A, Octave.OneLine);
-var alsoA4 = new Note(Pitch.A, Octave.OneLine);
-var b5 = new Note(Pitch.B, Octave.TwoLine);
+var a4 = Note.Create(Pitch.A, Octave.OneLine);
+var alsoA4 = Note.Create(Pitch.A, Octave.OneLine);
+var b5 = Note.Create(Pitch.B, Octave.TwoLine);
 
 _ = a4 == alsoA4; //true
 _ = a4 != alsoA4; //false
