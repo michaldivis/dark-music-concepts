@@ -122,11 +122,11 @@ public static class ChordFormulas
 
     #region Guitar oriented chords
     public static ChordFormula TwoNotePowerChord { get; } =
-       new("2Pow", Intervals.PerfectFifth);
+       new("PowTwo", Intervals.PerfectFifth);
     public static ChordFormula ThreeNotePowerChord { get; } =
-       new("3Pow", Intervals.PerfectFifth, Intervals.PerfectOctave);
+       new("PowThree", Intervals.PerfectFifth, Intervals.PerfectOctave);
     public static ChordFormula FourNotePowerChord { get; } =
-       new("4Pow", Intervals.PerfectFifth, Intervals.PerfectOctave, Intervals.PerfectTwelfth);
+       new("PowFour", Intervals.PerfectFifth, Intervals.PerfectOctave, Intervals.PerfectTwelfth);
     public static ChordFormula OctaveChord { get; } =
        new("Oct", Intervals.PerfectOctave);
 

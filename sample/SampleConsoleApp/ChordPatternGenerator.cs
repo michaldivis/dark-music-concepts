@@ -18,7 +18,7 @@ public class ChordPatternGenerator
 
         for (int i = 0; i < amount; i++)
         {
-            var chordRoot = (Pitch)_random.Next(12);
+            var chordRoot = scale.Pitches[_random.Next(scale.Pitches.Count)];
             var availableChordFunctions = ChordFormula.GetFormulasForScale(scale, chordRoot);
             var chordFunction = availableChordFunctions.ElementAt(_random.Next(availableChordFunctions.Count()));
             var root = Note.Create(chordRoot, octave);

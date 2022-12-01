@@ -379,6 +379,6 @@ public class Note : IEquatable<Note>, IComparable<Note>
 
     public override string ToString()
     {
-        return $"{BasePitch}{(int)Octave}";
+        return Name;
     }
 }
