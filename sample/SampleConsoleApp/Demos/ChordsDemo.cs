@@ -14,7 +14,7 @@ internal class ChordsDemo : Demo
         Print(chord.Bass);
         Print(chord.Lead);
         Print(chord.Formula);
-        Print(StrigifyCollection(chord.Notes));
+        PrintCollection(chord.Notes, false);
 
         var chord1stInversion = chord.Invert();
         Print(chord1stInversion);
@@ -44,7 +44,6 @@ internal class ChordsDemo : Demo
         var random = new Random(123456);
         var chordPatternGenerator = new ChordPatternGenerator(random);
         var randomChords = chordPatternGenerator.CreateRandomChords(6, ScaleFormulas.HarmonicMinor.Create(Pitch.C), Octave.Great);
-        var strigifiedRandomChords = StrigifyCollection(randomChords);
-        Print(strigifiedRandomChords);
+        PrintCollection(randomChords, true);
     }
 }

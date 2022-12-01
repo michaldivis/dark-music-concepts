@@ -10,11 +10,9 @@ internal class ScalesDemo : Demo
         PrintHeader("Scales");
 
         var gPhrygian = ScaleFormulas.Phrygian.Create(Pitch.G);
-        var gPhrygianNotes = gPhrygian.Pitches;
-        var gPhrygianFourth = gPhrygian.IV;
 
         Print(gPhrygian);
-        Print(string.Join(", ", gPhrygianNotes));
-        Print(gPhrygianFourth);
+        PrintCollection(gPhrygian.Pitches, false);
+        Print(gPhrygian.IV);
     }
 }

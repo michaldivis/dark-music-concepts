@@ -20,6 +20,17 @@ internal abstract class Demo
         AnsiConsole.Write(pad);
     }
 
+    protected void PrintCollection<T>(IEnumerable<T> items, bool newLine, [CallerArgumentExpression("items")] string expressionText = null!)
+    {
+        var stringified = newLine
+            ? StrigifyCollection(items)
+            : string.Join(", ", items);
+        var pad = new Padder(
+            new Markup($"[green]{expressionText}[/] => {stringified}"))
+            .Padding(4, 0, 0, 0);
+        AnsiConsole.Write(pad);
+    }
+
     protected void Print(object? expression, [CallerArgumentExpression("expression")] string expressionText = null!)
     {
         var pad = new Padder(
@@ -28,7 +39,7 @@ internal abstract class Demo
         AnsiConsole.Write(pad);
     }
 
-    protected string StrigifyCollection<T>(IEnumerable<T> items)
+    private string StrigifyCollection<T>(IEnumerable<T> items)
     {
         var sb = new StringBuilder();
 

@@ -13,5 +13,6 @@ internal class TimeDemo : Demo
         Print(Time.QuarterNote.GetDuration(Bpm.From(155)));
         Print(Time.QuarterNote.Ticks);
         Print(Time.QuarterNote * 3);
+        Print(Time.HalfNoteDotted + Time.Bar - (Time.SixteenthNote * 8));
     }
 }
