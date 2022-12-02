@@ -5,9 +5,9 @@
 /// </summary>
 /// <typeparam name="TValue">The actual value</typeparam>
 /// <typeparam name="TThis">Self</typeparam>
-public abstract class Unit<TValue, TThis> : IComparable<Unit<TValue, TThis>>, IEquatable<Unit<TValue, TThis>>
+public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue, TThis>>, IEquatable<Unit<TValue, TThis>>
     where TThis : Unit<TValue, TThis>, new()
-    where TValue : IComparable<TValue>, IEquatable<TValue>
+    where TValue : IComparable, IComparable<TValue>, IEquatable<TValue>
 {
     protected abstract TValue MinValue { get; }
     protected abstract TValue MaxValue { get; }
@@ -152,6 +152,26 @@ public abstract class Unit<TValue, TThis> : IComparable<Unit<TValue, TThis>>, IE
         }
 
         return a.Value.CompareTo(b.Value);
+    }
+
+    public int CompareTo(object? obj)
+    {
+        if (obj is null)
+        {
+            return 1;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return 0;
+        }
+
+        if (obj is not Unit<TValue, TThis> other)
+        {
+            throw new ArgumentException($"Object must be of type {typeof(TValue).Name}", nameof(obj));
+        }
+
+        return CompareToInteral(this, other);
     }
 
     public int CompareTo(Unit<TValue, TThis>? other)

@@ -73,6 +73,21 @@ public class UnitTests
     #region Equality
 
     [Fact]
+    public void StaticEquals_ShouldWork()
+    {
+        DemoUnit nullItem = null!;
+        var item1 = DemoUnit.From(123456);
+        var item2 = DemoUnit.From(123456);
+        var item3 = DemoUnit.From(456789);
+
+        (DemoUnit.Equals(item1, item2)).Should().BeTrue();
+        (DemoUnit.Equals(item2, item1)).Should().BeTrue();
+
+        (DemoUnit.Equals(item1, item3)).Should().BeFalse();
+        (DemoUnit.Equals(item1, nullItem)).Should().BeFalse();
+    }
+
+    [Fact]
     public void Equals_ShouldWork()
     {
         DemoUnit nullItem = null!;
@@ -137,6 +152,26 @@ public class UnitTests
         normal.CompareTo(little).Should().Be(1);
         normal.CompareTo(alsoNormal).Should().Be(0);
         normal.CompareTo(large).Should().Be(-1);
+    }
+
+    [Fact]
+    public void CompareToObject_ShouldWork()
+    {
+        var normal = DemoUnit.From(123456);
+
+        object nullItem = null!;
+        object anotherType = "I'm not a Demo Unit...";
+        object little = DemoUnit.From(10);
+        object alsoNormal = DemoUnit.From(123456);
+        object large = DemoUnit.From(456789);
+
+        normal.CompareTo(nullItem).Should().Be(1);
+        normal.CompareTo(little).Should().Be(1);
+        normal.CompareTo(alsoNormal).Should().Be(0);
+        normal.CompareTo(large).Should().Be(-1);
+
+        Action act = () => normal.CompareTo(anotherType);
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
