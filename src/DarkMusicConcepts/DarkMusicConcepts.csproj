@@ -7,7 +7,7 @@
   </PropertyGroup>
 
 	<PropertyGroup>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageId>Divis.DarkMusicConcepts</PackageId>
 		<Version>0.0.0-dev</Version>
 		<Authors>michaldivis</Authors>
