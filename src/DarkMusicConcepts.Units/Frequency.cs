@@ -8,11 +8,14 @@
 /// </summary>
 public class Frequency : Unit<double, Frequency>
 {
-    public const double Min = 0;
-    public const double Max = double.MaxValue;
+    public const double MinValue = 0;
+    public const double MaxValue = double.MaxValue;
 
-    protected override double MinValue { get; } = Min;
-    protected override double MaxValue { get; } = Max;
+    public static Frequency Min { get; } = From(MinValue);
+    public static Frequency Max { get; } = From(MaxValue);
+
+    protected override double GetMinValue() => MinValue;
+    protected override double GetMaxValue() => MaxValue;
 
     public override string ToString()
     {

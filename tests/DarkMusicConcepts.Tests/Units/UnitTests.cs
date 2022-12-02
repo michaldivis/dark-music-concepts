@@ -6,11 +6,14 @@ public class UnitTests
 {
     private class DemoUnit : Unit<int, DemoUnit>
     {
-        public const int Min = 0;
-        public const int Max = int.MaxValue;
+        public const int MinValue = 0;
+        public const int MaxValue = int.MaxValue;
 
-        protected override int MinValue { get; } = Min;
-        protected override int MaxValue { get; } = Max;
+        public static DemoUnit Min { get; } = From(MinValue);
+        public static DemoUnit Max { get; } = From(MaxValue);
+
+        protected override int GetMinValue() => MinValue;
+        protected override int GetMaxValue() => MaxValue;
     }
 
     [Fact]

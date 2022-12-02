@@ -6,9 +6,12 @@
 /// </summary>
 public class MidiVelocity : Unit<int, MidiVelocity>
 {
-    public const int Min = 0;
-    public const int Max = 127;
+    public const int MinValue = 0;
+    public const int MaxValue = 127;
 
-    protected override int MinValue { get; } = Min;
-    protected override int MaxValue { get; } = Max;
+    public static MidiVelocity Min { get; } = From(MinValue);
+    public static MidiVelocity Max { get; } = From(MaxValue);
+
+    protected override int GetMinValue() => MinValue;
+    protected override int GetMaxValue() => MaxValue;
 }

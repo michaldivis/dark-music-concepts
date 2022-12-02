@@ -4,11 +4,14 @@
 /// </summary>
 public class Time : Unit<int, Time>
 {
-    public const int Min = 0;
-    public const int Max = int.MaxValue;
+    public const int MinValue = 0;
+    public const int MaxValue = int.MaxValue;
 
-    protected override int MinValue { get; } = Min;
-    protected override int MaxValue { get; } = Max;
+    public static Time Min { get; } = From(MinValue);
+    public static Time Max { get; } = From(MaxValue);
+
+    protected override int GetMinValue() => MinValue;
+    protected override int GetMaxValue() => MaxValue;
 
     private const int TicksPerQuarterNote = 960;
     private const int TicksPerSixteenthNote = TicksPerQuarterNote / 4;

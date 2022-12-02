@@ -66,12 +66,12 @@ public class Note : IEquatable<Note>, IComparable<Note>
         var relativePitchToMiddleC = absolutePitch - middleCPitch;
         var midiNumber = MidiMiddleCNumber + relativePitchToMiddleC;
 
-        if (midiNumber < MidiNumber.Min)
+        if (midiNumber < MidiNumber.MinValue)
         {
             return null;
         }
 
-        if (midiNumber > MidiNumber.Max)
+        if (midiNumber > MidiNumber.MaxValue)
         {
             return null;
         }

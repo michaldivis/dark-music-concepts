@@ -7,13 +7,13 @@ public class TimeTests
     [Fact]
     public void From_ShouldThrow_WhenLessThanMin()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Time.From(Time.Min - 1));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Time.From(Time.MinValue - 1));
     }
 
     [Fact]
     public void TryFrom_ShouldFail_WhenLessThanMin()
     {
-        var success = Time.TryFrom(Time.Min - 1, out var invalidTime);
+        var success = Time.TryFrom(Time.MinValue - 1, out var invalidTime);
         success.Should().Be(false);
         invalidTime.Should().Be(null);
     }

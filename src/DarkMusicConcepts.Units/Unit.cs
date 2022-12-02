@@ -9,14 +9,14 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
     where TThis : Unit<TValue, TThis>, new()
     where TValue : IComparable, IComparable<TValue>, IEquatable<TValue>
 {
-    protected abstract TValue MinValue { get; }
-    protected abstract TValue MaxValue { get; }
+    protected abstract TValue GetMinValue();
+    protected abstract TValue GetMaxValue();
 
     private void Validate()
     {
         if (!IsValidValue(Value))
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {MinValue}-{MaxValue}");
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {GetMinValue()}-{GetMaxValue()}");
         }
     }
 
@@ -32,12 +32,12 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
             return false;
         }
 
-        if (value.CompareTo(MinValue) < 0)
+        if (value.CompareTo(GetMinValue()) < 0)
         {
             return false;
         }
 
-        if (value.CompareTo(MaxValue) > 0)
+        if (value.CompareTo(GetMaxValue()) > 0)
         {
             return false;
         }
