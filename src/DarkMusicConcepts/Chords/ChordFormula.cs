@@ -23,7 +23,7 @@ public class ChordFormula
 
     public static IEnumerable<ChordFormula> GetFormulasForScale(Scale scale, Pitch chordRoot)
     {
-        var root = Note.Create(chordRoot, Octave.OneLine);
+        var root = Note.Create(chordRoot, Octave.Four);
 
         foreach (var function in ChordFormulas.All)
         {

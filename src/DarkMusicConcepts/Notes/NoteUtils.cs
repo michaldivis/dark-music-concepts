@@ -10,7 +10,7 @@ public static class NoteUtils
     /// <returns>Transposed pitch</returns>
     public static Pitch TransposePitch(Pitch pitch, Interval interval)
     {
-        var note = Note.Create(pitch, Octave.OneLine);
+        var note = Note.Create(pitch, Octave.Four);
         var transposedNote = note.TransposeUp(interval);
         return transposedNote.BasePitch;
     }

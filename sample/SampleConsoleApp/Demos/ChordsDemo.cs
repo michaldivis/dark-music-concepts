@@ -42,7 +42,7 @@ internal class ChordsDemo : Demo
         PrintSubHeader("Chords from scale degrees");
 
         var cMajorScale = ScaleFormulas.Ionian.Create(Pitch.C);
-        var octave = Octave.OneLine;
+        var octave = Octave.Four;
         Print(Chord.Create(cMajorScale, octave, ScaleDegree.I));
         Print(Chord.Create(cMajorScale, octave, ScaleDegree.II));
         Print(Chord.Create(cMajorScale, octave, ScaleDegree.III));
@@ -69,7 +69,7 @@ internal class ChordsDemo : Demo
 
         var random = new Random(123456);
         var chordPatternGenerator = new ChordPatternGenerator(random);
-        var randomChords = chordPatternGenerator.CreateRandomChords(6, ScaleFormulas.HarmonicMinor.Create(Pitch.C), Octave.Great);
+        var randomChords = chordPatternGenerator.CreateRandomChords(6, ScaleFormulas.HarmonicMinor.Create(Pitch.C), Octave.Two);
         PrintCollection(randomChords, true);
     }
 }

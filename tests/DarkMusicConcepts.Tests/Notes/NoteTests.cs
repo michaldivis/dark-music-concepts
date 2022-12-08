@@ -9,22 +9,22 @@ public class NoteTests
     public static IEnumerable<object[]> AllNotes => Notes.All.Select(a => new[] { a });
 
     //notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
-    public static IEnumerable<object[]> NotesUpTo8thOctave => Notes.All.Where(a => a.Octave <= Octave.FiveLine).Select(a => new[] { a });
+    public static IEnumerable<object[]> NotesUpTo8thOctave => Notes.All.Where(a => a.Octave <= Octave.Eight).Select(a => new[] { a });
 
     public NoteTests()
     {
         DarkMusicConceptsCore.Configure(new DarkMusicConceptsSettings
         {
-            MidiMiddleCOctave = Octave.OneLine //middle C = C4
+            MidiMiddleCOctave = Octave.Four //middle C = C4
         });
     }
 
     [Theory]
-    [InlineData(Pitch.C, Octave.SubContra, 12)]
-    [InlineData(Pitch.D, Octave.Contra, 26)]
-    [InlineData(Pitch.A, Octave.OneLine, 69)]
-    [InlineData(Pitch.B, Octave.FourLine, 107)]
-    [InlineData(Pitch.G, Octave.SixLine, 127)]
+    [InlineData(Pitch.C, Octave.Zero, 12)]
+    [InlineData(Pitch.D, Octave.One, 26)]
+    [InlineData(Pitch.A, Octave.Four, 69)]
+    [InlineData(Pitch.B, Octave.Seven, 107)]
+    [InlineData(Pitch.G, Octave.Nine, 127)]
     public void MidiNumber_ShouldBeCorrect(Pitch notePitch, Octave octave, int expectedMidiNumber)
     {
         var note = Note.Create(notePitch, octave);
@@ -32,15 +32,15 @@ public class NoteTests
     }
 
     [Theory]
-    [InlineData(Pitch.C, Octave.SubContra, 16.35)]
-    [InlineData(Pitch.G, Octave.SubContra, 24.50)]
-    [InlineData(Pitch.E, Octave.Contra, 41.20)]
-    [InlineData(Pitch.CSharpOrDFlat, Octave.Great, 69.30)]
-    [InlineData(Pitch.F, Octave.Small, 174.61)]
-    [InlineData(Pitch.A, Octave.OneLine, 440.00)]
-    [InlineData(Pitch.E, Octave.TwoLine, 659.25)]
-    [InlineData(Pitch.B, Octave.ThreeLine, 1975.53)]
-    [InlineData(Pitch.A, Octave.FiveLine, 7040.00)]
+    [InlineData(Pitch.C, Octave.Zero, 16.35)]
+    [InlineData(Pitch.G, Octave.Zero, 24.50)]
+    [InlineData(Pitch.E, Octave.One, 41.20)]
+    [InlineData(Pitch.CSharpOrDFlat, Octave.Two, 69.30)]
+    [InlineData(Pitch.F, Octave.Three, 174.61)]
+    [InlineData(Pitch.A, Octave.Four, 440.00)]
+    [InlineData(Pitch.E, Octave.Five, 659.25)]
+    [InlineData(Pitch.B, Octave.Six, 1975.53)]
+    [InlineData(Pitch.A, Octave.Eight, 7040.00)]
     public void Frequency_ShouldBeCorrect(Pitch notePitch, Octave octave, double expectedFrequency)
     {
         var note = Note.Create(notePitch, octave);
@@ -69,7 +69,7 @@ public class NoteTests
     {
         DarkMusicConceptsCore.Configure(new DarkMusicConceptsSettings
         {
-            MidiMiddleCOctave = Octave.Small //middle C = C3
+            MidiMiddleCOctave = Octave.Three //middle C = C3
         });
 
         try
@@ -216,9 +216,9 @@ public class NoteTests
     public void Equals_ShouldWork()
     {
         Note nullItem = null!;
-        var item1 = Note.Create(Pitch.C, Octave.OneLine);
-        var item2 = Note.Create(Pitch.C, Octave.OneLine);
-        var item3 = Note.Create(Pitch.G, Octave.Small);
+        var item1 = Note.Create(Pitch.C, Octave.Four);
+        var item2 = Note.Create(Pitch.C, Octave.Four);
+        var item3 = Note.Create(Pitch.G, Octave.Three);
 
         (item1.Equals(item2)).Should().BeTrue();
         (item2.Equals(item1)).Should().BeTrue();
@@ -231,9 +231,9 @@ public class NoteTests
     public void EqualOperator_ShouldWork()
     {
         Note nullItem = null!;
-        var item1 = Note.Create(Pitch.C, Octave.OneLine);
-        var item2 = Note.Create(Pitch.C, Octave.OneLine);
-        var item3 = Note.Create(Pitch.G, Octave.Small);
+        var item1 = Note.Create(Pitch.C, Octave.Four);
+        var item2 = Note.Create(Pitch.C, Octave.Four);
+        var item3 = Note.Create(Pitch.G, Octave.Three);
 
         (item1 == item2).Should().BeTrue();
         (item2 == item1).Should().BeTrue();
@@ -247,9 +247,9 @@ public class NoteTests
     public void NotEqualOperator_ShouldWork()
     {
         Note nullItem = null!;
-        var item1 = Note.Create(Pitch.C, Octave.OneLine);
-        var item2 = Note.Create(Pitch.C, Octave.OneLine);
-        var item3 = Note.Create(Pitch.G, Octave.Small);
+        var item1 = Note.Create(Pitch.C, Octave.Four);
+        var item2 = Note.Create(Pitch.C, Octave.Four);
+        var item3 = Note.Create(Pitch.G, Octave.Three);
 
         (item1 != item2).Should().BeFalse();
         (item2 != item1).Should().BeFalse();
@@ -266,12 +266,12 @@ public class NoteTests
     [Fact]
     public void CompareTo_ShouldWork()
     {
-        var normal = Note.Create(Pitch.C, Octave.OneLine);
+        var normal = Note.Create(Pitch.C, Octave.Four);
 
         Note nullItem = null!;
-        var little = Note.Create(Pitch.F, Octave.Contra);
-        var alsoNormal = Note.Create(Pitch.C, Octave.OneLine);
-        var large = Note.Create(Pitch.G, Octave.ThreeLine);
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
 
         normal.CompareTo(nullItem).Should().Be(1);
         normal.CompareTo(little).Should().Be(1);
@@ -282,12 +282,12 @@ public class NoteTests
     [Fact]
     public void GreaterThanOperator_ShouldWork()
     {
-        var normal = Note.Create(Pitch.C, Octave.OneLine);
+        var normal = Note.Create(Pitch.C, Octave.Four);
 
         Note nullItem = null!;
-        var little = Note.Create(Pitch.F, Octave.Contra);
-        var alsoNormal = Note.Create(Pitch.C, Octave.OneLine);
-        var large = Note.Create(Pitch.G, Octave.ThreeLine);
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
 
         (normal > nullItem).Should().BeTrue();
         (normal > little).Should().BeTrue();
@@ -299,12 +299,12 @@ public class NoteTests
     [Fact]
     public void GreaterThanOrEqualOperator_ShouldWork()
     {
-        var normal = Note.Create(Pitch.C, Octave.OneLine);
+        var normal = Note.Create(Pitch.C, Octave.Four);
 
         Note nullItem = null!;
-        var little = Note.Create(Pitch.F, Octave.Contra);
-        var alsoNormal = Note.Create(Pitch.C, Octave.OneLine);
-        var large = Note.Create(Pitch.G, Octave.ThreeLine);
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
 
         (normal >= nullItem).Should().BeTrue();
         (normal >= little).Should().BeTrue();
@@ -316,12 +316,12 @@ public class NoteTests
     [Fact]
     public void SmallerThanOperator_ShouldWork()
     {
-        var normal = Note.Create(Pitch.C, Octave.OneLine);
+        var normal = Note.Create(Pitch.C, Octave.Four);
 
         Note nullItem = null!;
-        var little = Note.Create(Pitch.F, Octave.Contra);
-        var alsoNormal = Note.Create(Pitch.C, Octave.OneLine);
-        var large = Note.Create(Pitch.G, Octave.ThreeLine);
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
 
         (normal < nullItem).Should().BeFalse();
         (normal < little).Should().BeFalse();
@@ -333,12 +333,12 @@ public class NoteTests
     [Fact]
     public void SmallerThanOrEqualOperator_ShouldWork()
     {
-        var normal = Note.Create(Pitch.C, Octave.OneLine);
+        var normal = Note.Create(Pitch.C, Octave.Four);
 
         Note nullItem = null!;
-        var little = Note.Create(Pitch.F, Octave.Contra);
-        var alsoNormal = Note.Create(Pitch.C, Octave.OneLine);
-        var large = Note.Create(Pitch.G, Octave.ThreeLine);
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
 
         (normal <= nullItem).Should().BeFalse();
         (normal <= little).Should().BeFalse();

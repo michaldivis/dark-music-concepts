@@ -53,7 +53,7 @@ public class Note : IEquatable<Note>, IComparable<Note>
 
     private static Frequency GetFrequency(int absolutePitch)
     {
-        var a4AbsolutePitch = GetAbsolutePitch(Pitch.A, Octave.OneLine);
+        var a4AbsolutePitch = GetAbsolutePitch(Pitch.A, Octave.Four);
         var relativePitchToA4 = absolutePitch - a4AbsolutePitch;
         var power = (double)relativePitchToA4 / OctaveRange;
         var frequency = Math.Pow(2.0, power) * A4Frequency;
