@@ -44,7 +44,7 @@ public class Interval : IEquatable<Interval>, IComparable<Interval>
             return false;
         }
 
-        return a.Distance.Equals(b.Distance);
+        return a.Distance.Equals(b.Distance) && a.Accident.Equals(b.Accident);
     }
 
     public bool Equals(Interval? other)
