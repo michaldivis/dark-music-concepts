@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using DarkMusicConcepts.Scales;
+using System.Linq;
 
 namespace DarkMusicConcepts.Chords;
 /// <summary>
@@ -131,22 +132,49 @@ public class Chord
 
         var rootPitch = scale._pitches[(int)scaleDegree];
 
-        var notes = new List<Note>();
+        return Create(scale, rootPitch, octave, ScaleStep.II, ScaleStep.II);
+    }
+
+    /// <summary>
+    /// Creates a chord based on an a scale, root pitch and steps.
+    /// <para>The following code should create a chord that starts with the I, then goes two scale degrees up (to III), and the goes another two degrees up (to V). Resulting in a I, III, V chord</para>
+    /// <code>
+    /// var scale = ScaleFormulas.Ionian.CreateForRoot(Pitch.E);
+    /// var chord = Chord.Create(scale, scale.I, Octave.OneLine, ScaleStep.II, ScaleStep.II);</code>
+    /// </summary>
+    /// <param name="scale">Scale</param>
+    /// <param name="octave">Octave to start the root note in</param>
+    /// <param name="scaleSteps">The steps to find the notes (each step is relative to the previous one)</param>
+    /// <returns>A chord created from the scale, root pitch and steps</returns>
+    /// <exception cref="ArgumentOutOfRangeException" />
+    public static Chord Create(Scale scale, Pitch rootPitch, Octave octave, params ScaleStep[] scaleSteps)
+    {
+        if (!scale.Pitches.Contains(rootPitch))
+        {
+            throw new ArgumentException("The root pitch is not in the scale", nameof(rootPitch));
+        }
 
         var root = Note.Create(rootPitch, octave);
-        notes.Add(root);
 
-        foreach (var step in new[] { 2, 4 })
+        var notes = new List<Note>
         {
-            var otherPitch = scale._pitches.GetNext(rootPitch, step);
+            root
+        };
 
-            if (otherPitch < rootPitch)
+        var currentPitch = rootPitch;
+
+        foreach (var scaleStep in scaleSteps)
+        {
+            var otherPitch = scale._pitches.GetNext(currentPitch, (int)scaleStep);
+
+            if (otherPitch < currentPitch)
             {
                 octave += 1;
             }
 
-            var note = Note.Create(otherPitch, octave);
-            notes.Add(note);
+            notes.Add(Note.Create(otherPitch, octave));
+
+            currentPitch = otherPitch;
         }
 
         var intervals = notes
@@ -154,7 +182,9 @@ public class Chord
             .Select(x => root.IntervalWithOther(x))
             .ToArray();
 
-        var formula = new ChordFormula("Custom", intervals);
+        var existingFormula = ChordFormulas.All.FirstOrDefault(x => x.Intervals.SequenceEqual(intervals));
+
+        var formula = existingFormula ?? new ChordFormula("Custom", intervals);
 
         var chord = new Chord(notes, root, formula, 0);
 

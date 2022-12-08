@@ -34,7 +34,7 @@ internal static class Humanizer
             Accident.Flat => "b",
             Accident.None => "",
             Accident.Sharp => "#",
-            _ => throw new NotImplementedException()
+            _ => throw ExhaustiveMatch.Failed(accident)
         };
     }
 }

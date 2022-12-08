@@ -39,17 +39,31 @@ internal class ChordsDemo : Demo
 
         Print(customChord);
 
-        PrintSubHeader("Create chords from scale");
+        PrintSubHeader("Chords from scale degrees");
 
         var cMajorScale = ScaleFormulas.Ionian.Create(Pitch.C);
         var octave = Octave.OneLine;
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Tonic));
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Supertonic));
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Mediant));
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Subdominant));
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Dominant));
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Submediant));
-        Print(Chord.Create(cMajorScale, octave, ScaleDegree.LeadingTone));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.I));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.II));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.III));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.IV));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.V));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.VI));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.VII));
+
+        PrintSubHeader("Chords from scale degrees");
+
+        Comment("The following will create a triad based on the major scale. Starting with the root pitch, then skipping one pitch and taking the next");
+        Print(Chord.Create(cMajorScale, cMajorScale.Root, octave, ScaleStep.II, ScaleStep.II));
+
+        PrintSubHeader("Chords progressions");
+
+        Print(ChordProgressions.Pop.I_IV_V_IV);
+
+        var customChordProgression = ChordProgression.Create(ScaleDegree.I, ScaleDegree.IV, ScaleDegree.V, ScaleDegree.II, ScaleDegree.VI);
+        var customChordProgressionChords = customChordProgression.GetChords(cMajorScale, octave);
+        Print(customChordProgression);
+        PrintCollection(customChordProgressionChords, true);
 
         PrintSubHeader("Chord pattern generation");
 

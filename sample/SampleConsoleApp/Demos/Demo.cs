@@ -39,6 +39,14 @@ internal abstract class Demo
         AnsiConsole.Write(pad);
     }
 
+    protected void Comment(string text)
+    {
+        var pad = new Padder(
+            new Markup($"[italic dim]{text}[/]"))
+            .Padding(4, 0, 0, 0);
+        AnsiConsole.Write(pad);
+    }
+
     private string StrigifyCollection<T>(IEnumerable<T> items)
     {
         var sb = new StringBuilder();
