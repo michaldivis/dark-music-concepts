@@ -1,5 +1,6 @@
 ﻿using DarkMusicConcepts.Scales;
 using System.Linq;
+using Throw;
 
 namespace DarkMusicConcepts.Chords;
 /// <summary>
@@ -125,10 +126,9 @@ public class Chord
     /// <exception cref="ArgumentOutOfRangeException" />
     public static Chord Create(Scale scale, Octave octave, ScaleDegree scaleDegree)
     {
-        if((int)scaleDegree >= scale._pitches.Count)
-        {
-            throw new ArgumentOutOfRangeException(nameof(scaleDegree), scaleDegree, "The scale degree is greater than the number of pitches in the scale");
-        }
+        ((int)scaleDegree)
+            .Throw("The scale degree is greater than the number of pitches in the scale")
+            .IfGreaterThanOrEqualTo(scale._pitches.Count);
 
         var rootPitch = scale._pitches[(int)scaleDegree];
 
@@ -149,10 +149,9 @@ public class Chord
     /// <exception cref="ArgumentOutOfRangeException" />
     public static Chord Create(Scale scale, Pitch rootPitch, Octave octave, params ScaleStep[] scaleSteps)
     {
-        if (!scale.Pitches.Contains(rootPitch))
-        {
-            throw new ArgumentException("The root pitch is not in the scale", nameof(rootPitch));
-        }
+        scale.Pitches
+            .Throw("The root pitch is not in the scale")
+            .IfNotContains(rootPitch);
 
         var root = Note.Create(rootPitch, octave);
 

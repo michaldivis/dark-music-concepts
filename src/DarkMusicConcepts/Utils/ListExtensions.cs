@@ -1,4 +1,7 @@
-﻿namespace DarkMusicConcepts.Utils;
+﻿using System;
+using Throw;
+
+namespace DarkMusicConcepts.Utils;
 
 internal static class ListExtensions
 {
@@ -13,12 +16,11 @@ internal static class ListExtensions
     /// <exception cref="ArgumentException"></exception>
     public static T GetNext<T>(this IList<T> list, T item, int step = 1)
     {
-        var index = list.IndexOf(item);        
+        var index = list.IndexOf(item);
 
-        if (index < 0)
-        {
-            throw new ArgumentException("Item not found in list", nameof(item));
-        }
+        index
+            .Throw("Item not found in list")
+            .IfNegative();
 
         var wantedIndex = index + step;
         var safeIndex = wantedIndex % list.Count;

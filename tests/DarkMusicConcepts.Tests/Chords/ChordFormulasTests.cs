@@ -1,8 +1,6 @@
-using DarkMusicConcepts.Chords;
 using DarkMusicConcepts.Tests;
-using FluentAssertions;
 
-namespace DarkMusicConcepts.Notes.Tests;
+namespace DarkMusicConcepts.Chords;
 
 public class ChordFormulasTests
 {

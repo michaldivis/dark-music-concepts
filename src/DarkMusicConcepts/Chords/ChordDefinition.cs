@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿using Throw;
+
+namespace DarkMusicConcepts.Chords;
 
 /// <summary>
 /// A chord in progress. Defines and builds a <see cref="Chord"/>
@@ -24,11 +26,8 @@ public class ChordDefinition
     {
         var interval = chordFunction.Intervals.FirstOrDefault(x => x.Accident == accident);
 
-        if (interval is null)
-        {
-            //TODO handle interval not found
-            throw new ArgumentException("Interval with this accident not found in the specified chord function");
-        }
+        //TODO handle interval not found
+        interval.ThrowIfNull("Interval with this accident not found in the specified chord function");
 
         _intervals.Add(interval);
 

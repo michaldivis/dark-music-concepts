@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Scales;
+﻿using Throw;
+
+namespace DarkMusicConcepts.Scales;
 
 /// <summary>
 /// In music theory, a scale is any set of musical notes ordered by fundamental frequency or pitch. A scale ordered by increasing pitch is an ascending scale, and a scale ordered by decreasing pitch is a descending scale.
@@ -17,15 +19,9 @@ public class Scale
     /// <exception cref="ArgumentException"></exception>
     internal static Scale Create(Pitch root, ScaleFormula formula, IEnumerable<Pitch> pitches)
     {
-        if(pitches is null)
-        {
-            throw new ArgumentNullException(nameof(pitches), "Pitches cannot be null");
-        }
-
-        if(pitches.Count() < 5)
-        {
-            throw new ArgumentException("At least 5 pitches are required to create a scale", nameof(pitches));
-        }
+        pitches
+            .ThrowIfNull()
+            .IfCountLessThan(5);
 
         return new Scale(root, formula, pitches);
     }

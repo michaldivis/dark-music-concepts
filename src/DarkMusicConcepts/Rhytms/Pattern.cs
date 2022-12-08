@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Rhytms;
+﻿using Throw;
+
+namespace DarkMusicConcepts.Rhytms;
 /// <summary>
 /// Representation of a rhytmical pattern. Each node either is a beat or is empty (true or false)
 /// </summary>
@@ -25,15 +27,9 @@ public class Pattern
     /// <exception cref="ArgumentException" />
     public static Pattern Create(bool[] nodes, Time nodeDuration)
     {
-        if(nodes is null)
-        {
-            throw new ArgumentNullException(nameof(nodes));
-        }
-
-        if(nodes.Length == 0)
-        {
-            throw new ArgumentException("Nodes cannot be empty", nameof(nodes));
-        }
+        nodes
+            .ThrowIfNull()
+            .IfEmpty();
 
         return new Pattern(nodes, nodeDuration);
     }

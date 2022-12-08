@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿using Throw;
+
+namespace DarkMusicConcepts.Chords;
 
 public class ChordProgression
 {
@@ -19,10 +21,9 @@ public class ChordProgression
     /// <exception cref="ArgumentException"></exception>
     public static ChordProgression Create(params ScaleDegree[] scaleDegrees)
     {
-        if(scaleDegrees.Length <= 1)
-        {
-            throw new ArgumentException("A chord progression must have at least two chords", nameof(scaleDegrees));
-        }
+        scaleDegrees
+            .ThrowIfNull()
+            .IfCountLessThan(2);
 
         return new ChordProgression(scaleDegrees);
     }
