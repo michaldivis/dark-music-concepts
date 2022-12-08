@@ -39,6 +39,18 @@ internal class ChordsDemo : Demo
 
         Print(customChord);
 
+        PrintSubHeader("Create chords from scale");
+
+        var cMajorScale = ScaleFormulas.Ionian.Create(Pitch.C);
+        var octave = Octave.OneLine;
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Tonic));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Supertonic));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Mediant));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Subdominant));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Dominant));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.Submediant));
+        Print(Chord.Create(cMajorScale, octave, ScaleDegree.LeadingTone));
+
         PrintSubHeader("Chord pattern generation");
 
         var random = new Random(123456);

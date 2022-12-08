@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿using System.Linq;
+
+namespace DarkMusicConcepts.Chords;
 /// <summary>
 /// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
 /// </summary>
@@ -110,6 +112,53 @@ public class Chord
         }
 
         return new Chord(invertedNotes, _rootBeforeInversion, Formula, Inversion + 1);   
+    }
+
+    /// <summary>
+    /// Creates a chord based on an a scale and scale degree
+    /// </summary>
+    /// <param name="scale">Scale</param>
+    /// <param name="octave">Octave to start the root note in</param>
+    /// <param name="scaleDegree">The scale degree</param>
+    /// <returns>A chord created from the scale and scale degree</returns>
+    /// <exception cref="ArgumentOutOfRangeException" />
+    public static Chord Create(Scale scale, Octave octave, ScaleDegree scaleDegree)
+    {
+        if((int)scaleDegree >= scale._pitches.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(scaleDegree), scaleDegree, "The scale degree is greater than the number of pitches in the scale");
+        }
+
+        var rootPitch = scale._pitches[(int)scaleDegree];
+
+        var notes = new List<Note>();
+
+        var root = Note.Create(rootPitch, octave);
+        notes.Add(root);
+
+        foreach (var step in new[] { 2, 4 })
+        {
+            var otherPitch = scale._pitches.GetNext(rootPitch, step);
+
+            if (otherPitch < rootPitch)
+            {
+                octave += 1;
+            }
+
+            var note = Note.Create(otherPitch, octave);
+            notes.Add(note);
+        }
+
+        var intervals = notes
+            .Skip(1)
+            .Select(x => root.IntervalWithOther(x))
+            .ToArray();
+
+        var formula = new ChordFormula("Custom", intervals);
+
+        var chord = new Chord(notes, root, formula, 0);
+
+        return chord;
     }
 
     private static string GetName(Note root, ChordFormula formula, int inversion)

@@ -33,4 +33,8 @@
     <ProjectReference Include="..\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+	<InternalsVisibleTo Include="DarkMusicConcepts.Tests" />
+  </ItemGroup>
+
 </Project>

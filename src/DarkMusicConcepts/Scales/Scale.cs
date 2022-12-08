@@ -34,10 +34,11 @@ public class Scale
     {
         Root = root;
         Formula = formula;
-        Pitches = pitches.ToList();
+        _pitches = pitches.ToList();
     }
 
-    public IReadOnlyList<Pitch> Pitches { get; }
+    internal readonly List<Pitch> _pitches;
+    public IReadOnlyList<Pitch> Pitches => _pitches;
 
     public Pitch I => Pitches[0];
 
