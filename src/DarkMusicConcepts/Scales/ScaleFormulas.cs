@@ -216,6 +216,75 @@ public static class ScaleFormulas
         Intervals.MinorSeventh
     );
 
+    public static ScaleFormula MaqamHijaz { get; } = new("Maqam Hijaz",
+       Intervals.Unisson,
+       Intervals.MajorSecond,
+       Intervals.MinorThird,
+       Intervals.PerfectFourth,
+       Intervals.PerfectFifth,
+       Intervals.MinorSixth,
+       Intervals.MajorSixth,
+       Intervals.MinorSeventh
+   );
+
+    public static ScaleFormula MaqamSaba { get; } = new("Maqam Saba",
+       Intervals.Unisson,
+       Intervals.MinorSecond,
+       Intervals.MajorSecond,
+       Intervals.MinorThird,
+       Intervals.MajorThird,
+       Intervals.PerfectFourth,
+       Intervals.PerfectFifth,
+       Intervals.MinorSixth,
+       Intervals.MajorSixth,
+       Intervals.MinorSeventh
+   );
+
+    public static ScaleFormula MaqamBayati { get; } = new("Maqam Bayati",
+       Intervals.Unisson,
+       Intervals.MajorSecond,
+       Intervals.MinorThird,
+       Intervals.MajorThird,
+       Intervals.PerfectFourth,
+       Intervals.PerfectFifth,
+       Intervals.MinorSixth,
+       Intervals.MajorSixth
+   );
+
+    public static ScaleFormula MaqamJiharkah { get; } = new("Maqam Jiharkah",
+       Intervals.Unisson,
+       Intervals.MinorSecond,
+       Intervals.MajorSecond,
+       Intervals.MinorThird,
+       Intervals.MajorThird,
+       Intervals.PerfectFourth,
+       Intervals.PerfectFifth,
+       Intervals.MinorSixth,
+       Intervals.MinorSeventh
+    );
+
+    public static ScaleFormula MaqamAtharKurd { get; } = new("Maqam Athar Kurd",
+       Intervals.Unisson,
+       Intervals.MajorSecond,
+       Intervals.MinorThird,
+       Intervals.MajorThird,
+       Intervals.PerfectFourth,
+       Intervals.PerfectFifth,
+       Intervals.MajorSixth,
+       Intervals.MinorSeventh
+   );
+
+    public static ScaleFormula MaqamShawqAfza { get; } = new("Maqam Shawq Afza",
+       Intervals.Unisson,
+       Intervals.MinorSecond,
+       Intervals.MinorThird,
+       Intervals.MajorThird,
+       Intervals.PerfectFourth,
+       Intervals.PerfectFifth,
+       Intervals.MinorSixth,
+       Intervals.MajorSixth
+   );
+
     public static IReadOnlyList<ScaleFormula> All { get; } = new[]
     {
         Ionian,
@@ -239,6 +308,12 @@ public static class ScaleFormulas
         LocrianSharp2,
         AlteredDominant,
         HalfWholeDiminished,
-        WholeTone
+        WholeTone,
+        MaqamHijaz,
+        MaqamSaba,
+        MaqamBayati,
+        MaqamJiharkah,
+        MaqamAtharKurd,
+        MaqamShawqAfza
     };
 }

@@ -12,4 +12,15 @@ public class NotesTests
         Notes.All.Count.Should().Be(found.Count());
         Notes.All.Should().Contain(found);
     }
+
+    [Fact]
+    public void All_ShouldBeUnique()
+    {
+        var duplicates = Notes.All
+            .GroupBy(x => new { x.BasePitch, x.Octave })
+            .Where(x => x.Count() > 1)
+            .ToList();
+
+        duplicates.Should().BeEmpty();
+    }
 }
