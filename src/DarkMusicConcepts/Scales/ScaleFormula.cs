@@ -3,6 +3,7 @@
 public class ScaleFormula
 {
     private readonly Interval[] _intervals;
+    public IReadOnlyList<Interval> Intervals => _intervals;
 
     public string Name { get; }
 
