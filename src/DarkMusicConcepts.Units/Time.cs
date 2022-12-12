@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts;
 /// <summary>
 /// Representation of musical time, the (<see cref="Value"/>) is stored in MIDI ticks
 /// </summary>

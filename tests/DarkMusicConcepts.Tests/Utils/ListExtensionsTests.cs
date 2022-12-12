@@ -1,7 +1,4 @@
-﻿using DarkMusicConcepts.Utils;
-using FluentAssertions;
-
-namespace DarkMusicConcepts.Tests.Utils;
+﻿namespace DarkMusicConcepts.Tests.Utils;
 public class ListExtensionsTests
 {
     private const string _item1 = "Harry";

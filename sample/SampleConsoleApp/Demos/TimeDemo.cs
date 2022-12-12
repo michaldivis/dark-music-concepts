@@ -1,4 +1,4 @@
-﻿using DarkMusicConcepts.Units;
+﻿using DarkMusicConcepts;
 
 namespace SampleConsoleApp.Demos;
 internal class TimeDemo : Demo

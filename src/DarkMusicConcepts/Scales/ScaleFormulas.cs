@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts;
 public static class ScaleFormulas
 {
     public static ScaleFormula Ionian { get; } = new("Ionian",

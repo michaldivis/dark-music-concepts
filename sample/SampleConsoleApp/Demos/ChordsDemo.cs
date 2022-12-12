@@ -1,6 +1,4 @@
-﻿using DarkMusicConcepts.Chords;
-using DarkMusicConcepts.Notes;
-using DarkMusicConcepts.Scales;
+﻿using DarkMusicConcepts;
 
 namespace SampleConsoleApp.Demos;
 internal class ChordsDemo : Demo

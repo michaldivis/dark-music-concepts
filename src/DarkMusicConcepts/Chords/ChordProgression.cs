@@ -1,6 +1,4 @@
-﻿using Throw;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 public class ChordProgression
 {

@@ -1,5 +1,4 @@
-﻿using DarkMusicConcepts.Notes;
-using DarkMusicConcepts.Units;
+﻿using DarkMusicConcepts;
 
 namespace SampleConsoleApp.Demos;
 internal class NotesDemo : Demo

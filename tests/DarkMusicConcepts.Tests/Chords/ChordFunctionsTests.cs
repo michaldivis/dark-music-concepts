@@ -1,6 +1,4 @@
-﻿using DarkMusicConcepts.Tests;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 public class ChordFunctionsTests
 {

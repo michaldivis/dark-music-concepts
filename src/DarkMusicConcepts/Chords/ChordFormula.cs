@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// A chord formula is a list of intervals which make up a chord

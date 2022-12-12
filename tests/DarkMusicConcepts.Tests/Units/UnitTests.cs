@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace DarkMusicConcepts.Units.Tests;
+﻿namespace DarkMusicConcepts;
 
 public class UnitTests
 {

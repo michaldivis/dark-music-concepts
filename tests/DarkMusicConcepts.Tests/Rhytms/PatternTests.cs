@@ -1,11 +1,4 @@
-﻿using DarkMusicConcepts.Units;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DarkMusicConcepts.Rhytms;
+﻿namespace DarkMusicConcepts;
 public class PatternTests
 {
     [Fact]

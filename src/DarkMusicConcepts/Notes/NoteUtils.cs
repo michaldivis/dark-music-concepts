@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 
 public static class NoteUtils
 {

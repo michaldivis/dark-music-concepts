@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// In music, a note is a symbol denoting a musical sound. In English usage, a note is also the sound itself. Notes can represent the pitch and duration of a sound in musical notation. A note can also represent a pitch class.

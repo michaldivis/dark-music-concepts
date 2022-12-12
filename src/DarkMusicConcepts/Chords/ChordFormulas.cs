@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// Chord formulas. The current implementation contains the formulas described at <see href="http://www.smithfowler.org/music/Chord_Formulas.htm"/> and some custom ones

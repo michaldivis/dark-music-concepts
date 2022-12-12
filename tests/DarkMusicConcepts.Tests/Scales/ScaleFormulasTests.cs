@@ -1,7 +1,4 @@
-﻿using DarkMusicConcepts.Tests;
-using FluentAssertions;
-
-namespace DarkMusicConcepts.Scales.Tests;
+﻿namespace DarkMusicConcepts;
 
 public class ScaleFormulasTests
 {

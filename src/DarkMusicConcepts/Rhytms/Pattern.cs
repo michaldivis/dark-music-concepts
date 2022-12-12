@@ -1,6 +1,4 @@
-﻿using Throw;
-
-namespace DarkMusicConcepts.Rhytms;
+﻿namespace DarkMusicConcepts;
 /// <summary>
 /// Representation of a rhytmical pattern. Each node either is a beat or is empty (true or false)
 /// </summary>

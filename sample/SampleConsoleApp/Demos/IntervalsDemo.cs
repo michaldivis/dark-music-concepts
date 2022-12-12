@@ -1,4 +1,4 @@
-﻿using DarkMusicConcepts.Notes;
+﻿using DarkMusicConcepts;
 
 namespace SampleConsoleApp.Demos;
 internal class IntervalsDemo : Demo

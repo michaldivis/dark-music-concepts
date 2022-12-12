@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// Represents the size of a step to take relative to scale positions

@@ -1,8 +1,4 @@
-﻿using DarkMusicConcepts.Scales;
-using System.Linq;
-using Throw;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 /// <summary>
 /// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
 /// </summary>

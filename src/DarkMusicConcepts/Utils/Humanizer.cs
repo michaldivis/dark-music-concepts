@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Utils;
+﻿namespace DarkMusicConcepts;
 internal static class Humanizer
 {
     public static string AddOrdinal(int num)

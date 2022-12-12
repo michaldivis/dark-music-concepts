@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts;
 
 public class Bpm : Unit<int, Bpm>
 {

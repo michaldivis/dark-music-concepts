@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// <para>MIDI number of a note.</para>

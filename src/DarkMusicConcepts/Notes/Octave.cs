@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// <para>Octaves in westerns music are named: Sub-Contra, Contra, Great, Small, One-Line, Two-Line, Three-Line, Four-Line, Five-Line and Six-Line. </para>

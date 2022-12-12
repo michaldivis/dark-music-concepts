@@ -1,6 +1,4 @@
-﻿using Throw;
-
-namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// A chord in progress. Defines and builds a <see cref="Chord"/>

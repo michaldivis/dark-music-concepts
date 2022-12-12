@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 public static class ChordFunctions
 {

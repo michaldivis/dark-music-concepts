@@ -1,6 +1,4 @@
-﻿using Throw;
-
-namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// In music theory, a scale is any set of musical notes ordered by fundamental frequency or pitch. A scale ordered by increasing pitch is an ascending scale, and a scale ordered by decreasing pitch is a descending scale.

@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Chords;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// A collection of chord progressions. This collection not complete by any means. It should serve more as demo of what the chord progressions can be. Feel free to create your own <see cref="ChordProgression"/>s.

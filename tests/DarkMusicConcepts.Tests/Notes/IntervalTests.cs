@@ -1,6 +1,4 @@
-﻿using FluentAssertions;
-
-namespace DarkMusicConcepts.Notes.Tests;
+﻿namespace DarkMusicConcepts;
 
 public class IntervalTests
 {

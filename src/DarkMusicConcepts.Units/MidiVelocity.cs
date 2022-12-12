@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// <para>MIDI velocity indicates how hard the key was struck when the note was played, which usually corresponds to the note's loudness.</para>

@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 public static class Intervals
 {
     public static Interval Unisson { get; } = new(0, "Unisson", Accident.None);

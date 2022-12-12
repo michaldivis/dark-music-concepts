@@ -1,7 +1,4 @@
-﻿using System;
-using Throw;
-
-namespace DarkMusicConcepts.Utils;
+﻿namespace DarkMusicConcepts;
 
 internal static class ListExtensions
 {

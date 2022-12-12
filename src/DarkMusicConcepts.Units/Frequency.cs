@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// <para>A frequency of a note in Herz.</para>

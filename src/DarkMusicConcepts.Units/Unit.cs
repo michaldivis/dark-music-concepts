@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Units;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// Number value object base class with a specific value range from Min to Max

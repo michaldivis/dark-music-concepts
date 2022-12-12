@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 public static class Notes
 {
     public static Note CMinus1 { get; } = Note.Create(Pitch.C, Octave.MinusOne);

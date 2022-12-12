@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts;
 
 public enum ScaleDegree
 {
