@@ -54,6 +54,13 @@ internal class ChordsDemo : Demo
         Comment("The following will create a triad based on the major scale. Starting with the root pitch, then skipping one pitch and taking the next");
         Print(Chord.Create(cMajorScale, cMajorScale.Root, octave, ScaleStep.II, ScaleStep.II));
 
+        PrintSubHeader("Chords from types (tertian, quartal, etc.)");
+        Print(Chord.Create(cMajorScale, octave, Pitch.C, ChordType.Tertian, amountOfNotes: 4));
+        Print(Chord.Create(cMajorScale, octave, Pitch.C, ChordType.Quartal, amountOfNotes: 4));
+        Print(Chord.Create(cMajorScale, octave, Pitch.C, ChordType.Quintal, amountOfNotes: 4));
+        Print(Chord.Create(cMajorScale, octave, Pitch.C, ChordType.Sextal, amountOfNotes: 4));
+        Print(Chord.Create(cMajorScale, octave, Pitch.C, ChordType.Septimal, amountOfNotes: 4));
+
         PrintSubHeader("Chords progressions");
 
         Print(ChordProgressions.Pop.I_IV_V_IV);

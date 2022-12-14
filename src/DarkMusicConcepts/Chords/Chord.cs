@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts;
+﻿using Throw;
+
+namespace DarkMusicConcepts;
 /// <summary>
 /// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
 /// </summary>
@@ -184,6 +186,45 @@ public class Chord
         var chord = new Chord(notes, root, formula, 0);
 
         return chord;
+    }
+
+    /// <summary>
+    /// Creates a chord based on an a scale and chord type
+    /// </summary>
+    /// <param name="scale">Scale</param>
+    /// <param name="octave">Octave to start the root note in</param>
+    /// <param name="rootPitch">The root pitch to start the chord</param>
+    /// <param name="chordType">Type of the chord</param>
+    /// <param name="amountOfNotes">Amount of chord notes</param>
+    /// <returns>A chord created from the scale and chord type</returns>
+    /// <exception cref="ArgumentException" />
+    /// <exception cref="ArgumentOutOfRangeException" />
+    public static Chord Create(Scale scale, Octave octave, Pitch rootPitch, ChordType chordType, int amountOfNotes)
+    {
+        amountOfNotes
+            .Throw()
+            .IfNegativeOrZero();
+
+        scale.Pitches
+            .Throw()
+            .IfNotContains(rootPitch);
+
+        var scaleStep = chordType switch
+        {
+            ChordType.Tertian => ScaleStep.II,
+            ChordType.Quartal => ScaleStep.III,
+            ChordType.Quintal => ScaleStep.IV,
+            ChordType.Sextal => ScaleStep.V,
+            ChordType.Septimal => ScaleStep.VI,
+            _ => throw ExhaustiveMatch.Failed(chordType)
+        };
+
+        var steps = Enumerable
+            .Range(0, amountOfNotes - 1)
+            .Select(x => scaleStep)
+            .ToArray();
+
+        return Create(scale, rootPitch, octave, steps);
     }
 
     private static string GetName(Note root, ChordFormula formula, int inversion)
