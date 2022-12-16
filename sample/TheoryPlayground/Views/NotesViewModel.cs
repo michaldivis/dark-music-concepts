@@ -5,7 +5,7 @@ namespace TheoryPlayground.Views;
 public partial class NotesViewModel : ViewModelBase
 {
     [ObservableProperty]
-    private Note _selectedNote = Notes.C2;
+    private Note _selectedNote = Notes.C4;
 
     [RelayCommand]
     private void Play()

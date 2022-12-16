@@ -18,26 +18,28 @@
     <UserControl.DataContext>
         <local:NotesViewModel />
     </UserControl.DataContext>
-    <Border Padding="5">
-        <StackPanel>
-            <TextBlock
-                Margin="5"
-                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                Text="Notes" />
-            <DockPanel VerticalAlignment="Top" LastChildFill="True">
-                <Button
+    <ScrollViewer>
+        <Border Padding="15,15,5,5">
+            <StackPanel>
+                <TextBlock
                     Margin="5"
-                    Command="{Binding PlayCommand}"
-                    Content="{materialDesign:PackIcon Kind=Play}"
-                    DockPanel.Dock="Right"
-                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
-                <ComboBox
-                    Margin="5"
-                    materialDesign:HintAssist.Hint="Note"
-                    ItemsSource="{x:Static dmc:Notes.All}"
-                    SelectedItem="{Binding SelectedNote}"
-                    Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-            </DockPanel>
-        </StackPanel>
-    </Border>
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="Notes" />
+                <DockPanel VerticalAlignment="Top" LastChildFill="True">
+                    <Button
+                        Margin="5"
+                        Command="{Binding PlayCommand}"
+                        Content="{materialDesign:PackIcon Kind=Play}"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                    <ComboBox
+                        Margin="5"
+                        materialDesign:HintAssist.Hint="Note"
+                        ItemsSource="{x:Static dmc:Notes.All}"
+                        SelectedItem="{Binding SelectedNote}"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                </DockPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
 </UserControl>

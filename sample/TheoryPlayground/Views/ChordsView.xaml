@@ -18,74 +18,138 @@
     <UserControl.DataContext>
         <local:ChordsViewModel />
     </UserControl.DataContext>
-    <Border Padding="5">
-        <StackPanel>
-            <TextBlock
-                Margin="5"
-                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                Text="Chords" />
-
-            <TextBlock
-                Margin="5"
-                Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                Text="Root note and formula" />
+    <ScrollViewer>
+        <Border Padding="15,15,5,5">
             <StackPanel>
-                <DockPanel>
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Root note"
-                        ItemsSource="{x:Static dmc:Notes.All}"
-                        SelectedItem="{Binding RootAndFormula.SelectedRootNote}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Chord formula"
-                        ItemsSource="{x:Static dmc:ChordFormulas.All}"
-                        SelectedItem="{Binding RootAndFormula.SelectedChordFormula}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                </DockPanel>
-
-                <Button
+                <TextBlock
                     Margin="5"
-                    HorizontalAlignment="Right"
-                    Command="{Binding RootAndFormula.PlayCommand}"
-                    Content="{materialDesign:PackIcon Kind=Play}"
-                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
-            </StackPanel>
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="Chords" />
 
-            <TextBlock
-                Margin="5"
-                Style="{StaticResource MaterialDesignHeadline6TextBlock}"
-                Text="Scale and scale degree" />
-            <StackPanel>
-                <DockPanel>
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Root note"
-                        ItemsSource="{x:Static dmc:Notes.All}"
-                        SelectedItem="{Binding ScaleAndScaleDegree.SelectedRootNote}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Scale formula"
-                        ItemsSource="{x:Static dmc:ScaleFormulas.All}"
-                        SelectedItem="{Binding ScaleAndScaleDegree.SelectedScaleFormula}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Scale degree"
-                        ItemsSource="{Binding ScaleDegrees}"
-                        SelectedItem="{Binding ScaleAndScaleDegree.SelectedScaleDegree}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                </DockPanel>
-
-                <Button
+                <TextBlock
                     Margin="5"
-                    HorizontalAlignment="Right"
-                    Command="{Binding ScaleAndScaleDegree.PlayCommand}"
-                    Content="{materialDesign:PackIcon Kind=Play}"
-                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="Root note and formula" />
+                <StackPanel DataContext="{Binding RootAndFormula}">
+                    <DockPanel>
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Root note"
+                            ItemsSource="{x:Static dmc:Notes.All}"
+                            SelectedItem="{Binding SelectedRootNote}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Chord formula"
+                            ItemsSource="{x:Static dmc:ChordFormulas.All}"
+                            SelectedItem="{Binding SelectedChordFormula}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                    </DockPanel>
+
+                    <TextBlock
+                        Margin="5"
+                        Opacity="0.5"
+                        Text="{Binding Chord}" />
+
+                    <Button
+                        Margin="5"
+                        HorizontalAlignment="Right"
+                        Command="{Binding PlayCommand}"
+                        Content="{materialDesign:PackIcon Kind=Play}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                </StackPanel>
+
+                <TextBlock
+                    Margin="5"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="Scale and scale degree" />
+                <StackPanel DataContext="{Binding ScaleAndScaleDegree}">
+                    <DockPanel>
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Root note"
+                            ItemsSource="{x:Static dmc:Notes.All}"
+                            SelectedItem="{Binding SelectedRootNote}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Scale formula"
+                            ItemsSource="{x:Static dmc:ScaleFormulas.All}"
+                            SelectedItem="{Binding SelectedScaleFormula}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Scale degree"
+                            ItemsSource="{Binding ScaleDegrees}"
+                            SelectedItem="{Binding SelectedScaleDegree}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                    </DockPanel>
+
+                    <TextBlock
+                        Margin="5"
+                        Opacity="0.5"
+                        Text="{Binding Chord}" />
+
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                        <Button
+                            Margin="5"
+                            Command="{Binding PlayCommand}"
+                            Content="{materialDesign:PackIcon Kind=Play}"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+
+                        <Button
+                            Margin="5"
+                            Command="{Binding PlayAllScaleDegreesCommand}"
+                            Content="{materialDesign:PackIcon Kind=SkipForward}"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                    </StackPanel>
+                </StackPanel>
+
+                <TextBlock
+                    Margin="5"
+                    Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                    Text="Scale and chord type" />
+                <StackPanel DataContext="{Binding ScaleAndChordType}">
+                    <DockPanel>
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Root note"
+                            ItemsSource="{x:Static dmc:Notes.All}"
+                            SelectedItem="{Binding SelectedRootNote}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Scale formula"
+                            ItemsSource="{x:Static dmc:ScaleFormulas.All}"
+                            SelectedItem="{Binding SelectedScaleFormula}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Chord type"
+                            ItemsSource="{Binding ChordTypes}"
+                            SelectedItem="{Binding SelectedChordType}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                        <ComboBox
+                            Margin="5"
+                            materialDesign:HintAssist.Hint="Amount of notes"
+                            ItemsSource="{Binding AmountsOfNotes}"
+                            SelectedItem="{Binding SelectedAmountOfNotes}"
+                            Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                    </DockPanel>
+
+                    <TextBlock
+                        Margin="5"
+                        Opacity="0.5"
+                        Text="{Binding Chord}" />
+
+                    <Button
+                        Margin="5"
+                        HorizontalAlignment="Right"
+                        Command="{Binding PlayCommand}"
+                        Content="{materialDesign:PackIcon Kind=Play}"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-    </Border>
+        </Border>
+    </ScrollViewer>
 </UserControl>

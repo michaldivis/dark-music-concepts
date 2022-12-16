@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dmc="clr-namespace:DarkMusicConcepts;assembly=DarkMusicConcepts"
     xmlns:local="clr-namespace:TheoryPlayground.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,10 +15,37 @@
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
-    <Grid>
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Text="Scales" />
-    </Grid>
+    <UserControl.DataContext>
+        <local:ScalesViewModel />
+    </UserControl.DataContext>
+    <ScrollViewer>
+        <Border Padding="15,15,5,5">
+            <StackPanel>
+                <TextBlock
+                    Margin="5"
+                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                    Text="Notes" />
+                <DockPanel VerticalAlignment="Top" LastChildFill="True">
+                    <Button
+                        Margin="5"
+                        Command="{Binding PlayCommand}"
+                        Content="{materialDesign:PackIcon Kind=Play}"
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                    <ComboBox
+                        Margin="5"
+                        materialDesign:HintAssist.Hint="Root note"
+                        ItemsSource="{x:Static dmc:Notes.All}"
+                        SelectedItem="{Binding SelectedRootNote}"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                    <ComboBox
+                        Margin="5"
+                        materialDesign:HintAssist.Hint="Scale formula"
+                        ItemsSource="{x:Static dmc:ScaleFormulas.All}"
+                        SelectedItem="{Binding SelectedScaleFormula}"
+                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                </DockPanel>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
 </UserControl>
