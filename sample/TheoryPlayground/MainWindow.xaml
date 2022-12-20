@@ -9,22 +9,27 @@
     xmlns:views="clr-namespace:TheoryPlayground.Views"
     Title="Theory Playground"
     Width="800"
-    Height="600"
+    Height="800"
     Background="{DynamicResource MaterialDesignPaper}"
     FontFamily="{materialDesign:MaterialDesignFont}"
+    ResizeMode="CanResizeWithGrip"
     TextElement.FontSize="14"
     TextElement.FontWeight="Medium"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <TabControl Style="{StaticResource MaterialDesignNavigatilRailTabControl}">
-        <TabItem Header="Notes">
-            <views:NotesView />
+        <TabItem Header="Chords">
+            <views:ChordsView />
+        </TabItem>
+        <TabItem Header="Chord progressions">
+            <views:ChordProgressionsView />
         </TabItem>
         <TabItem Header="Scales">
             <views:ScalesView />
         </TabItem>
-        <TabItem Header="Chords">
-            <views:ChordsView />
+        <TabItem Header="Notes">
+            <views:NotesView />
         </TabItem>
     </TabControl>
 </Window>

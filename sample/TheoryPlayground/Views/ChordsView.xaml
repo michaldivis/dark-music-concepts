@@ -55,8 +55,8 @@
                         Margin="5"
                         HorizontalAlignment="Right"
                         Command="{Binding PlayCommand}"
-                        Content="{materialDesign:PackIcon Kind=Play}"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                        Content="Play"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" />
                 </StackPanel>
 
                 <TextBlock
@@ -94,14 +94,14 @@
                         <Button
                             Margin="5"
                             Command="{Binding PlayCommand}"
-                            Content="{materialDesign:PackIcon Kind=Play}"
-                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                            Content="Play"
+                            Style="{StaticResource MaterialDesignOutlinedButton}" />
 
                         <Button
                             Margin="5"
                             Command="{Binding PlayAllScaleDegreesCommand}"
-                            Content="{materialDesign:PackIcon Kind=SkipForward}"
-                            Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                            Content="Play All"
+                            Style="{StaticResource MaterialDesignOutlinedButton}" />
                     </StackPanel>
                 </StackPanel>
 
@@ -146,8 +146,8 @@
                         Margin="5"
                         HorizontalAlignment="Right"
                         Command="{Binding PlayCommand}"
-                        Content="{materialDesign:PackIcon Kind=Play}"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
+                        Content="Play"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" />
                 </StackPanel>
             </StackPanel>
         </Border>
