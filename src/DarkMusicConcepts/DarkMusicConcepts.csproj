@@ -7,9 +7,9 @@
   </PropertyGroup>
 
 	<PropertyGroup>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<PackageId>Divis.DarkMusicConcepts</PackageId>
-		<Version>0.8.0</Version>
+		<Version>0.0.0-dev</Version>
 		<Authors>michaldivis</Authors>
 		<Company>Michal Diviš</Company>
 		<Product>Dark Music Concepts</Product>
@@ -30,11 +30,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ValueOf" Version="2.0.31" />
+    <ProjectReference Include="..\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj" />
+	<InternalsVisibleTo Include="DarkMusicConcepts.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExhaustiveMatching.Analyzer" Version="0.5.0" />
+    <PackageReference Include="Throw" Version="1.3.1" />
   </ItemGroup>
 
 </Project>

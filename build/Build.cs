@@ -14,6 +14,8 @@ class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.PushNuget);
 
+    private const string Version = "0.9.0";
+
     private const string CoreProjectName = "DarkMusicConcepts";
     private const string UnitsProjectName = "DarkMusicConcepts.Units";
     private const string TestProjectName = "DarkMusicConcepts.Tests";
@@ -29,14 +31,14 @@ class Build : NukeBuild
     [Parameter] readonly string NugetApiKey;
 
     Target Clean => _ => _
-        .Before(RestoreCore)
-        .Before(RestoreUnits)
         .Executes(() =>
         {
             SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
+            EnsureCleanDirectory(ArtifactsDirectory);
         });
 
     Target RestoreCore => _ => _
+        .DependsOn(Clean)
         .Executes(() =>
         {
             DotNetRestore(s => s
@@ -83,6 +85,7 @@ class Build : NukeBuild
             DotNetPack(s => s
               .SetProject(Solution.GetProject(CoreProjectName))
               .SetConfiguration(Configuration)
+              .SetVersion(Version)
               .EnableNoBuild()
               .EnableNoRestore()
               .SetOutputDirectory(ArtifactsDirectory));
@@ -112,6 +115,7 @@ class Build : NukeBuild
             DotNetPack(s => s
               .SetProject(Solution.GetProject(UnitsProjectName))
               .SetConfiguration(Configuration)
+              .SetVersion(Version)
               .EnableNoBuild()
               .EnableNoRestore()
               .SetOutputDirectory(ArtifactsDirectory));

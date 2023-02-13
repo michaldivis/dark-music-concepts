@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 
 public static class NoteUtils
 {
@@ -8,10 +8,10 @@ public static class NoteUtils
     /// <param name="pitch">Pitch to transpose</param>
     /// <param name="interval">Interval to transpose by</param>
     /// <returns>Transposed pitch</returns>
-    public static NotePitch TransposePitch(NotePitch pitch, Interval interval)
+    public static Pitch TransposePitch(Pitch pitch, Interval interval)
     {
-        var note = new Note(pitch, Octave.OneLine);
-        var transposedNote = note.Transpose(interval);
+        var note = Note.Create(pitch, Octave.Four);
+        var transposedNote = note.TransposeUp(interval);
         return transposedNote.BasePitch;
     }
 }

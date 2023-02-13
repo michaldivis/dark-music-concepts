@@ -1,37 +1,34 @@
-﻿using DarkMusicConcepts.Notes;
-using FluentAssertions;
-
-namespace DarkMusicConcepts.Scales.Tests;
+﻿namespace DarkMusicConcepts;
 public class ScaleFormulaTests
 {
     [Theory]
     [MemberData(nameof(AllScaleFormulasAndRoots))]
-    public void CreateForRoot_ShouldWorkForAllScalesAndRoots(ScaleFormula scaleFormula, NotePitch root)
+    public void Create_ShouldWorkForAllScalesAndRoots(ScaleFormula scaleFormula, Pitch root)
     {
-        _ = scaleFormula.CreateForRoot(root);
+        _ = scaleFormula.Create(root);
     }
 
     [Fact]
-    public void CreateForRoot_ShouldCreateAValidScale()
+    public void Create_ShouldCreateAValidScale()
     {
-        var aPhrygian = ScaleFormula.Phrygian.CreateForRoot(NotePitch.A);
+        var aPhrygian = ScaleFormulas.Phrygian.Create(Pitch.A);
 
-        aPhrygian.I.Should().Be(NotePitch.A);
-        aPhrygian.II.Should().Be(NotePitch.ASharpOrBFlat);
-        aPhrygian.III.Should().Be(NotePitch.C);
-        aPhrygian.IV.Should().Be(NotePitch.D);
-        aPhrygian.V.Should().Be(NotePitch.E);
-        aPhrygian.VI.Should().Be(NotePitch.F);
-        aPhrygian.VII.Should().Be(NotePitch.G);
+        aPhrygian.I.Should().Be(Pitch.A);
+        aPhrygian.II.Should().Be(Pitch.ASharpOrBFlat);
+        aPhrygian.III.Should().Be(Pitch.C);
+        aPhrygian.IV.Should().Be(Pitch.D);
+        aPhrygian.V.Should().Be(Pitch.E);
+        aPhrygian.VI.Should().Be(Pitch.F);
+        aPhrygian.VII.Should().Be(Pitch.G);
 
-        aPhrygian.Notes.Should().ContainInOrder(new[] {
-            NotePitch.A,
-            NotePitch.ASharpOrBFlat,
-            NotePitch.C,
-            NotePitch.D,
-            NotePitch.E,
-            NotePitch.F,
-            NotePitch.G
+        aPhrygian.Pitches.Should().ContainInOrder(new[] {
+            Pitch.A,
+            Pitch.ASharpOrBFlat,
+            Pitch.C,
+            Pitch.D,
+            Pitch.E,
+            Pitch.F,
+            Pitch.G
         });
     }
 
@@ -39,9 +36,9 @@ public class ScaleFormulaTests
 
     private static IEnumerable<object[]> GetAllScaleFormulasAndRoots()
     {
-        foreach (var scaleFormula in ScaleFormula.AllScaleFormulas)
+        foreach (var scaleFormula in ScaleFormulas.All)
         {
-            foreach (var root in Enum.GetValues<NotePitch>())
+            foreach (var root in Enum.GetValues<Pitch>())
             {
                 yield return new object[] { scaleFormula, root }; 
             }

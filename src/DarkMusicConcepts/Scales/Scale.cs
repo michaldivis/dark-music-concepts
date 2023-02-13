@@ -1,60 +1,55 @@
-﻿namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// In music theory, a scale is any set of musical notes ordered by fundamental frequency or pitch. A scale ordered by increasing pitch is an ascending scale, and a scale ordered by decreasing pitch is a descending scale.
 /// </summary>
 public class Scale
 {
-    public NotePitch Root { get; }
-    public string Name { get; }
+    public Pitch Root { get; }
+    public ScaleFormula Formula { get; }
 
     /// <summary>
     /// Create a scale from notes
     /// </summary>
-    /// <param name="notes">Notes to create the scale from</param>
+    /// <param name="pitches">Notes to create the scale from</param>
     /// <returns>A created scale</returns>
     /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
-    internal static Scale Create(NotePitch root, string name, IEnumerable<NotePitch> notes)
+    internal static Scale Create(Pitch root, ScaleFormula formula, IEnumerable<Pitch> pitches)
     {
-        if(notes is null)
-        {
-            throw new ArgumentNullException(nameof(notes), "Notes cannot be null");
-        }
+        pitches
+            .ThrowIfNull()
+            .IfCountLessThan(5);
 
-        if(notes.Count() < 5)
-        {
-            throw new ArgumentException("At least 5 notes are required to create a scale", nameof(notes));
-        }
-
-        return new Scale(root, name, notes);
+        return new Scale(root, formula, pitches);
     }
      
-    private Scale(NotePitch root, string name, IEnumerable<NotePitch> notes)
+    private Scale(Pitch root, ScaleFormula formula, IEnumerable<Pitch> pitches)
     {
         Root = root;
-        Name = name;
-        Notes = notes;
+        Formula = formula;
+        _pitches = pitches.ToList();
     }
 
-    public IEnumerable<NotePitch> Notes { get; }
+    internal readonly List<Pitch> _pitches;
+    public IReadOnlyList<Pitch> Pitches => _pitches;
 
-    public NotePitch I => Notes.ElementAt(0);
+    public Pitch I => Pitches[0];
 
-    public NotePitch II => Notes.ElementAt(1);
+    public Pitch II => Pitches[1];
 
-    public NotePitch III => Notes.ElementAt(2);
+    public Pitch III => Pitches[2];
 
-    public NotePitch IV => Notes.ElementAt(3);
+    public Pitch IV => Pitches[3];
 
-    public NotePitch V => Notes.ElementAt(4);
+    public Pitch V => Pitches[4];
 
-    public NotePitch? VI => Notes.ElementAtOrDefault(5);
+    public Pitch? VI => Pitches.ElementAtOrDefault(5);
 
-    public NotePitch? VII => Notes.ElementAtOrDefault(6);
+    public Pitch? VII => Pitches.ElementAtOrDefault(6);
 
     public override string ToString()
     {
-        return $"{Root} {Name}";
+        return $"{Root} {Formula.Name}";
     }
 }

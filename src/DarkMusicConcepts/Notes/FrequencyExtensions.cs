@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 internal static class FrequencyExtensions
 {
     internal static bool EqualsWithPrecision(this Frequency a, Frequency b, double precision)

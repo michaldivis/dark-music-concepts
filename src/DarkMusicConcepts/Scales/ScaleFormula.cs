@@ -1,20 +1,21 @@
-﻿namespace DarkMusicConcepts.Scales;
+﻿namespace DarkMusicConcepts;
 
-public partial class ScaleFormula
+public class ScaleFormula
 {
-    private readonly IEnumerable<Interval> _intervals;
+    private readonly Interval[] _intervals;
+    public IReadOnlyList<Interval> Intervals => _intervals;
 
     public string Name { get; }
 
-    private ScaleFormula(string name, params Interval[] intervals)
+    internal ScaleFormula(string name, params Interval[] intervals)
     {
         Name = name;
         _intervals = intervals;
     }
 
-    public Scale CreateForRoot(NotePitch root)
+    public Scale Create(Pitch root)
     {
-        return Scale.Create(root, Name, _intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
+        return Scale.Create(root, this, _intervals.Select(interval => NoteUtils.TransposePitch(root, interval)));
     }
 
     public override string ToString()

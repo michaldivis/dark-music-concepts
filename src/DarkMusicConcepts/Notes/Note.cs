@@ -1,31 +1,35 @@
-﻿namespace DarkMusicConcepts.Notes;
+﻿namespace DarkMusicConcepts;
 
 /// <summary>
 /// In music, a note is a symbol denoting a musical sound. In English usage, a note is also the sound itself. Notes can represent the pitch and duration of a sound in musical notation. A note can also represent a pitch class.
 /// </summary>
-public partial class Note : IEquatable<Note?>
+public class Note : IEquatable<Note>, IComparable<Note>
 {
     private const int MidiMiddleCNumber = 60;
     private const double A4Frequency = 440.0;
     private const int OctaveRange = 12;
 
     /// <summary>
-    /// Internal representation of a Note's pitch
+    /// Internal representation of Note's absolute pitch. Is always valid unlike <see cref="MidiNumber"/> which can be <see langword="null"/>
     /// </summary>
-    private readonly int _pitch;
-
-    public NotePitch BasePitch { get; }
+    public int AbsolutePitch { get; }
+    public Pitch BasePitch { get; }
     public Octave Octave { get; }
 
-    public Note(NotePitch basePitch, Octave octave)
+    private Note(Pitch basePitch, Octave octave)
     {
         BasePitch = basePitch;
         Octave = octave;
 
-        _pitch = GetPitch(basePitch, octave);
+        AbsolutePitch = GetAbsolutePitch(basePitch, octave);
         Name = GetName(basePitch, octave);
-        Frequency = GetFrequency(_pitch);
-        MidiNumber = GetMidiNumber(_pitch);
+        Frequency = GetFrequency(AbsolutePitch);
+        MidiNumber = GetMidiNumber(AbsolutePitch);
+    }
+
+    public static Note Create(Pitch basePitch, Octave octave)
+    {
+        return new Note(basePitch, octave);
     }
 
     public string Name { get; }
@@ -34,7 +38,7 @@ public partial class Note : IEquatable<Note?>
 
     public MidiNumber? MidiNumber { get; }
 
-    private static string GetName(NotePitch basePitch, Octave octave)
+    private static string GetName(Pitch basePitch, Octave octave)
     {
         return $"{basePitch}{(int)octave}"
             .Replace("Or", "/")
@@ -42,32 +46,32 @@ public partial class Note : IEquatable<Note?>
             .Replace("Flat", "b");
     }
 
-    private static int GetPitch(NotePitch basePitch, Octave octave)
+    private static int GetAbsolutePitch(Pitch basePitch, Octave octave)
     {
-        return (int)basePitch + OctaveRange * (int)octave;
+        return (int)basePitch + OctaveRange * ((int)octave + 1);
     }
 
-    private static Frequency GetFrequency(int pitch)
+    private static Frequency GetFrequency(int absolutePitch)
     {
-        var a4Pitch = GetPitch(NotePitch.A, Octave.OneLine);
-        var relativePitchToA4 = pitch - a4Pitch;
+        var a4AbsolutePitch = GetAbsolutePitch(Pitch.A, Octave.Four);
+        var relativePitchToA4 = absolutePitch - a4AbsolutePitch;
         var power = (double)relativePitchToA4 / OctaveRange;
         var frequency = Math.Pow(2.0, power) * A4Frequency;
         return Frequency.From(frequency);
     }
 
-    private static MidiNumber? GetMidiNumber(int pitch)
+    private static MidiNumber? GetMidiNumber(int absolutePitch)
     {
-        var middleCPitch = GetPitch(NotePitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
-        var relativePitchToMiddleC = pitch - middleCPitch;
+        var middleCPitch = GetAbsolutePitch(Pitch.C, DarkMusicConceptsCore.MidiMiddleCOctave);
+        var relativePitchToMiddleC = absolutePitch - middleCPitch;
         var midiNumber = MidiMiddleCNumber + relativePitchToMiddleC;
 
-        if (midiNumber < MidiNumber.Min)
+        if (midiNumber < MidiNumber.MinValue)
         {
             return null;
         }
 
-        if (midiNumber > MidiNumber.Max)
+        if (midiNumber > MidiNumber.MaxValue)
         {
             return null;
         }
@@ -83,7 +87,7 @@ public partial class Note : IEquatable<Note?>
     /// <returns><see langword="true"/> if found</returns>
     public static bool TryFindByMidiNumber(MidiNumber midiNumber, out Note? note)
     {
-        var found = AllNotes.FirstOrDefault(a => a.MidiNumber == midiNumber);
+        var found = Notes.All.FirstOrDefault(a => a.MidiNumber == midiNumber);
 
         if (found is null)
         {
@@ -122,7 +126,7 @@ public partial class Note : IEquatable<Note?>
     /// <returns><see langword="true"/> if found</returns>
     public static bool TryFindByFrequency(Frequency frequency, out Note? note, double precision = 0.01)
     {
-        var found = AllNotes.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
+        var found = Notes.All.FirstOrDefault(a => a.Frequency.EqualsWithPrecision(frequency, precision));
 
         if (found is null)
         {
@@ -154,34 +158,68 @@ public partial class Note : IEquatable<Note?>
     }
 
     /// <summary>
-    /// Transpose a note by a specific internval
+    /// Transpose a note up by a specific internval
     /// </summary>
     /// <param name="interval">Interval to trasnpose by</param>
     /// <returns>Transposed note</returns>
     /// <exception cref="ArgumentException"></exception>
-    public Note Transpose(Interval interval)
+    public Note TransposeUp(Interval interval)
     {
-        var success = TryTranspose(interval, out var note);
+        var success = TryTransposeUp(interval, out var note);
 
         if (!success)
         {
             throw new ArgumentException("Interval transposes the note out of possible range", nameof(interval));
         }
-        
+
         return note!;
     }
 
     /// <summary>
-    /// Tries to transpose a note by a specific internval
+    /// Tries to transpose a note up by a specific internval
     /// </summary>
     /// <param name="interval">Interval to trasnpose by</param>
     /// <param name="note">Transposed note</param>
     /// <returns><see langword="true"/> if transposed succesfully</returns>
-    public bool TryTranspose(Interval interval, out Note? note)
+    public bool TryTransposeUp(Interval interval, out Note? note)
     {
-        var transposedPitch = _pitch + interval.Distance;
+        return TryTranspose(interval.Distance, out note);
+    }
 
-        var noteExists = TryFindByPitch(transposedPitch, out var found);
+    /// <summary>
+    /// Transpose a note down by a specific internval
+    /// </summary>
+    /// <param name="interval">Interval to trasnpose by</param>
+    /// <returns>Transposed note</returns>
+    /// <exception cref="ArgumentException"></exception>
+    public Note TransposeDown(Interval interval)
+    {
+        var success = TryTransposeDown(interval, out var note);
+
+        if (!success)
+        {
+            throw new ArgumentException("Interval transposes the note out of possible range", nameof(interval));
+        }
+
+        return note!;
+    }
+
+    /// <summary>
+    /// Tries to transpose a note down by a specific internval
+    /// </summary>
+    /// <param name="interval">Interval to trasnpose by</param>
+    /// <param name="note">Transposed note</param>
+    /// <returns><see langword="true"/> if transposed succesfully</returns>
+    public bool TryTransposeDown(Interval interval, out Note? note)
+    {
+        return TryTranspose(-interval.Distance, out note);
+    }
+
+    private bool TryTranspose(int distance, out Note? note)
+    {
+        var transposedPitch = AbsolutePitch + distance;
+
+        var noteExists = TryFindByAbsolutePitch(transposedPitch, out var found);
 
         if (!noteExists)
         {
@@ -193,9 +231,9 @@ public partial class Note : IEquatable<Note?>
         return true;
     }
 
-    private static bool TryFindByPitch(int pitch, out Note? note)
+    private static bool TryFindByAbsolutePitch(int pitch, out Note? note)
     {
-        var found = AllNotes.FirstOrDefault(a => a._pitch == pitch);
+        var found = Notes.All.FirstOrDefault(a => a.AbsolutePitch == pitch);
 
         if (found is null)
         {
@@ -207,53 +245,140 @@ public partial class Note : IEquatable<Note?>
         return true;
     }
 
-    private static Note FindByPitch(int pitch)
+    private static Note FindByAbsolutePitch(int absolutePitch)
     {
-        var success = TryFindByPitch(pitch, out var note);
+        var success = TryFindByAbsolutePitch(absolutePitch, out var note);
 
         if (!success)
         {
-            throw new ArgumentOutOfRangeException(nameof(pitch), pitch, "Note with this pitch was not found");
+            throw new ArgumentOutOfRangeException(nameof(absolutePitch), absolutePitch, "Note with this pitch was not found");
         }
 
         return note!;
     }
 
-    public override bool Equals(object? obj)
+    public Interval IntervalWithOther(Note note)
     {
-        return Equals(obj as Note);
+        var distance = Math.Abs(AbsolutePitch - note.AbsolutePitch);
+        var interval = Interval.CreateIntervalFromDistance(distance);
+        return interval;
+    }
+
+    #region Equality
+
+    private static bool EqualsInternal(Note? a, Note? b)
+    {
+        if (a is null && b is null)
+        {
+            return true;
+        }
+
+        if (a is null || b is null)
+        {
+            return false;
+        }
+
+        return a.AbsolutePitch.Equals(b.AbsolutePitch);
     }
 
     public bool Equals(Note? other)
     {
-        return other is not null &&
-               BasePitch == other.BasePitch &&
-               Octave == other.Octave;
+        if (other is null)
+        {
+            return false;
+        }
+
+        return EqualsInternal(this, other);
     }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+        {
+            return false;
+        }
+
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (obj is not Note other)
+        {
+            return false;
+        }
+
+        return EqualsInternal(this, other);
+    }
+
+    public static bool operator ==(Note? a, Note? b)
+    {
+        return EqualsInternal(a, b);
+    }
+
+    public static bool operator !=(Note? a, Note? b)
+    {
+        return !EqualsInternal(a, b);
+    }
+
+    #endregion
+
+    #region Comparison
+
+    private static int CompareToInteral(Note? a, Note? b)
+    {
+        if (a is null && b is null)
+        {
+            return 0;
+        }
+
+        if (a is null)
+        {
+            return -1;
+        }
+
+        if (b is null)
+        {
+            return 1;
+        }
+
+        return a.AbsolutePitch.CompareTo(b.AbsolutePitch);
+    }
+
+    public int CompareTo(Note? other)
+    {
+        return CompareToInteral(this, other);
+    }
+
+    public static bool operator >(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) > 0;
+    }
+
+    public static bool operator <(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) < 0;
+    }
+
+    public static bool operator >=(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) >= 0;
+    }
+
+    public static bool operator <=(Note? a, Note? b)
+    {
+        return CompareToInteral(a, b) <= 0;
+    }
+
+    #endregion
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(BasePitch, Octave);
-    }
-
-    public static bool operator ==(Note note1, Note note2)
-    {
-        if (ReferenceEquals(note1, note2))
-            return true;
-        if (ReferenceEquals(note1, null))
-            return false;
-        if (ReferenceEquals(note2, null))
-            return false;
-        return note1.Equals(note2);
-    }
-
-    public static bool operator !=(Note note1, Note note2)
-    {
-        return !(note1 == note2);
+        return AbsolutePitch.GetHashCode();
     }
 
     public override string ToString()
     {
-        return $"{BasePitch}{(int)Octave}";
+        return Name;
     }
 }

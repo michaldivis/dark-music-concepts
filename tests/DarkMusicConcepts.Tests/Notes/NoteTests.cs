@@ -1,97 +1,46 @@
-using FluentAssertions;
-
-namespace DarkMusicConcepts.Notes.Tests;
+namespace DarkMusicConcepts;
 
 public class NoteTests
 {
+    public static IEnumerable<object[]> AllNotes => Notes.All.Select(a => new[] { a });
+
+    //notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
+    public static IEnumerable<object[]> NotesUpTo8thOctave => Notes.All.Where(a => a.Octave <= Octave.Eight).Select(a => new[] { a });
+
     public NoteTests()
     {
         DarkMusicConceptsCore.Configure(new DarkMusicConceptsSettings
         {
-            MidiMiddleCOctave = Octave.OneLine //middle C = C4
+            MidiMiddleCOctave = Octave.Four //middle C = C4
         });
     }
 
     [Theory]
-    [InlineData(NotePitch.C, Octave.SubContra, 12)]
-    [InlineData(NotePitch.D, Octave.Contra, 26)]
-    [InlineData(NotePitch.A, Octave.OneLine, 69)]
-    [InlineData(NotePitch.B, Octave.FourLine, 107)]
-    [InlineData(NotePitch.G, Octave.SixLine, 127)]
-    public void MidiNumber_ShouldBeCorrect(NotePitch notePitch, Octave octave, int expectedMidiNumber)
+    [InlineData(Pitch.C, Octave.Zero, 12)]
+    [InlineData(Pitch.D, Octave.One, 26)]
+    [InlineData(Pitch.A, Octave.Four, 69)]
+    [InlineData(Pitch.B, Octave.Seven, 107)]
+    [InlineData(Pitch.G, Octave.Nine, 127)]
+    public void MidiNumber_ShouldBeCorrect(Pitch notePitch, Octave octave, int expectedMidiNumber)
     {
-        var note = new Note(notePitch, octave);
+        var note = Note.Create(notePitch, octave);
         note.MidiNumber?.Value.Should().Be(expectedMidiNumber);
     }
 
     [Theory]
-    [InlineData(NotePitch.C, Octave.SubContra, 16.35)]
-    [InlineData(NotePitch.G, Octave.SubContra, 24.50)]
-    [InlineData(NotePitch.E, Octave.Contra, 41.20)]
-    [InlineData(NotePitch.CSharpOrDFlat, Octave.Great, 69.30)]
-    [InlineData(NotePitch.F, Octave.Small, 174.61)]
-    [InlineData(NotePitch.A, Octave.OneLine, 440.00)]
-    [InlineData(NotePitch.E, Octave.TwoLine, 659.25)]
-    [InlineData(NotePitch.B, Octave.ThreeLine, 1975.53)]
-    [InlineData(NotePitch.A, Octave.FiveLine, 7040.00)]
-    public void Frequency_ShouldBeCorrect(NotePitch notePitch, Octave octave, double expectedFrequency)
+    [InlineData(Pitch.C, Octave.Zero, 16.35)]
+    [InlineData(Pitch.G, Octave.Zero, 24.50)]
+    [InlineData(Pitch.E, Octave.One, 41.20)]
+    [InlineData(Pitch.CSharpOrDFlat, Octave.Two, 69.30)]
+    [InlineData(Pitch.F, Octave.Three, 174.61)]
+    [InlineData(Pitch.A, Octave.Four, 440.00)]
+    [InlineData(Pitch.E, Octave.Five, 659.25)]
+    [InlineData(Pitch.B, Octave.Six, 1975.53)]
+    [InlineData(Pitch.A, Octave.Eight, 7040.00)]
+    public void Frequency_ShouldBeCorrect(Pitch notePitch, Octave octave, double expectedFrequency)
     {
-        var note = new Note(notePitch, octave);
+        var note = Note.Create(notePitch, octave);
         note.Frequency.Value.Should().BeApproximately(expectedFrequency, 0.01d);
-    }
-
-    [Fact]
-    public void ComparisonEqualsOperator_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
-    {
-        var note1 = new Note(NotePitch.C, Octave.Contra);
-        var note2 = new Note(NotePitch.C, Octave.Contra);
-        var areEqual = note1 == note2;
-        areEqual.Should().BeTrue();
-    }
-
-    [Fact]
-    public void ComparisonEqualsOperator_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
-    {
-        var note1 = new Note(NotePitch.C, Octave.Contra);
-        var note2 = new Note(NotePitch.D, Octave.OneLine);
-        var areEqual = note1 == note2;
-        areEqual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComparisonEquals_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
-    {
-        var note1 = new Note(NotePitch.C, Octave.Contra);
-        var note2 = new Note(NotePitch.C, Octave.Contra);
-        var areEqual = note1.Equals(note2);
-        areEqual.Should().BeTrue();
-    }
-
-    [Fact]
-    public void ComparisonEquals_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
-    {
-        var note1 = new Note(NotePitch.C, Octave.Contra);
-        var note2 = new Note(NotePitch.D, Octave.OneLine);
-        var areEqual = note1.Equals(note2);
-        areEqual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComparisonNotEqualOperator_ShouldBeTrue_WhenPitchAndOctaveAreEqual()
-    {
-        var note1 = new Note(NotePitch.C, Octave.Contra);
-        var note2 = new Note(NotePitch.C, Octave.Contra);
-        var areNotEqual = note1 != note2;
-        areNotEqual.Should().BeFalse();
-    }
-
-    [Fact]
-    public void ComparisonNotEqualOperator_ShouldBeFalse_WhenPitchAndOctaveAreNotEqual()
-    {
-        var note1 = new Note(NotePitch.C, Octave.Contra);
-        var note2 = new Note(NotePitch.D, Octave.OneLine);
-        var areNotEqual = note1 != note2;
-        areNotEqual.Should().BeTrue();
     }
 
     [Fact]
@@ -99,7 +48,7 @@ public class NoteTests
     {
         try
         {
-            foreach (var note in Note.AllNotes)
+            foreach (var note in Notes.All)
             {
                 _ = note;
             }
@@ -109,6 +58,36 @@ public class NoteTests
             Console.WriteLine(ex);
             throw;
         }
+    }
+
+    [Fact]
+    public void AllNotesCanBeCreated_WhenMiddleCIsC3()
+    {
+        DarkMusicConceptsCore.Configure(new DarkMusicConceptsSettings
+        {
+            MidiMiddleCOctave = Octave.Three //middle C = C3
+        });
+
+        try
+        {
+            foreach (var note in Notes.All)
+            {
+                _ = note;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            throw;
+        }
+    }
+
+    [Theory]
+    [MemberData(nameof(AllNotes))]
+    public void AbsolutePitch_ShouldBeUnique(Note note)
+    {
+        var isAbsolutePitchUnique = Notes.All.All(a => a == note || a.AbsolutePitch != note.AbsolutePitch);
+        isAbsolutePitchUnique.Should().BeTrue();
     }
 
     [Theory]
@@ -123,7 +102,7 @@ public class NoteTests
     [Fact]
     public void FindByFrequency_ShouldThrow_WhenFrequencyDoesntMatch()
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(441));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Note.FindByFrequency(Frequency.From(441)));
     }
 
     [Theory]
@@ -138,7 +117,7 @@ public class NoteTests
     [Fact]
     public void TryFindByFrequency_ShouldFail_WhenFrequencyDoesntMatch()
     {
-        var success = Note.TryFindByFrequency(441, out var note);
+        var success = Note.TryFindByFrequency(Frequency.From(441), out var note);
         success.Should().BeFalse();
         note.Should().BeNull();
     }
@@ -162,40 +141,207 @@ public class NoteTests
     }
 
     [Fact]
-    public void Transpose_ShouldWork_WhenTransposingInsidePossibleRange()
+    public void TransposeUp_ShouldWork_WhenTransposingInsidePossibleRange()
     {
-        var note = Note.A4;
-        var transposed = note.Transpose(Interval.PerfectOctave);
-        transposed.Should().Be(Note.A5);
+        var note = Notes.A4;
+        var transposed = note.TransposeUp(Intervals.PerfectOctave);
+        transposed.Should().Be(Notes.A5);
     }
 
     [Fact]
-    public void Transpose_ShouldThrow_WhenTransposingOutOfRange()
+    public void TransposeUp_ShouldThrow_WhenTransposingOutOfRange()
     {
-        var maxNote = Note.B9;
-        Assert.Throws<ArgumentException>(() => maxNote.Transpose(Interval.MinorSecond));
+        var maxNote = Notes.B9;
+        Assert.Throws<ArgumentException>(() => maxNote.TransposeUp(Intervals.MinorSecond));
     }
 
     [Fact]
-    public void TryTranspose_ShouldWork_WhenTransposingInsidePossibleRange()
+    public void TryTransposeUp_ShouldWork_WhenTransposingInsidePossibleRange()
     {
-        var note = Note.A4;
-        var success = note.TryTranspose(Interval.PerfectOctave, out var transposed);
+        var note = Notes.A4;
+        var success = note.TryTransposeUp(Intervals.PerfectOctave, out var transposed);
         success.Should().BeTrue();
-        transposed.Should().Be(Note.A5);
+        transposed.Should().Be(Notes.A5);
     }
 
     [Fact]
-    public void TryTranspose_ShouldFail_WhenTransposingOutOfRange()
+    public void TryTransposeUp_ShouldFail_WhenTransposingOutOfRange()
     {
-        var maxNote = Note.B9;
-        var success = maxNote.TryTranspose(Interval.MinorSecond, out var note);
+        var maxNote = Notes.B9;
+        var success = maxNote.TryTransposeUp(Intervals.MinorSecond, out var note);
         success.Should().BeFalse();
         note.Should().BeNull();
     }
 
-    public static IEnumerable<object[]> AllNotes => Note.AllNotes.Select(a => new[] { a } );
+    [Fact]
+    public void TransposeDown_ShouldWork_WhenTransposingInsidePossibleRange()
+    {
+        var note = Notes.A4;
+        var transposed = note.TransposeDown(Intervals.PerfectOctave);
+        transposed.Should().Be(Notes.A3);
+    }
 
-    //notes up to 8th octave since some of the 9th octave notes go out of MIDI number range (127)
-    public static IEnumerable<object[]> NotesUpTo8thOctave => Note.AllNotes.Where(a => a.Octave <= Octave.FiveLine).Select(a => new[] { a });    
+    [Fact]
+    public void TransposeDown_ShouldThrow_WhenTransposingOutOfRange()
+    {
+        var minNote = Notes.CMinus1;
+        Assert.Throws<ArgumentException>(() => minNote.TransposeDown(Intervals.MinorSecond));
+    }
+
+    [Fact]
+    public void TryTransposeDown_ShouldWork_WhenTransposingInsidePossibleRange()
+    {
+        var note = Notes.A4;
+        var success = note.TryTransposeDown(Intervals.PerfectOctave, out var transposed);
+        success.Should().BeTrue();
+        transposed.Should().Be(Notes.A3);
+    }
+
+    [Fact]
+    public void TryTransposeDown_ShouldFail_WhenTransposingOutOfRange()
+    {
+        var minNote = Notes.CMinus1;
+        var success = minNote.TryTransposeDown(Intervals.MinorSecond, out var note);
+        success.Should().BeFalse();
+        note.Should().BeNull();
+    }
+
+    #region Equality
+
+    [Fact]
+    public void Equals_ShouldWork()
+    {
+        Note nullItem = null!;
+        var item1 = Note.Create(Pitch.C, Octave.Four);
+        var item2 = Note.Create(Pitch.C, Octave.Four);
+        var item3 = Note.Create(Pitch.G, Octave.Three);
+
+        (item1.Equals(item2)).Should().BeTrue();
+        (item2.Equals(item1)).Should().BeTrue();
+
+        (item1.Equals(item3)).Should().BeFalse();
+        (item1.Equals(nullItem)).Should().BeFalse();
+    }
+
+    [Fact]
+    public void EqualOperator_ShouldWork()
+    {
+        Note nullItem = null!;
+        var item1 = Note.Create(Pitch.C, Octave.Four);
+        var item2 = Note.Create(Pitch.C, Octave.Four);
+        var item3 = Note.Create(Pitch.G, Octave.Three);
+
+        (item1 == item2).Should().BeTrue();
+        (item2 == item1).Should().BeTrue();
+
+        (item1 == item3).Should().BeFalse();
+        (item1 == nullItem).Should().BeFalse();
+        (nullItem == item1).Should().BeFalse();
+    }
+
+    [Fact]
+    public void NotEqualOperator_ShouldWork()
+    {
+        Note nullItem = null!;
+        var item1 = Note.Create(Pitch.C, Octave.Four);
+        var item2 = Note.Create(Pitch.C, Octave.Four);
+        var item3 = Note.Create(Pitch.G, Octave.Three);
+
+        (item1 != item2).Should().BeFalse();
+        (item2 != item1).Should().BeFalse();
+
+        (item1 != item3).Should().BeTrue();
+        (item1 != nullItem).Should().BeTrue();
+        (nullItem != item1).Should().BeTrue();
+    }
+
+    #endregion
+
+    #region Comparison
+
+    [Fact]
+    public void CompareTo_ShouldWork()
+    {
+        var normal = Note.Create(Pitch.C, Octave.Four);
+
+        Note nullItem = null!;
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
+
+        normal.CompareTo(nullItem).Should().Be(1);
+        normal.CompareTo(little).Should().Be(1);
+        normal.CompareTo(alsoNormal).Should().Be(0);
+        normal.CompareTo(large).Should().Be(-1);
+    }
+
+    [Fact]
+    public void GreaterThanOperator_ShouldWork()
+    {
+        var normal = Note.Create(Pitch.C, Octave.Four);
+
+        Note nullItem = null!;
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
+
+        (normal > nullItem).Should().BeTrue();
+        (normal > little).Should().BeTrue();
+        (normal > alsoNormal).Should().BeFalse();
+        (normal > large).Should().BeFalse();
+        (nullItem > normal).Should().BeFalse();
+    }
+
+    [Fact]
+    public void GreaterThanOrEqualOperator_ShouldWork()
+    {
+        var normal = Note.Create(Pitch.C, Octave.Four);
+
+        Note nullItem = null!;
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
+
+        (normal >= nullItem).Should().BeTrue();
+        (normal >= little).Should().BeTrue();
+        (normal >= alsoNormal).Should().BeTrue();
+        (normal >= large).Should().BeFalse();
+        (nullItem >= normal).Should().BeFalse();
+    }
+
+    [Fact]
+    public void SmallerThanOperator_ShouldWork()
+    {
+        var normal = Note.Create(Pitch.C, Octave.Four);
+
+        Note nullItem = null!;
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
+
+        (normal < nullItem).Should().BeFalse();
+        (normal < little).Should().BeFalse();
+        (normal < alsoNormal).Should().BeFalse();
+        (normal < large).Should().BeTrue();
+        (nullItem < normal).Should().BeTrue();
+    }
+
+    [Fact]
+    public void SmallerThanOrEqualOperator_ShouldWork()
+    {
+        var normal = Note.Create(Pitch.C, Octave.Four);
+
+        Note nullItem = null!;
+        var little = Note.Create(Pitch.F, Octave.One);
+        var alsoNormal = Note.Create(Pitch.C, Octave.Four);
+        var large = Note.Create(Pitch.G, Octave.Six);
+
+        (normal <= nullItem).Should().BeFalse();
+        (normal <= little).Should().BeFalse();
+        (normal <= alsoNormal).Should().BeTrue();
+        (normal <= large).Should().BeTrue();
+        (nullItem <= normal).Should().BeTrue();
+    }
+
+    #endregion   
 }
