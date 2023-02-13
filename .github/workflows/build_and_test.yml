@@ -18,9 +18,15 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Build Core
+      run: dotnet build "src\DarkMusicConcepts\DarkMusicConcepts.csproj"
+    - name: Build Core Tests
+      run: dotnet build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
+    - name: Run Core Tests
+      run: dotnet test --no-build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
+    - name: Build Units
+      run: dotnet build "src\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj"
+    - name: Build Units Tests
+      run: dotnet build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
+    - name: Run Units Tests
+      run: dotnet test --no-build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
