@@ -19,14 +19,10 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Build Core
-      run: dotnet build "src\DarkMusicConcepts\DarkMusicConcepts.csproj"
-    - name: Build Core Tests
-      run: dotnet build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
-    - name: Run Core Tests
-      run: dotnet test --no-build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
+      run: dotnet build "src\DarkMusicConcepts\DarkMusicConcepts.csproj"      
     - name: Build Units
       run: dotnet build "src\DarkMusicConcepts.Units\DarkMusicConcepts.Units.csproj"
-    - name: Build Units Tests
+    - name: Build Tests
       run: dotnet build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
-    - name: Run Units Tests
+    - name: Run Tests
       run: dotnet test --no-build "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
