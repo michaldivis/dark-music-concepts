@@ -2,77 +2,79 @@
 /// <summary>
 /// Representation of musical time, the (<see cref="Value"/>) is stored in MIDI ticks
 /// </summary>
-public class Time : Unit<int, Time>
+public class Time : Unit<long, Time>
 {
-    public const int MinValue = 0;
-    public const int MaxValue = int.MaxValue;
+    public const long MinValue = 0;
+    public const long MaxValue = long.MaxValue;
 
     public static Time Min { get; } = From(MinValue);
     public static Time Max { get; } = From(MaxValue);
 
-    protected override int GetMinValue() => MinValue;
-    protected override int GetMaxValue() => MaxValue;
+    protected override long GetMinValue() => MinValue;
+    protected override long GetMaxValue() => MaxValue;
 
-    private const int TicksPerQuarterNote = 960;
-    private const int TicksPerSixteenthNote = TicksPerQuarterNote / 4;
-    private const int TicksPerSixteenthNoteTriplet = TicksPerQuarterNote / 6;
-    private const int TicksPerSixteenthNoteDotted = 360;
+    private const long TicksPerQuarterNote = 960;
+    private const long TicksPerSixteenthNote = TicksPerQuarterNote / 4;
+    private const long TicksPerSixteenthNoteTriplet = TicksPerQuarterNote / 6;
+    private const long TicksPerSixteenthNoteDotted = 360;
 
     #region Helper members
 
-    public int Ticks => Value;
+    public long Ticks => Value;
 
-    public int Bars => Ticks / TicksPerSixteenthNote / 16 / 4;
+    public long Bars => Ticks / TicksPerSixteenthNote / 16 / 4;
 
-    public int WholeNotes => Ticks / TicksPerSixteenthNote / 16;
-    public int HalfNotes => Ticks / TicksPerSixteenthNote / 8;
-    public int QuarterNotes => Ticks / TicksPerSixteenthNote / 4;
-    public int EightNotes => Ticks / TicksPerSixteenthNote / 2;
-    public int SixteenthNotes => Ticks / TicksPerSixteenthNote;
-    public int ThirtySecondNotes => Ticks / TicksPerSixteenthNote * 2;
-    public int SixtyForthNotes => Ticks / TicksPerSixteenthNote * 4;
+    public long WholeNotes => Ticks / TicksPerSixteenthNote / 16;
+    public long HalfNotes => Ticks / TicksPerSixteenthNote / 8;
+    public long QuarterNotes => Ticks / TicksPerSixteenthNote / 4;
+    public long EightNotes => Ticks / TicksPerSixteenthNote / 2;
+    public long SixteenthNotes => Ticks / TicksPerSixteenthNote;
+    public long ThirtySecondNotes => Ticks / TicksPerSixteenthNote * 2;
+    public long SixtyForthNotes => Ticks / TicksPerSixteenthNote * 4;
 
-    public int WholeNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 16;
-    public int HalfNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 8;
-    public int QuarterNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 4;
-    public int EightNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 2;
-    public int SixteenthNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet;
-    public int ThirtySecondNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet * 2;
-    public int SixtyForthNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet * 4;
+    public long WholeNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 16;
+    public long HalfNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 8;
+    public long QuarterNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 4;
+    public long EightNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet / 2;
+    public long SixteenthNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet;
+    public long ThirtySecondNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet * 2;
+    public long SixtyForthNoteTriplets => Ticks / TicksPerSixteenthNoteTriplet * 4;
 
-    public int WholeDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 16;
-    public int HalfDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 8;
-    public int QuarterDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 4;
-    public int EightDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 2;
-    public int SixteenthDottedNotes => Ticks / TicksPerSixteenthNoteDotted;
-    public int ThirtySecondDottedNotes => Ticks / TicksPerSixteenthNoteDotted * 2;
-    public int SixtyForthDottedNotes => Ticks / TicksPerSixteenthNoteDotted * 4;
+    public long WholeDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 16;
+    public long HalfDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 8;
+    public long QuarterDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 4;
+    public long EightDottedNotes => Ticks / TicksPerSixteenthNoteDotted / 2;
+    public long SixteenthDottedNotes => Ticks / TicksPerSixteenthNoteDotted;
+    public long ThirtySecondDottedNotes => Ticks / TicksPerSixteenthNoteDotted * 2;
+    public long SixtyForthDottedNotes => Ticks / TicksPerSixteenthNoteDotted * 4;
 
-    public static Time FromBars(int amount) => From(amount * TicksPerSixteenthNote * 64);
+    public static Time FromBars(long amount) => From(amount * TicksPerSixteenthNote * 64);
 
-    public static Time FromWholeNotes(int amount) => From(amount * TicksPerSixteenthNote * 16);
-    public static Time FromHalfNotes(int amount) => From(amount * TicksPerSixteenthNote * 8);
-    public static Time FromQuarterNotes(int amount) => From(amount * TicksPerSixteenthNote * 4);
-    public static Time FromEightNotes(int amount) => From(amount * TicksPerSixteenthNote * 2);
-    public static Time FromSixteenthNotes(int amount) => From(amount * TicksPerSixteenthNote);
-    public static Time FromThirtySecondNotes(int amount) => From(amount * TicksPerSixteenthNote / 2);
-    public static Time FromSixtyForthNotes(int amount) => From(amount * TicksPerSixteenthNote / 4);
+    public static Time FromWholeNotes(long amount) => From(amount * TicksPerSixteenthNote * 16);
+    public static Time FromHalfNotes(long amount) => From(amount * TicksPerSixteenthNote * 8);
+    public static Time FromQuarterNotes(long amount) => From(amount * TicksPerSixteenthNote * 4);
+    public static Time FromEightNotes(long amount) => From(amount * TicksPerSixteenthNote * 2);
+    public static Time FromSixteenthNotes(long amount) => From(amount * TicksPerSixteenthNote);
+    public static Time FromThirtySecondNotes(long amount) => From(amount * TicksPerSixteenthNote / 2);
+    public static Time FromSixtyForthNotes(long amount) => From(amount * TicksPerSixteenthNote / 4);
 
-    public static Time FromWholeNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet * 16);
-    public static Time FromHalfNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet * 8);
-    public static Time FromQuarterNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet * 4);
-    public static Time FromEightNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet * 2);
-    public static Time FromSixteenthNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet);
-    public static Time FromThirtySecondNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet / 2);
-    public static Time FromSixtyForthNoteTriplets(int amount) => From(amount * TicksPerSixteenthNoteTriplet / 4);
+    public static Time FromWholeNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet * 16);
+    public static Time FromHalfNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet * 8);
+    public static Time FromQuarterNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet * 4);
+    public static Time FromEightNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet * 2);
+    public static Time FromSixteenthNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet);
+    public static Time FromThirtySecondNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet / 2);
+    public static Time FromSixtyForthNoteTriplets(long amount) => From(amount * TicksPerSixteenthNoteTriplet / 4);
 
-    public static Time FromWholeNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted * 16);
-    public static Time FromHalfNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted * 8);
-    public static Time FromQuarterNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted * 4);
-    public static Time FromEightNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted * 2);
-    public static Time FromSixteenthNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted);
-    public static Time FromThirtySecondNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted / 2);
-    public static Time FromSixtyForthNoteDotteds(int amount) => From(amount * TicksPerSixteenthNoteDotted / 4);
+    public static Time FromWholeNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted * 16);
+    public static Time FromHalfNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted * 8);
+    public static Time FromQuarterNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted * 4);
+    public static Time FromEightNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted * 2);
+    public static Time FromSixteenthNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted);
+    public static Time FromThirtySecondNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted / 2);
+    public static Time FromSixtyForthNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted / 4);
+
+    public static Time FromTicks(long amount) => From(amount);
 
     public static readonly Time Zero = From(0);
 
@@ -116,12 +118,12 @@ public class Time : Unit<int, Time>
         return From(a.Ticks - b.Ticks);
     }
 
-    public static Time operator *(Time a, int multiplier)
+    public static Time operator *(Time a, long multiplier)
     {
         return From(a.Ticks * multiplier);
     }
 
-    public static Time operator *(int multiplier, Time a)
+    public static Time operator *(long multiplier, Time a)
     {
         return From(a.Ticks * multiplier);
     }
