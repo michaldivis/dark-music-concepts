@@ -1,13 +1,13 @@
 ﻿namespace DarkMusicConcepts;
 
-public class Bpm : Unit<int, Bpm>
+public class Bpm : Unit<double, Bpm>
 {
-    public const int MinValue = 0;
-    public const int MaxValue = int.MaxValue;
+    public const double MinValue = 0;
+    public const double MaxValue = double.MaxValue;
 
     public static Bpm Min { get; } = From(MinValue);
     public static Bpm Max { get; } = From(MaxValue);
 
-    protected override int GetMinValue() => MinValue;
-    protected override int GetMaxValue() => MaxValue;
+    protected override double GetMinValue() => MinValue;
+    protected override double GetMaxValue() => MaxValue;
 }
