@@ -14,7 +14,7 @@ class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.PushNuget);
 
-    private const string Version = "1.0.0-pre001";
+    private const string Version = "0.10.0";
 
     private const string CoreProjectName = "DarkMusicConcepts";
     private const string UnitsProjectName = "DarkMusicConcepts.Units";
