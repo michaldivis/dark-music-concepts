@@ -14,7 +14,7 @@ A code model for western music concepts.
 
 ## Status
 
-![Build and Run Tests](https://github.com/michaldivis/dark-music-concepts/actions/workflows/build_and_test.yml/badge.svg)
+![Run Tests](https://github.com/michaldivis/dark-music-concepts/actions/workflows/run_tests.yml/badge.svg)
 
 ## Nuget
 
