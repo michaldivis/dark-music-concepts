@@ -1,0 +1,57 @@
+name: 💡 Feature Proposal
+description: Propose a new feature or a change to an existing feature
+title: "[Proposal] "
+labels: [feature-proposal]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We welcome feature proposals! Describe a feature you'd like to add or change.
+  - type: textarea
+    id: background
+    attributes:
+      label: Background and motivation
+      description: Please describe the purpose and value of the feature here.
+      placeholder: Purpose
+    validations:
+      required: true
+  - type: textarea
+    id: feature-proposal
+    attributes:
+      label: Feature Proposal
+      description: |
+        Please provide the specific public API signature diff that you are proposing.
+      placeholder: API declaration (no method bodies)
+      value: |
+        ```C#
+        public class Chord
+        {
+            public Chord ReverseInvert();
+        }
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: usage
+    attributes:
+      label: Usage
+      description: |
+        Please provide code examples that highlight how the proposed API additions are meant to be consumed. This will help suggest whether the API has the right shape to be functional, performant and usable.
+      placeholder: API usage
+      value: |
+        ```C#
+        var chord = Chord.Create(Notes.C2, ChordFormulas.DominantSeventh);
+
+        chord.ReverseInvert();
+        ```
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks
+      description: |
+        Please mention any risks that to your knowledge the API proposal might entail, such as breaking changes, performance regressions, etc.
+      placeholder: Risks
+    validations:
+      required: false
