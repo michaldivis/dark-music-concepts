@@ -1,12 +1,12 @@
 ﻿namespace DarkMusicConcepts;
 
-public class ChordInvertTests
+public class ChordInversionTests
 {
-    public static IEnumerable<Note> NotesUpTo7ThOctave => Notes.All.Where(a => a.Octave <= Octave.Seven);
+    private static readonly IEnumerable<Note> _notesUpTo7ThOctave = Notes.All.Where(a => a.Octave <= Octave.Seven);
 
-    public class InvertCommonTriadsTests
+    public class CommonTriads
     {
-        private static readonly ChordFormula[] commonTriads =
+        private static readonly ChordFormula[] _commonTriads =
         {
             ChordFormulas.Major,
             ChordFormulas.Minor,
@@ -14,13 +14,16 @@ public class ChordInvertTests
             ChordFormulas.Augmented
         };
 
-        public static IEnumerable<object[]> CommonTriadsTestData
+        public static IEnumerable<object[]> CommonTriadsTestData { get; } = CreateCommonTriadsTestData();
+
+        private static IEnumerable<object[]> CreateCommonTriadsTestData()
         {
-            get
+            foreach (var chordFormula in _commonTriads)
             {
-                foreach (var chordFormula in commonTriads)
-                foreach (var rootNote in NotesUpTo7ThOctave)
+                foreach (var rootNote in _notesUpTo7ThOctave)
+                {
                     yield return new object[] { chordFormula, rootNote };
+                }
             }
         }
 
@@ -32,7 +35,13 @@ public class ChordInvertTests
 
             var inversion1 = chord.Invert();
 
-            inversion1.Notes.Should().Equal(chord.Notes[1], chord.Notes[2], chord.Notes[0].TransposeUp(Intervals.PerfectOctave));
+            inversion1.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[1], 
+                    chord.Notes[2], 
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave));
+
             inversion1.Inversion.Should().Be(1);
         }
 
@@ -44,8 +53,13 @@ public class ChordInvertTests
 
             var inversion2 = chord.Invert().Invert();
 
-            inversion2.Notes.Should().Equal(chord.Notes[2], chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[1].TransposeUp(Intervals.PerfectOctave));
+            inversion2.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[2], 
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[1].TransposeUp(Intervals.PerfectOctave));
+
             inversion2.Inversion.Should().Be(2);
         }
 
@@ -57,16 +71,20 @@ public class ChordInvertTests
 
             var inversion2 = chord.Invert().Invert().Invert();
 
-            inversion2.Notes.Should().Equal(
-                chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[1].TransposeUp(Intervals.PerfectOctave), chord.Notes[2].TransposeUp(Intervals.PerfectOctave));
+            inversion2.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[1].TransposeUp(Intervals.PerfectOctave), 
+                    chord.Notes[2].TransposeUp(Intervals.PerfectOctave));
+
             inversion2.Inversion.Should().Be(0);
         }
     }
 
-    public class InvertCommonSeventhChordsTests
+    public class CommonSeventhChords
     {
-        private static readonly ChordFormula[] commonTriads =
+        private static readonly ChordFormula[] _commonSeventhChords =
         {
             ChordFormulas.DominantSeventh,
             ChordFormulas.MajorSeventh,
@@ -75,13 +93,16 @@ public class ChordInvertTests
             ChordFormulas.DiminishedSeventh
         };
 
-        public static IEnumerable<object[]> CommonSeventhChordsTestData
+        public static IEnumerable<object[]> CommonSeventhChordsTestData { get; } = CreateCommonSeventhChordsTestData();
+
+        private static IEnumerable<object[]> CreateCommonSeventhChordsTestData()
         {
-            get
+            foreach (var chordFormula in _commonSeventhChords)
             {
-                foreach (var chordFormula in commonTriads)
-                foreach (var rootNote in NotesUpTo7ThOctave)
+                foreach (var rootNote in _notesUpTo7ThOctave)
+                {
                     yield return new object[] { chordFormula, rootNote };
+                }
             }
         }
 
@@ -93,11 +114,14 @@ public class ChordInvertTests
 
             var inversion1 = chord.Invert();
 
-            inversion1.Notes.Should().Equal(
-                chord.Notes[1],
-                chord.Notes[2],
-                chord.Notes[3],
-                chord.Notes[0].TransposeUp(Intervals.PerfectOctave));
+            inversion1.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[1],
+                    chord.Notes[2],
+                    chord.Notes[3],
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave));
+
             inversion1.Inversion.Should().Be(1);
         }
 
@@ -109,11 +133,14 @@ public class ChordInvertTests
 
             var inversion2 = chord.Invert().Invert();
 
-            inversion2.Notes.Should().Equal(
-                chord.Notes[2],
-                chord.Notes[3],
-                chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[1].TransposeUp(Intervals.PerfectOctave));
+            inversion2.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[2],
+                    chord.Notes[3],
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[1].TransposeUp(Intervals.PerfectOctave));
+
             inversion2.Inversion.Should().Be(2);
         }
 
@@ -125,11 +152,14 @@ public class ChordInvertTests
 
             var inversion2 = chord.Invert().Invert().Invert();
 
-            inversion2.Notes.Should().Equal(
-                chord.Notes[3],
-                chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[1].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[2].TransposeUp(Intervals.PerfectOctave));
+            inversion2.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[3],
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[1].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[2].TransposeUp(Intervals.PerfectOctave));
+
             inversion2.Inversion.Should().Be(3);
         }
 
@@ -141,11 +171,14 @@ public class ChordInvertTests
 
             var inversion2 = chord.Invert().Invert().Invert().Invert();
 
-            inversion2.Notes.Should().Equal(
-                chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[1].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[2].TransposeUp(Intervals.PerfectOctave),
-                chord.Notes[3].TransposeUp(Intervals.PerfectOctave));
+            inversion2.Notes
+                .Should()
+                .Equal(
+                    chord.Notes[0].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[1].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[2].TransposeUp(Intervals.PerfectOctave),
+                    chord.Notes[3].TransposeUp(Intervals.PerfectOctave));
+
             inversion2.Inversion.Should().Be(0);
         }
     }
