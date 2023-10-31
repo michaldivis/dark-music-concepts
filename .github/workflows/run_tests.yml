@@ -1,0 +1,28 @@
+name: Run Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+    paths:
+      - src/**
+      - tests/**
+  pull_request:
+    branches: [ "master" ]  
+    paths:
+      - src/**
+      - tests/**
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Run Tests
+      run: dotnet test "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
