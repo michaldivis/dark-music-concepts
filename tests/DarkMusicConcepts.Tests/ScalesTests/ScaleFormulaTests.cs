@@ -1,4 +1,5 @@
-﻿namespace DarkMusicConcepts;
+﻿namespace DarkMusicConcepts.Tests.ScalesTests;
+
 public class ScaleFormulaTests
 {
     [Theory]

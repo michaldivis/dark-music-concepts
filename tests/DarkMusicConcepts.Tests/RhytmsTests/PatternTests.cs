@@ -1,4 +1,5 @@
-﻿namespace DarkMusicConcepts;
+﻿namespace DarkMusicConcepts.Tests.RhytmsTests;
+
 public class PatternTests
 {
     [Fact]

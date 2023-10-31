@@ -1,4 +1,4 @@
-﻿namespace DarkMusicConcepts;
+﻿namespace DarkMusicConcepts.Tests.NotesTests;
 
 public class NoteUtilsTests
 {

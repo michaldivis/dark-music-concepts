@@ -1,4 +1,5 @@
-﻿namespace DarkMusicConcepts.Tests.Utils;
+﻿namespace DarkMusicConcepts.Tests.UtilsTests;
+
 public class ListExtensionsTests
 {
     private const string _item1 = "Harry";
