@@ -5,6 +5,8 @@
 /// </summary>
 public static class ChordFormulas
 {
+    public static ChordFormula Unknown { get; } = new("Unknown");
+
     #region Major
 
     public static ChordFormula Major { get; } =

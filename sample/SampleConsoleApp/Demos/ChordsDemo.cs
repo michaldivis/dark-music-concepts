@@ -29,7 +29,7 @@ internal class ChordsDemo : Demo
         PrintSubHeader("Chord builder");
 
         var customChord = Chord
-            .CreateCustom(Notes.G3)
+            .Build(Notes.G3)
             .With(ChordFunctions.Third)
             .With(ChordFunctions.Fifth, Accident.Sharp)
             .With(ChordFunctions.Eleventh, Accident.Flat)

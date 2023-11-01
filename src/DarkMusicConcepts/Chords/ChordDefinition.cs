@@ -6,11 +6,13 @@
 public class ChordDefinition
 {
     private readonly Note _root;
-    private readonly List<Interval> _intervals = new();
+    private readonly HashSet<Note> _notes = new();
 
     internal ChordDefinition(Note root)
     {
         _root = root;
+
+        _notes.Add(root);
     }
 
     /// <summary>
@@ -27,7 +29,9 @@ public class ChordDefinition
         //TODO handle interval not found
         interval.ThrowIfNull("Interval with this accident not found in the specified chord function");
 
-        _intervals.Add(interval);
+        var note = _root.TransposeUp(interval);
+
+        _notes.Add(note);
 
         return this;
     }
@@ -38,14 +42,6 @@ public class ChordDefinition
     /// <returns>Resulting chord</returns>
     public Chord Build()
     {
-        var existingFormula = ChordFormulas.All.FirstOrDefault(x => x.Intervals.SequenceEqual(_intervals));
-
-        if (existingFormula is null)
-        {
-            var customFormula = new ChordFormula("Custom", _intervals.ToArray());
-            return Chord.Create(_root, customFormula);
-        }
-
-        return Chord.Create(_root, existingFormula);
+        return Chord.Create(_notes);
     }
 }

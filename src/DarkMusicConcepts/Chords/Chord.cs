@@ -1,13 +1,11 @@
-﻿using Throw;
+﻿namespace DarkMusicConcepts;
 
-namespace DarkMusicConcepts;
 /// <summary>
 /// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
 /// </summary>
 public class Chord
 {
     private readonly List<ChordNote> _chordNotes = new();
-    private readonly Note _rootBeforeInversion;
 
     /// <summary>
     /// The formula used to created the chord
@@ -25,7 +23,12 @@ public class Chord
     public string Name { get; }
 
     /// <summary>
-    /// The root note of the chord
+    /// The root pitch of the chord
+    /// </summary>
+    public Pitch RootPitch { get; }
+
+    /// <summary>
+    /// The bass (lowest) note of the chord
     /// </summary>
     public Note Bass { get; }
 
@@ -39,29 +42,55 @@ public class Chord
     /// </summary>
     public IReadOnlyList<Note> Notes { get; }
 
-    private Chord(IReadOnlyList<Note> notes, Note rootBeforeInversion, ChordFormula chordFormula, int inversion)
+    private Chord(IEnumerable<Note> notes, ChordFormula? chordFormula, int? inversion, Pitch? rootPitch)
     {
-        _rootBeforeInversion = rootBeforeInversion;
+        notes.ThrowIfNull();
 
-        Notes = notes;
-        Inversion = inversion;
+        notes
+            .Throw()
+            .IfCountLessThan(2);
+
+        var orderedNotes = notes
+            .OrderBy(x => x.AbsolutePitch)
+            .ToList()
+            .AsReadOnly();
+
+        Notes = orderedNotes;
+
+        if (chordFormula is null || inversion is null || rootPitch is null)
+        {
+            (chordFormula, inversion, rootPitch) = GetFormulaAndInversionAndRootPitch(orderedNotes);
+        }
+
         Formula = chordFormula;
+        Inversion = inversion.Value;
+        RootPitch = rootPitch.Value;
 
-        var root = notes[0];
+        var bass = orderedNotes[0];
 
-        _chordNotes.Add(new ChordNote(root, ChordFunctions.Root));
+        _chordNotes.Add(new ChordNote(bass, ChordFunctions.Root));
 
         foreach (var note in notes)
         {
-            var interval = root.IntervalWithOther(note);
+            var interval = bass.IntervalWithOther(note);
             var chordNote = new ChordNote(note, ChordFunction.FunctionForInterval(interval));
             _chordNotes.Add(chordNote);
         }
 
-        Name = GetName(_rootBeforeInversion, chordFormula, inversion);
+        Name = GetName(rootPitch.Value, chordFormula, inversion.Value);
 
-        Bass = notes[0];
-        Lead = notes[notes.Count - 1];
+        Bass = bass;
+        Lead = orderedNotes[orderedNotes.Count - 1];
+    }
+
+    /// <summary>
+    /// Creates a chord from a collection of notes
+    /// </summary>
+    /// <param name="notes">Notes to create the chord from</param>
+    /// <returns>A chord created from the notes</returns>
+    public static Chord Create(IEnumerable<Note> notes)
+    {
+        return new Chord(notes, null, null, null);
     }
 
     /// <summary>
@@ -82,7 +111,7 @@ public class Chord
             notes.Add(root.TransposeUp(interval));
         }
 
-        return new Chord(notes, root, formula, 0);
+        return new Chord(notes, formula, 0, root.BasePitch);
     }
 
     /// <summary>
@@ -90,7 +119,7 @@ public class Chord
     /// </summary>
     /// <param name="root">Root note of the chord</param>
     /// <returns>A chord definition that can be manipulated to build a custom chord</returns>
-    public static ChordDefinition CreateCustom(Note root)
+    public static ChordDefinition Build(Note root)
     {
         return new ChordDefinition(root);
     }
@@ -106,12 +135,9 @@ public class Chord
         invertedNotes.Add(Notes[0].TransposeUp(Intervals.PerfectOctave));
         invertedNotes.Sort();
 
-        if(Inversion >= invertedNotes.Count - 1)
-        {
-            return new Chord(invertedNotes, _rootBeforeInversion.TransposeUp(Intervals.PerfectOctave), Formula, 0);
-        }
-
-        return new Chord(invertedNotes, _rootBeforeInversion, Formula, Inversion + 1);   
+        return Inversion >= invertedNotes.Count - 1
+            ? new Chord(invertedNotes, Formula, 0, RootPitch) 
+            : new Chord(invertedNotes, Formula, Inversion + 1, RootPitch);
     }
 
     /// <summary>
@@ -128,9 +154,11 @@ public class Chord
             .Throw("The scale degree is greater than the number of pitches in the scale")
             .IfGreaterThanOrEqualTo(scale._pitches.Count);
 
-        var rootPitch = scale._pitches[(int)scaleDegree];
+        var rootPitch = scale.Pitches[(int)scaleDegree];
 
-        return Create(scale, rootPitch, octave, ScaleStep.II, ScaleStep.II);
+        var root = Note.Create(rootPitch, octave);
+
+        return Create(scale, root, ScaleStep.II, ScaleStep.II);
     }
 
     /// <summary>
@@ -141,25 +169,23 @@ public class Chord
     /// var chord = Chord.Create(scale, scale.I, Octave.OneLine, ScaleStep.II, ScaleStep.II);</code>
     /// </summary>
     /// <param name="scale">Scale</param>
-    /// <param name="rootPitch">Root pitch</param>
-    /// <param name="octave">Octave to start the root note in</param>
+    /// <param name="root">Root note</param>
     /// <param name="scaleSteps">The steps to find the notes (each step is relative to the previous one)</param>
     /// <returns>A chord created from the scale, root pitch and steps</returns>
     /// <exception cref="ArgumentOutOfRangeException" />
-    public static Chord Create(Scale scale, Pitch rootPitch, Octave octave, params ScaleStep[] scaleSteps)
+    public static Chord Create(Scale scale, Note root, params ScaleStep[] scaleSteps)
     {
         scale.Pitches
             .Throw("The root pitch is not in the scale")
-            .IfNotContains(rootPitch);
-
-        var root = Note.Create(rootPitch, octave);
+            .IfNotContains(root.BasePitch);
 
         var notes = new List<Note>
         {
             root
         };
 
-        var currentPitch = rootPitch;
+        var currentPitch = root.BasePitch;
+        var currentOctave = root.Octave;
 
         foreach (var scaleStep in scaleSteps)
         {
@@ -167,10 +193,10 @@ public class Chord
 
             if (otherPitch < currentPitch)
             {
-                octave += 1;
+                currentOctave += 1;
             }
 
-            notes.Add(Note.Create(otherPitch, octave));
+            notes.Add(Note.Create(otherPitch, currentOctave));
 
             currentPitch = otherPitch;
         }
@@ -184,7 +210,7 @@ public class Chord
 
         var formula = existingFormula ?? new ChordFormula("Custom", intervals);
 
-        var chord = new Chord(notes, root, formula, 0);
+        var chord = new Chord(notes, formula, 0, root.BasePitch);
 
         return chord;
     }
@@ -225,17 +251,39 @@ public class Chord
             .Select(x => scaleStep)
             .ToArray();
 
-        return Create(scale, rootPitch, octave, steps);
+        var root = Note.Create(rootPitch, octave);
+
+        return Create(scale, root, steps);
     }
 
-    private static string GetName(Note root, ChordFormula formula, int inversion)
+    private static string GetName(Pitch root, ChordFormula formula, int inversion)
     {
-        if(inversion == 0)
+        return inversion == 0
+            ? $"{root}{formula.AbreviatedName}"
+            : $"{root}{formula.AbreviatedName} ({Humanizer.AddOrdinal(inversion)} inversion)";
+    }
+
+    private static (ChordFormula chordFormula, int inversion, Pitch rootPitch) GetFormulaAndInversionAndRootPitch(IReadOnlyList<Note> notes)
+    {
+        var pitches = notes
+            .Select(x => x.BasePitch)
+            .ToList();
+
+        var chordPitchesDefinition = ChordPitchesDefinitions.All.FirstOrDefault(x => x.Pitches.ContainsSameElements(pitches));
+
+        if (chordPitchesDefinition is null)
         {
-            return root.Name + formula.AbreviatedName;
+            // the pitches didn't match any chord known in the library
+            return (ChordFormulas.Unknown, 0, pitches[0]);
         }
 
-        return $"{root.Name}{formula.AbreviatedName} ({Humanizer.AddOrdinal(inversion)} inversion)";
+        var bassPitch = pitches[0];
+
+        var indexOfBassInChordFormula = chordPitchesDefinition.Pitches.IndexOf(bassPitch);
+
+        // var indexOfBass = pitches.IndexOf(chordPitchesDefinition.RootPitch);
+
+        return (chordPitchesDefinition.ChordFormula, indexOfBassInChordFormula, chordPitchesDefinition.RootPitch);
     }
 
     public override string ToString()
