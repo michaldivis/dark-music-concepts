@@ -13,7 +13,7 @@ public class TimeTests
     {
         var success = Time.TryFrom(Time.MinValue - 1, out var invalidTime);
         success.Should().Be(false);
-        invalidTime.Should().Be(null);
+        invalidTime.Should().Be(null!);
     }
 
     [Fact]

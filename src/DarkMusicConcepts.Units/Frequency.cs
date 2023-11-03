@@ -14,11 +14,31 @@ public class Frequency : Unit<double, Frequency>
     public static Frequency Min { get; } = From(MinValue);
     public static Frequency Max { get; } = From(MaxValue);
 
+    private Frequency(double value) : base(value)
+    {
+    }
+
     protected override double GetMinValue() => MinValue;
     protected override double GetMaxValue() => MaxValue;
 
     public override string ToString()
     {
         return $"{Value} Hz";
+    }
+
+    public static Frequency From(double value)
+    {
+        var frequency = new Frequency(value);
+
+        frequency.Validate();
+
+        return frequency;
+    }
+
+    public static bool TryFrom(double value, out Frequency frequency)
+    {
+        frequency = new Frequency(value);
+
+        return frequency.TryValidate();
     }
 }

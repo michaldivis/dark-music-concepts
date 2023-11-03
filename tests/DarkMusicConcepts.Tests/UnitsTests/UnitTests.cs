@@ -10,8 +10,28 @@ public class UnitTests
         public static DemoUnit Min { get; } = From(MinValue);
         public static DemoUnit Max { get; } = From(MaxValue);
 
+        private DemoUnit(int value) : base(value)
+        {
+        }
+
         protected override int GetMinValue() => MinValue;
         protected override int GetMaxValue() => MaxValue;
+
+        public static DemoUnit From(int value)
+        {
+            var demoUnit = new DemoUnit(value);
+
+            demoUnit.Validate();
+
+            return demoUnit;
+        }
+
+        public static bool TryFrom(int value, out DemoUnit demoUnit)
+        {
+            demoUnit = new DemoUnit(value);
+
+            return demoUnit.TryValidate();
+        }
     }
 
     [Fact]

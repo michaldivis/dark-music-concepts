@@ -6,13 +6,18 @@
 /// <typeparam name="TValue">The actual value</typeparam>
 /// <typeparam name="TThis">Self</typeparam>
 public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue, TThis>>, IEquatable<Unit<TValue, TThis>>
-    where TThis : Unit<TValue, TThis>, new()
+    where TThis : Unit<TValue, TThis>
     where TValue : IComparable, IComparable<TValue>, IEquatable<TValue>
 {
+    protected Unit(TValue value)
+    {
+        Value = value;
+    }
+
     protected abstract TValue GetMinValue();
     protected abstract TValue GetMaxValue();
 
-    private void Validate()
+    protected void Validate()
     {
         if (!IsValidValue(Value))
         {
@@ -20,7 +25,7 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
         }
     }
 
-    private bool TryValidate()
+    protected bool TryValidate()
     {
         return IsValidValue(Value);
     }
@@ -45,33 +50,7 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
         return true;
     }
 
-    public TValue Value { get; protected set; }
-
-    public static TThis From(TValue item)
-    {
-        var x = new TThis
-        {
-            Value = item
-        };
-
-        x.Validate();
-
-        return x;
-    }
-
-    public static bool TryFrom(TValue item, out TThis thisValue)
-    {
-        var x = new TThis
-        {
-            Value = item
-        };
-
-        thisValue = x.TryValidate()
-           ? x
-           : null!;
-
-        return thisValue is not null;
-    }
+    public TValue Value { get; }
 
     #region Equality
 
