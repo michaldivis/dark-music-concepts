@@ -1,6 +1,6 @@
 ﻿namespace DarkMusicConcepts;
 /// <summary>
-/// Representation of musical time, the (<see cref="Value"/>) is stored in MIDI ticks
+/// Representation of musical time, the value is stored in MIDI ticks
 /// </summary>
 public class Time : Unit<long, Time>
 {

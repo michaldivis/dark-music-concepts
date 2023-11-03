@@ -11,6 +11,8 @@ public class Scale
     /// <summary>
     /// Create a scale from notes
     /// </summary>
+    /// <param name="root">The root pitch</param>
+    /// <param name="formula">The scale formula</param>
     /// <param name="pitches">Notes to create the scale from</param>
     /// <returns>A created scale</returns>
     /// <exception cref="ArgumentNullException"></exception>

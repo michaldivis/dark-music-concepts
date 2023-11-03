@@ -141,6 +141,7 @@ public class Chord
     /// var chord = Chord.Create(scale, scale.I, Octave.OneLine, ScaleStep.II, ScaleStep.II);</code>
     /// </summary>
     /// <param name="scale">Scale</param>
+    /// <param name="rootPitch">Root pitch</param>
     /// <param name="octave">Octave to start the root note in</param>
     /// <param name="scaleSteps">The steps to find the notes (each step is relative to the previous one)</param>
     /// <returns>A chord created from the scale, root pitch and steps</returns>
