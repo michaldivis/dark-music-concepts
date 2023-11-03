@@ -8,14 +8,15 @@
 
 	<PropertyGroup>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageId>Divis.DarkMusicConcepts</PackageId>
-		<Version>0.0.0-dev</Version>
 		<Authors>michaldivis</Authors>
 		<Company>Michal Diviš</Company>
 		<Product>Dark Music Concepts</Product>
 		<Description>A code model for western music concepts.</Description>
 		<PackageProjectUrl>https://github.com/michaldivis/dark-music-concepts</PackageProjectUrl>
 		<PackageIcon>icon.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/michaldivis/dark-music-concepts</RepositoryUrl>
 		<PackageTags>music, music theory, music-library</PackageTags>
 		<NeutralLanguage>en</NeutralLanguage>
@@ -23,10 +24,8 @@
 	</PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\assets\icon.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="..\..\assets\icon.png" Pack="true" PackagePath="\"/>
+	<None Include="..\..\README.md" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>
