@@ -10,8 +10,32 @@ public class Time : Unit<long, Time>
     public static Time Min { get; } = From(MinValue);
     public static Time Max { get; } = From(MaxValue);
 
+    private Time(long value) : base(value)
+    {
+    }
+
     protected override long GetMinValue() => MinValue;
     protected override long GetMaxValue() => MaxValue;
+
+    public static Time From(long ticks)
+    {
+        var time = new Time(ticks);
+
+        time.Validate();
+
+        return time;
+    }
+
+    public static bool TryFrom(long ticks, out Time time)
+    {
+        var x = new Time(ticks);
+
+        time = x.TryValidate()
+            ? x
+            : null!;
+
+        return time is not null;
+    }
 
     private const long TicksPerQuarterNote = 960;
     private const long TicksPerSixteenthNote = TicksPerQuarterNote / 4;
@@ -73,8 +97,6 @@ public class Time : Unit<long, Time>
     public static Time FromSixteenthNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted);
     public static Time FromThirtySecondNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted / 2);
     public static Time FromSixtyForthNoteDotteds(long amount) => From(amount * TicksPerSixteenthNoteDotted / 4);
-
-    public static Time FromTicks(long amount) => From(amount);
 
     public static readonly Time Zero = From(0);
 

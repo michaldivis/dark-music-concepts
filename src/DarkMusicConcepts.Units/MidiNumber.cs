@@ -13,6 +13,30 @@ public class MidiNumber : Unit<int, MidiNumber>
     public static MidiNumber Min { get; } = From(MinValue);
     public static MidiNumber Max { get; } = From(MaxValue);
 
+    private MidiNumber(int value) : base(value)
+    {
+    }
+
     protected override int GetMinValue() => MinValue;
     protected override int GetMaxValue() => MaxValue;
+
+    public static MidiNumber From(int value)
+    {
+        var midiNumber = new MidiNumber(value);
+
+        midiNumber.Validate();
+
+        return midiNumber;
+    }
+
+    public static bool TryFrom(int value, out MidiNumber midiNumber)
+    {
+        var x = new MidiNumber(value);
+
+        midiNumber = x.TryValidate()
+            ? x
+            : null!;
+
+        return midiNumber is not null;
+    }
 }

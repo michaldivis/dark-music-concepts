@@ -12,6 +12,30 @@ public class MidiVelocity : Unit<int, MidiVelocity>
     public static MidiVelocity Min { get; } = From(MinValue);
     public static MidiVelocity Max { get; } = From(MaxValue);
 
+    private MidiVelocity(int value) : base(value)
+    {
+    }
+
     protected override int GetMinValue() => MinValue;
     protected override int GetMaxValue() => MaxValue;
+
+    public static MidiVelocity From(int value)
+    {
+        var midiVelocity = new MidiVelocity(value);
+
+        midiVelocity.Validate();
+
+        return midiVelocity;
+    }
+
+    public static bool TryFrom(int value, out MidiVelocity midiVelocity)
+    {
+        var x = new MidiVelocity(value);
+
+        midiVelocity = x.TryValidate()
+            ? x
+            : null!;
+
+        return midiVelocity is not null;
+    }
 }
