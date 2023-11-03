@@ -26,8 +26,12 @@ public class Bpm : Unit<double, Bpm>
 
     public static bool TryFrom(double value, out Bpm bpm)
     {
-        bpm = new Bpm(value);
+        var x = new Bpm(value);
 
-        return bpm.TryValidate();
+        bpm = x.TryValidate()
+            ? x
+            : null!;
+
+        return bpm is not null;
     }
 }

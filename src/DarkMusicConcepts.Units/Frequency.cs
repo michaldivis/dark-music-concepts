@@ -37,8 +37,12 @@ public class Frequency : Unit<double, Frequency>
 
     public static bool TryFrom(double value, out Frequency frequency)
     {
-        frequency = new Frequency(value);
+        var x = new Frequency(value);
 
-        return frequency.TryValidate();
+        frequency = x.TryValidate()
+            ? x
+            : null!;
+
+        return frequency is not null;
     }
 }

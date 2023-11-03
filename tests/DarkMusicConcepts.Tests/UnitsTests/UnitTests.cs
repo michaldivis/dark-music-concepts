@@ -28,9 +28,13 @@ public class UnitTests
 
         public static bool TryFrom(int value, out DemoUnit demoUnit)
         {
-            demoUnit = new DemoUnit(value);
+            var x = new DemoUnit(value);
 
-            return demoUnit.TryValidate();
+            demoUnit = x.TryValidate()
+                ? x
+                : null!;
+
+            return demoUnit is not null;
         }
     }
 

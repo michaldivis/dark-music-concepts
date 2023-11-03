@@ -28,9 +28,13 @@ public class Time : Unit<long, Time>
 
     public static bool TryFrom(long ticks, out Time time)
     {
-        time = new Time(ticks);
+        var x = new Time(ticks);
 
-        return time.TryValidate();
+        time = x.TryValidate()
+            ? x
+            : null!;
+
+        return time is not null;
     }
 
     private const long TicksPerQuarterNote = 960;

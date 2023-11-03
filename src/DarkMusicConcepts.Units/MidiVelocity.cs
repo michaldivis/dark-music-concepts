@@ -30,8 +30,12 @@ public class MidiVelocity : Unit<int, MidiVelocity>
 
     public static bool TryFrom(int value, out MidiVelocity midiVelocity)
     {
-        midiVelocity = new MidiVelocity(value);
+        var x = new MidiVelocity(value);
 
-        return midiVelocity.TryValidate();
+        midiVelocity = x.TryValidate()
+            ? x
+            : null!;
+
+        return midiVelocity is not null;
     }
 }

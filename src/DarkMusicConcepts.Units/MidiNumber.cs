@@ -31,8 +31,12 @@ public class MidiNumber : Unit<int, MidiNumber>
 
     public static bool TryFrom(int value, out MidiNumber midiNumber)
     {
-        midiNumber = new MidiNumber(value);
+        var x = new MidiNumber(value);
 
-        return midiNumber.TryValidate();
+        midiNumber = x.TryValidate()
+            ? x
+            : null!;
+
+        return midiNumber is not null;
     }
 }
