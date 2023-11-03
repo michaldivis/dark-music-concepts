@@ -9,6 +9,8 @@
 	<PropertyGroup>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<!-- Disable the compiler warnings not documented members-->
+		<NoWarn>$(NoWarn);CS1591</NoWarn>
 		<PackageId>Divis.DarkMusicConcepts.Units</PackageId>
 		<Authors>michaldivis</Authors>
 		<Company>Michal Diviš</Company>
