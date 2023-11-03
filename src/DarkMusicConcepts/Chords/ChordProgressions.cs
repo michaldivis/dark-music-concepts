@@ -7,7 +7,7 @@ public static class ChordProgressions
 {
     public static class Pop
     {
-        //// <summary>
+        /// <summary>
         ///This chord progression uses the tonic, subdominant, dominant, and subdominant chords in that order. It is a common and versatile progression, and it can be used in many different keys and styles of pop music. For example, in the key of C major, the progression would be C-F-G-F.
         ///</summary>
         public static ChordProgression I_IV_V_IV { get; } = new(ScaleDegree.I, ScaleDegree.IV, ScaleDegree.V, ScaleDegree.IV);
