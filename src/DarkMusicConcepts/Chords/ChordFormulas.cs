@@ -136,6 +136,7 @@ public static class ChordFormulas
 
     public static IReadOnlyList<ChordFormula> All { get; } = new[]
     {
+        Unknown,
         Major,
         AddedFourth,
         Sixth,
