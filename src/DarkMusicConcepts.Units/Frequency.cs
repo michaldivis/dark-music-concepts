@@ -6,43 +6,16 @@
 /// <para>Note frequencies are mathematically related to each other, and are defined around the central note, A4 (A @ OneLine octave) <see href="http://en.wikipedia.org/wiki/Piano_key_frequencies"/>. The current "standard pitch" or modern "concert pitch" for this note is 440 Hz. The formula for frequency calculatio is:</para>
 /// <para>f = 2^n/12 * 440Hz(n is the pitch distance to A4 or A @ OneLine).</para>
 /// </summary>
-public class Frequency : Unit<double, Frequency>
+public class Frequency : Unit<double, Frequency>, IUnit<double, Frequency>
 {
-    public const double MinValue = 0;
-    public const double MaxValue = double.MaxValue;
-
-    public static Frequency Min { get; } = From(MinValue);
-    public static Frequency Max { get; } = From(MaxValue);
+    public static double MinValue { get; } = 0;
+    public static double MaxValue { get; } = double.MaxValue;
 
     private Frequency(double value) : base(value)
     {
     }
 
-    protected override double GetMinValue() => MinValue;
-    protected override double GetMaxValue() => MaxValue;
+    static Frequency IUnit<double, Frequency>.Create(double value) => new(value);
 
-    public override string ToString()
-    {
-        return $"{Value} Hz";
-    }
-
-    public static Frequency From(double value)
-    {
-        var frequency = new Frequency(value);
-
-        frequency.Validate();
-
-        return frequency;
-    }
-
-    public static bool TryFrom(double value, out Frequency frequency)
-    {
-        var x = new Frequency(value);
-
-        frequency = x.TryValidate()
-            ? x
-            : null!;
-
-        return frequency is not null;
-    }
+    public override string ToString() => $"{Value} Hz";
 }

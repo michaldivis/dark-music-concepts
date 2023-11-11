@@ -2,48 +2,12 @@
 
 public class UnitTests
 {
-    private class DemoUnit : Unit<int, DemoUnit>
-    {
-        public const int MinValue = 0;
-        public const int MaxValue = int.MaxValue;
-
-        public static DemoUnit Min { get; } = From(MinValue);
-        public static DemoUnit Max { get; } = From(MaxValue);
-
-        private DemoUnit(int value) : base(value)
-        {
-        }
-
-        protected override int GetMinValue() => MinValue;
-        protected override int GetMaxValue() => MaxValue;
-
-        public static DemoUnit From(int value)
-        {
-            var demoUnit = new DemoUnit(value);
-
-            demoUnit.Validate();
-
-            return demoUnit;
-        }
-
-        public static bool TryFrom(int value, out DemoUnit demoUnit)
-        {
-            var x = new DemoUnit(value);
-
-            demoUnit = x.TryValidate()
-                ? x
-                : null!;
-
-            return demoUnit is not null;
-        }
-    }
-
     [Fact]
     public void SimpleExample_ShouldWork()
     {
-        var item1 = DemoUnit.From(123456);
-        var item2 = DemoUnit.From(123456);
-        var item3 = DemoUnit.From(456789);
+        var item1 = Bpm.From(123456);
+        var item2 = Bpm.From(123456);
+        var item3 = Bpm.From(456789);
 
         item1.Should().Be(item2);
         item1.GetHashCode().Should().Be(item2.GetHashCode());
@@ -52,12 +16,30 @@ public class UnitTests
         item1.GetHashCode().Should().NotBe(item3.GetHashCode());
     }
 
+    #region Creation
+
+    [Fact]
+    public void From_ShouldThrow_WhenLessThanMin()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() => Bpm.From(Bpm.MinValue - 1));
+    }
+
+    [Fact]
+    public void TryFrom_ShouldFail_WhenLessThanMin()
+    {
+        var success = Bpm.TryFrom(Bpm.MinValue - 1, out var invalidBpm);
+        success.Should().Be(false);
+        invalidBpm.Should().Be(null!);
+    }
+
+    #endregion
+
     #region Validate
 
     [Fact]
     public void Validate_ShouldWork()
     {
-        var act = new Action(() => DemoUnit.From(-99));
+        var act = new Action(() => Bpm.From(-99));
         act.Should().Throw<ArgumentOutOfRangeException>();
     }
 
@@ -68,7 +50,7 @@ public class UnitTests
     [Fact]
     public void TryValidate_ShouldReturnFalse_WhenInvalid()
     {
-        var result = DemoUnit.TryFrom(-99, out var value);
+        var result = Bpm.TryFrom(-99, out var value);
         result.Should().BeFalse();
         value.Should().BeNull();
     }
@@ -76,7 +58,7 @@ public class UnitTests
     [Fact]
     public void TryValidate_ShouldReturnTrue_WhenValid()
     {
-        var result = DemoUnit.TryFrom(25, out var value);
+        var result = Bpm.TryFrom(25, out var value);
         result.Should().BeTrue();
         value.Should().NotBeNull();
     }
@@ -89,7 +71,7 @@ public class UnitTests
     public void ToString_ShouldValueToString()
     {
         var value = 123;
-        var result = DemoUnit.From(value).ToString();
+        var result = Bpm.From(value).ToString();
         result.Should().Be(value.ToString());
     }
 
@@ -100,25 +82,25 @@ public class UnitTests
     [Fact]
     public void StaticEquals_ShouldWork()
     {
-        DemoUnit nullItem = null!;
-        var item1 = DemoUnit.From(123456);
-        var item2 = DemoUnit.From(123456);
-        var item3 = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var item1 = Bpm.From(123456);
+        var item2 = Bpm.From(123456);
+        var item3 = Bpm.From(456789);
 
-        (DemoUnit.Equals(item1, item2)).Should().BeTrue();
-        (DemoUnit.Equals(item2, item1)).Should().BeTrue();
+        (Bpm.Equals(item1, item2)).Should().BeTrue();
+        (Bpm.Equals(item2, item1)).Should().BeTrue();
 
-        (DemoUnit.Equals(item1, item3)).Should().BeFalse();
-        (DemoUnit.Equals(item1, nullItem)).Should().BeFalse();
+        (Bpm.Equals(item1, item3)).Should().BeFalse();
+        (Bpm.Equals(item1, nullItem)).Should().BeFalse();
     }
 
     [Fact]
     public void Equals_ShouldWork()
     {
-        DemoUnit nullItem = null!;
-        var item1 = DemoUnit.From(123456);
-        var item2 = DemoUnit.From(123456);
-        var item3 = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var item1 = Bpm.From(123456);
+        var item2 = Bpm.From(123456);
+        var item3 = Bpm.From(456789);
 
         (item1.Equals(item2)).Should().BeTrue();
         (item2.Equals(item1)).Should().BeTrue();
@@ -130,10 +112,10 @@ public class UnitTests
     [Fact]
     public void EqualOperator_ShouldWork()
     {
-        DemoUnit nullItem = null!;
-        var item1 = DemoUnit.From(123456);
-        var item2 = DemoUnit.From(123456);
-        var item3 = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var item1 = Bpm.From(123456);
+        var item2 = Bpm.From(123456);
+        var item3 = Bpm.From(456789);
 
         (item1 == item2).Should().BeTrue();
         (item2 == item1).Should().BeTrue();
@@ -146,10 +128,10 @@ public class UnitTests
     [Fact]
     public void NotEqualOperator_ShouldWork()
     {
-        DemoUnit nullItem = null!;
-        var item1 = DemoUnit.From(123456);
-        var item2 = DemoUnit.From(123456);
-        var item3 = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var item1 = Bpm.From(123456);
+        var item2 = Bpm.From(123456);
+        var item3 = Bpm.From(456789);
 
         (item1 != item2).Should().BeFalse();
         (item2 != item1).Should().BeFalse();
@@ -166,12 +148,12 @@ public class UnitTests
     [Fact]
     public void CompareTo_ShouldWork()
     {
-        var normal = DemoUnit.From(123456);
+        var normal = Bpm.From(123456);
 
-        DemoUnit nullItem = null!;
-        var little = DemoUnit.From(10);
-        var alsoNormal = DemoUnit.From(123456);
-        var large = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var little = Bpm.From(10);
+        var alsoNormal = Bpm.From(123456);
+        var large = Bpm.From(456789);
 
         normal.CompareTo(nullItem).Should().Be(1);
         normal.CompareTo(little).Should().Be(1);
@@ -182,13 +164,13 @@ public class UnitTests
     [Fact]
     public void CompareToObject_ShouldWork()
     {
-        var normal = DemoUnit.From(123456);
+        var normal = Bpm.From(123456);
 
         object nullItem = null!;
-        object anotherType = "I'm not a Demo Unit...";
-        object little = DemoUnit.From(10);
-        object alsoNormal = DemoUnit.From(123456);
-        object large = DemoUnit.From(456789);
+        object anotherType = "I'm not a Bpm...";
+        object little = Bpm.From(10);
+        object alsoNormal = Bpm.From(123456);
+        object large = Bpm.From(456789);
 
         normal.CompareTo(nullItem).Should().Be(1);
         normal.CompareTo(little).Should().Be(1);
@@ -202,12 +184,12 @@ public class UnitTests
     [Fact]
     public void GreaterThanOperator_ShouldWork()
     {
-        var normal = DemoUnit.From(123456);
+        var normal = Bpm.From(123456);
 
-        DemoUnit nullItem = null!;
-        var little = DemoUnit.From(10);
-        var alsoNormal = DemoUnit.From(123456);
-        var large = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var little = Bpm.From(10);
+        var alsoNormal = Bpm.From(123456);
+        var large = Bpm.From(456789);
 
         (normal > nullItem).Should().BeTrue();
         (normal > little).Should().BeTrue();
@@ -219,12 +201,12 @@ public class UnitTests
     [Fact]
     public void GreaterThanOrEqualOperator_ShouldWork()
     {
-        var normal = DemoUnit.From(123456);
+        var normal = Bpm.From(123456);
 
-        DemoUnit nullItem = null!;
-        var little = DemoUnit.From(10);
-        var alsoNormal = DemoUnit.From(123456);
-        var large = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var little = Bpm.From(10);
+        var alsoNormal = Bpm.From(123456);
+        var large = Bpm.From(456789);
 
         (normal >= nullItem).Should().BeTrue();
         (normal >= little).Should().BeTrue();
@@ -236,12 +218,12 @@ public class UnitTests
     [Fact]
     public void SmallerThanOperator_ShouldWork()
     {
-        var normal = DemoUnit.From(123456);
+        var normal = Bpm.From(123456);
 
-        DemoUnit nullItem = null!;
-        var little = DemoUnit.From(10);
-        var alsoNormal = DemoUnit.From(123456);
-        var large = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var little = Bpm.From(10);
+        var alsoNormal = Bpm.From(123456);
+        var large = Bpm.From(456789);
 
         (normal < nullItem).Should().BeFalse();
         (normal < little).Should().BeFalse();
@@ -253,12 +235,12 @@ public class UnitTests
     [Fact]
     public void SmallerThanOrEqualOperator_ShouldWork()
     {
-        var normal = DemoUnit.From(123456);
+        var normal = Bpm.From(123456);
 
-        DemoUnit nullItem = null!;
-        var little = DemoUnit.From(10);
-        var alsoNormal = DemoUnit.From(123456);
-        var large = DemoUnit.From(456789);
+        Bpm nullItem = null!;
+        var little = Bpm.From(10);
+        var alsoNormal = Bpm.From(123456);
+        var large = Bpm.From(456789);
 
         (normal <= nullItem).Should().BeFalse();
         (normal <= little).Should().BeFalse();

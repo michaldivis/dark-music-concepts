@@ -1,37 +1,17 @@
 ﻿namespace DarkMusicConcepts;
 
-public class Bpm : Unit<double, Bpm>
+/// <summary>
+/// <para>Beats per minute.</para>
+/// <para>In musical terminology, tempo (Italian, 'time'; plural tempos, or tempi from the Italian plural) also known as beats per minute, is the speed or pace of a given composition. In classical music, tempo is typically indicated with an instruction at the start of a piece (often using conventional Italian terms) and is usually measured in beats per minute (or bpm). In modern classical compositions, a "metronome mark" in beats per minute may supplement or replace the normal tempo marking, while in modern genres like electronic dance music, tempo will typically simply be stated in BPM.</para>
+/// </summary>
+public class Bpm : Unit<double, Bpm>, IUnit<double, Bpm>
 {
-    public const double MinValue = 0;
-    public const double MaxValue = double.MaxValue;
-
-    public static Bpm Min { get; } = From(MinValue);
-    public static Bpm Max { get; } = From(MaxValue);
+    public static double MinValue { get; } = 0;
+    public static double MaxValue { get; } = double.MaxValue;
 
     private Bpm(double value) : base(value)
-    {        
-    }
-
-    protected override double GetMinValue() => MinValue;
-    protected override double GetMaxValue() => MaxValue;
-
-    public static Bpm From(double value)
     {
-        var bpm = new Bpm(value);
-
-        bpm.Validate();
-
-        return bpm;
     }
 
-    public static bool TryFrom(double value, out Bpm bpm)
-    {
-        var x = new Bpm(value);
-
-        bpm = x.TryValidate()
-            ? x
-            : null!;
-
-        return bpm is not null;
-    }
+    static Bpm IUnit<double, Bpm>.Create(double value) => new(value);
 }
