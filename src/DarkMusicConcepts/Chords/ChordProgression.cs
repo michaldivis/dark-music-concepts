@@ -16,12 +16,16 @@ public class ChordProgression
     /// </summary>
     /// <param name="scaleDegrees">The scale degrees to use</param>
     /// <returns>A chord progression</returns>
+    /// <exception cref="ArgumentNullException"></exception>
     /// <exception cref="ArgumentException"></exception>
     public static ChordProgression Create(params ScaleDegree[] scaleDegrees)
     {
-        scaleDegrees
-            .ThrowIfNull()
-            .IfCountLessThan(2);
+        ArgumentNullException.ThrowIfNull(scaleDegrees);
+
+        if (scaleDegrees.Length < 2)
+        {
+            throw new ArgumentException("Scale degrees must contain at least 2 elements", nameof(scaleDegrees));
+        }
 
         return new ChordProgression(scaleDegrees);
     }

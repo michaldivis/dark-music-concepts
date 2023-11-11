@@ -15,9 +15,10 @@ internal static class ListExtensions
     {
         var index = list.IndexOf(item);
 
-        index
-            .Throw("Item not found in list")
-            .IfNegative();
+        if (index < 0)
+        {
+            throw new ArgumentException("Item not found in list");
+        }
 
         var wantedIndex = index + step;
         var safeIndex = wantedIndex % list.Count;

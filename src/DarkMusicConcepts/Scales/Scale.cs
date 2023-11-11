@@ -19,9 +19,12 @@ public class Scale
     /// <exception cref="ArgumentException"></exception>
     internal static Scale Create(Pitch root, ScaleFormula formula, IEnumerable<Pitch> pitches)
     {
-        pitches
-            .ThrowIfNull()
-            .IfCountLessThan(5);
+        ArgumentNullException.ThrowIfNull(pitches);
+
+        if (pitches.Count() < 5)
+        {
+            throw new ArgumentException("Pitches must contain at least 5 elements", nameof(pitches));
+        }
 
         return new Scale(root, formula, pitches);
     }

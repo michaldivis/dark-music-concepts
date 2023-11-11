@@ -1,6 +1,7 @@
-﻿using Throw;
+﻿using ExhaustiveMatching;
 
 namespace DarkMusicConcepts;
+
 /// <summary>
 /// A chord is any harmonic set of pitches/frequencies consisting of multiple notes (also called "pitches") that are heard as if sounding simultaneously.
 /// </summary>
@@ -124,9 +125,10 @@ public class Chord
     /// <exception cref="ArgumentOutOfRangeException" />
     public static Chord Create(Scale scale, Octave octave, ScaleDegree scaleDegree)
     {
-        ((int)scaleDegree)
-            .Throw("The scale degree is greater than the number of pitches in the scale")
-            .IfGreaterThanOrEqualTo(scale._pitches.Count);
+        if ((int)scaleDegree >= scale._pitches.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(scaleDegree), scaleDegree, "The scale degree is greater than the number of pitches in the scale");
+        }
 
         var rootPitch = scale._pitches[(int)scaleDegree];
 
@@ -148,9 +150,10 @@ public class Chord
     /// <exception cref="ArgumentOutOfRangeException" />
     public static Chord Create(Scale scale, Pitch rootPitch, Octave octave, params ScaleStep[] scaleSteps)
     {
-        scale.Pitches
-            .Throw("The root pitch is not in the scale")
-            .IfNotContains(rootPitch);
+        if (!scale.Pitches.Contains(rootPitch))
+        {
+            throw new ArgumentOutOfRangeException(nameof(rootPitch), rootPitch, "The root pitch is not contained in the scale");
+        }
 
         var root = Note.Create(rootPitch, octave);
 
@@ -202,13 +205,15 @@ public class Chord
     /// <exception cref="ArgumentOutOfRangeException" />
     public static Chord Create(Scale scale, Octave octave, Pitch rootPitch, ChordType chordType, int amountOfNotes)
     {
-        amountOfNotes
-            .Throw()
-            .IfNegativeOrZero();
+        if (amountOfNotes <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(amountOfNotes), amountOfNotes, "The amount of notes has to be greater than zero");
+        }
 
-        scale.Pitches
-            .Throw()
-            .IfNotContains(rootPitch);
+        if (!scale.Pitches.Contains(rootPitch))
+        {
+            throw new ArgumentOutOfRangeException(nameof(rootPitch), rootPitch, "The root pitch is not contained in the scale");
+        }
 
         var scaleStep = chordType switch
         {
