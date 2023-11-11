@@ -1,4 +1,5 @@
-﻿using SampleConsoleApp.Demos;
+﻿using DarkMusicConcepts;
+using SampleConsoleApp.Demos;
 
 var demos = new Demo[]
 {

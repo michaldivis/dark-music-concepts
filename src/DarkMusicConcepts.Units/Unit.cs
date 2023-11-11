@@ -1,4 +1,6 @@
-﻿namespace DarkMusicConcepts;
+﻿using System.Numerics;
+
+namespace DarkMusicConcepts;
 
 /// <summary>
 /// Number value object base class with a specific value range from Min to Max
@@ -6,43 +8,49 @@
 /// <typeparam name="TValue">The actual value</typeparam>
 /// <typeparam name="TThis">Self</typeparam>
 public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue, TThis>>, IEquatable<Unit<TValue, TThis>>
-    where TThis : Unit<TValue, TThis>
-    where TValue : IComparable, IComparable<TValue>, IEquatable<TValue>
+    where TThis : Unit<TValue, TThis>, IUnit<TValue, TThis>
+    where TValue : struct, IComparable, IComparable<TValue>, IEquatable<TValue>
 {
+    public static TThis Min { get; } = TThis.Create(TThis.MinValue);
+    public static TThis Max { get; } = TThis.Create(TThis.MaxValue);
+
     protected Unit(TValue value)
     {
         Value = value;
     }
 
-    protected abstract TValue GetMinValue();
-    protected abstract TValue GetMaxValue();
+    public TValue Value { get; init; }
 
-    protected void Validate()
+    public static TThis From(TValue value)
     {
-        if (!IsValidValue(Value))
+        var unit = TThis.Create(value);
+
+        unit.Validate();
+
+        return unit;
+    }
+
+    public static bool TryFrom(TValue value, out TThis unit)
+    {
+        if (!IsValidValue(value))
         {
-            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {GetMinValue()}-{GetMaxValue()}");
+            unit = null!;
+            return false;
         }
+
+        unit = TThis.Create(value);
+
+        return true;
     }
 
-    protected bool TryValidate()
+    public static bool IsValidValue(TValue value)
     {
-        return IsValidValue(Value);
-    }
-
-    private bool IsValidValue(TValue? value)
-    {
-        if(value is null)
+        if (value.CompareTo(TThis.MinValue) < 0)
         {
             return false;
         }
 
-        if (value.CompareTo(GetMinValue()) < 0)
-        {
-            return false;
-        }
-
-        if (value.CompareTo(GetMaxValue()) > 0)
+        if (value.CompareTo(TThis.MaxValue) > 0)
         {
             return false;
         }
@@ -50,7 +58,13 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
         return true;
     }
 
-    public TValue Value { get; }
+    protected void Validate()
+    {
+        if (!IsValidValue(Value))
+        {
+            throw new ArgumentOutOfRangeException(nameof(Value), Value, $"{nameof(Value)} has to be within range {TThis.MinValue}-{TThis.MaxValue}");
+        }
+    }
 
     #region Equality
 
@@ -91,7 +105,7 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
             return true;
         }
 
-        if(obj is not Unit<TValue, TThis> other)
+        if (obj is not Unit<TValue, TThis> other)
         {
             return false;
         }
@@ -180,18 +194,7 @@ public abstract class Unit<TValue, TThis> : IComparable, IComparable<Unit<TValue
 
     #endregion
 
-    public override int GetHashCode()
-    {
-        return EqualityComparer<TValue>.Default.GetHashCode(Value);
-    }
+    public override int GetHashCode() => EqualityComparer<TValue>.Default.GetHashCode(Value);
 
-    public override string ToString()
-    {
-        if (Value is null)
-        {
-            return string.Empty;
-        }
-
-        return Value.ToString() ?? string.Empty;
-    }
+    public override string ToString() => Value.ToString() ?? string.Empty;
 }

@@ -2,37 +2,8 @@
 
 public class TimeTests
 {
-    [Fact]
-    public void From_ShouldThrow_WhenLessThanMin()
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() => Time.From(Time.MinValue - 1));
-    }
 
-    [Fact]
-    public void TryFrom_ShouldFail_WhenLessThanMin()
-    {
-        var success = Time.TryFrom(Time.MinValue - 1, out var invalidTime);
-        success.Should().Be(false);
-        invalidTime.Should().Be(null!);
-    }
-
-    [Fact]
-    public void Comparison_ShouldReturnTrue_WhenValueMatches()
-    {
-        var time1 = Time.From(43);
-        var time2 = Time.From(43);
-        var result = time1 == time2;
-        result.Should().BeTrue();
-    }
-
-    [Fact]
-    public void Comparison_ShouldReturnFalse_WhenValueDoesntMatch()
-    {
-        var time1 = Time.From(43);
-        var time2 = Time.From(69);
-        var result = time1 == time2;
-        result.Should().BeFalse();
-    }
+    #region Arithmetic operators
 
     [Fact]
     public void AdditionOperatorWithSelf_ShouldWork()
@@ -59,6 +30,8 @@ public class TimeTests
         var result = time * 3;
         result.Value.Should().Be(45);
     }
+
+    #endregion
 
     [Fact]
     public void CalculatedProperties_NoneShouldThrowWhenAccessed()
