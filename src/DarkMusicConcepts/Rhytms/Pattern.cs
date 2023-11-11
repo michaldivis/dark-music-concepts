@@ -25,9 +25,12 @@ public class Pattern
     /// <exception cref="ArgumentException" />
     public static Pattern Create(bool[] nodes, Time nodeDuration)
     {
-        nodes
-            .ThrowIfNull()
-            .IfEmpty();
+        ArgumentNullException.ThrowIfNull(nodes);
+
+        if (nodes.Length == 0)
+        {
+            throw new ArgumentException("Nodes can't be empty", nameof(nodes));
+        }
 
         return new Pattern(nodes, nodeDuration);
     }

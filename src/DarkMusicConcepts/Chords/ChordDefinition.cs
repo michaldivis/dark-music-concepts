@@ -19,13 +19,16 @@ public class ChordDefinition
     /// <param name="chordFunction">Chord function of the added note</param>
     /// <param name="accident">Accident of the added note</param>
     /// <returns>The updated definition</returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="InvalidOperationException"></exception>
     public ChordDefinition With(ChordFunction chordFunction, Accident accident = Accident.None)
     {
         var interval = chordFunction.Intervals.FirstOrDefault(x => x.Accident == accident);
 
         //TODO handle interval not found
-        interval.ThrowIfNull("Interval with this accident not found in the specified chord function");
+        if (interval is null)
+        {
+            throw new InvalidOperationException("Interval with this accident not found in the specified chord function");
+        }
 
         _intervals.Add(interval);
 
