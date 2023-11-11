@@ -6,7 +6,7 @@ var demos = new Demo[]
     new IntervalsDemo(),
     new ScalesDemo(),
     new ChordsDemo(),
-    new TimeDemo()
+    new UnitsDemo()
 };
 
 foreach (var demo in demos)
