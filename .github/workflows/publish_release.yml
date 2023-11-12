@@ -19,13 +19,13 @@ jobs:
         dotnet-version: 7.0.x
 
     - name: Run Tests
-      run: dotnet test "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj" -f net7.0
+      run: dotnet test "tests\DarkMusicConcepts.Tests\DarkMusicConcepts.Tests.csproj"
 
     - name: Set NuGet Version
       run: echo "NUGET_VERSION=$(echo ${{ github.ref_name }} | cut -d 'v' -f 2)" >> $GITHUB_ENV
 
     - name: Pack as NuGet package
-      run: dotnet pack "src/Useless/Useless.csproj" -c Release /p:Version=${{ env.NUGET_VERSION }} -o artifacts -f net7.0
+      run: dotnet pack "src/Useless/Useless.csproj" -c Release /p:Version=${{ env.NUGET_VERSION }} -o artifacts
 
     - name: Publish to NuGet
       run: dotnet nuget push "artifacts/Useless.${{ env.NUGET_VERSION }}.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
