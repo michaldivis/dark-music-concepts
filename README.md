@@ -1,16 +1,6 @@
-﻿<img src="https://github.com/michaldivis/dark-music-concepts/blob/master/assets/icon.png?raw=true" width="200">
-
-# Dark Music Concepts
+﻿<img src="https://github.com/michaldivis/dark-music-concepts/blob/master/assets/header.png?raw=true">
 
 A code model for western music concepts.
-
-**Roadmap**
-| Feature | Implementation status |
-| --- | --- |
-| Notes | ✅ |
-| Scales | ✅ |
-| Chords | ✅ |
-| Rhytms | 🚧 (work in progress) |
 
 ## Status
 
