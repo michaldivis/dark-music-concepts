@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{0D3D70
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheoryPlayground", "sample\TheoryPlayground\TheoryPlayground.csproj", "{C620512E-19E8-4E83-AE62-7A01A25C57F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DarkMusicConcepts.NewNoteNaming", "src\DarkMusicConcepts.NewNoteNaming\DarkMusicConcepts.NewNoteNaming.csproj", "{94DFB2AD-C7EF-4ADC-BACE-EB629ED8D825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{C620512E-19E8-4E83-AE62-7A01A25C57F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C620512E-19E8-4E83-AE62-7A01A25C57F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C620512E-19E8-4E83-AE62-7A01A25C57F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DFB2AD-C7EF-4ADC-BACE-EB629ED8D825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DFB2AD-C7EF-4ADC-BACE-EB629ED8D825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DFB2AD-C7EF-4ADC-BACE-EB629ED8D825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DFB2AD-C7EF-4ADC-BACE-EB629ED8D825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{6E6D0B94-A541-46F7-9361-4E67827D0643} = {ED34997C-B90F-4578-B70F-8C32AC40D67B}
 		{B5F287C9-8BCF-4756-8250-343289964A9F} = {C7D3DCC6-1D61-47C5-ABAE-A9196A3989AE}
 		{C620512E-19E8-4E83-AE62-7A01A25C57F1} = {0D3D7089-3F5E-4EFB-8124-7488F8CACAD1}
+		{94DFB2AD-C7EF-4ADC-BACE-EB629ED8D825} = {C7D3DCC6-1D61-47C5-ABAE-A9196A3989AE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80F22427-1181-49C6-A8DA-04A8C884F72C}
