@@ -5,48 +5,67 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dmc="clr-namespace:DarkMusicConcepts;assembly=DarkMusicConcepts"
     xmlns:local="clr-namespace:TheoryPlayground.Views"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sf="http://schemas.syncfusion.com/wpf"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Background="{DynamicResource MaterialDesignPaper}"
-    FontFamily="{materialDesign:MaterialDesignFont}"
-    TextElement.FontSize="14"
-    TextElement.FontWeight="Medium"
-    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     mc:Ignorable="d">
     <UserControl.DataContext>
         <local:ScalesViewModel />
     </UserControl.DataContext>
-    <ScrollViewer>
-        <Border Padding="15,15,5,5">
-            <StackPanel>
+    <StackPanel>
+        <TextBlock
+            Margin="5"
+            FontSize="16"
+            Text="Scales" />
+        <TextBlock
+            Margin="5"
+            FontStyle="Italic"
+            Opacity="0.75"
+            Text="Play the notes of a scale, starting at a selected root note" />
+        <DockPanel HorizontalAlignment="Left">
+            <StackPanel
+                Margin="5"
+                HorizontalAlignment="Left"
+                Orientation="Vertical">
                 <TextBlock
-                    Margin="5"
-                    Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                    Text="Scales" />
-
-                <DockPanel VerticalAlignment="Top" LastChildFill="True">
-                    <Button
-                        Margin="5"
-                        Command="{Binding PlayCommand}"
-                        Content="{materialDesign:PackIcon Kind=Play}"
-                        DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingActionMiniButton}" />
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Root note"
-                        ItemsSource="{x:Static dmc:Notes.All}"
-                        SelectedItem="{Binding SelectedRootNote}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                    <ComboBox
-                        Margin="5"
-                        materialDesign:HintAssist.Hint="Scale formula"
-                        ItemsSource="{x:Static dmc:ScaleFormulas.All}"
-                        SelectedItem="{Binding SelectedScaleFormula}"
-                        Style="{StaticResource MaterialDesignOutlinedComboBox}" />
-                </DockPanel>
+                    FontSize="10"
+                    FontWeight="Light"
+                    Opacity="0.75"
+                    Text="Root note" />
+                <sf:ComboBoxAdv
+                    VerticalAlignment="Center"
+                    ItemsSource="{x:Static dmc:Notes.All}"
+                    SelectedItem="{Binding SelectedRootNote}" />
             </StackPanel>
-        </Border>
-    </ScrollViewer>
+            <StackPanel
+                Margin="5"
+                HorizontalAlignment="Left"
+                Orientation="Vertical">
+                <TextBlock
+                    FontSize="10"
+                    FontWeight="Light"
+                    Opacity="0.75"
+                    Text="Scale formula" />
+                <sf:ComboBoxAdv
+                    VerticalAlignment="Center"
+                    ItemsSource="{x:Static dmc:ScaleFormulas.All}"
+                    SelectedItem="{Binding SelectedScaleFormula}" />
+            </StackPanel>
+        </DockPanel>
+
+        <TextBlock Margin="5" Opacity="0.5">
+            <Run Text="Scale formula (H = half step, W = whole step): " />
+            <LineBreak />
+            <Run Text="{Binding CreationSteps, Mode=OneWay}" />
+        </TextBlock>
+
+        <sf:ButtonAdv
+            Margin="5"
+            HorizontalAlignment="Right"
+            Command="{Binding PlayCommand}"
+            IconHeight="0"
+            IconWidth="0"
+            Label="Play" />
+    </StackPanel>
 </UserControl>

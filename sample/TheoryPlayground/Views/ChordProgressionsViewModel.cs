@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace TheoryPlayground.Views;
+﻿namespace TheoryPlayground.Views;
 
 public partial class ChordProgressionsViewModel : ViewModelBase
 {
@@ -21,7 +19,7 @@ public partial class ChordProgressionsViewModel : ViewModelBase
     private async Task Play()
     {
         var scale = SelectedScaleFormula.Create(SelectedRootNote.BasePitch);
-        var scaleDegrees = ParseProgression(ProgressionDefinition);
+        var scaleDegrees = ParseProgression(ProgressionDefinition).Cast<ScaleDegree>().ToArray();
         var chordProgression = ChordProgression.Create(scaleDegrees);
         var chords = chordProgression.GetChords(scale, SelectedRootNote.Octave);
 
@@ -34,25 +32,19 @@ public partial class ChordProgressionsViewModel : ViewModelBase
 
     private bool CanPlay()
     {
-        try
-        {
-            return ParseProgression(ProgressionDefinition).Any();
-        }
-        catch (Exception)
-        {
-            return false;
-        }
+        var scaleDegrees = ParseProgression(ProgressionDefinition);
+        return scaleDegrees.Length > 0 && scaleDegrees.All(x => x is not null);
     }
 
-    private ScaleDegree[] ParseProgression(string definition)
+    private ScaleDegree?[] ParseProgression(string definition)
     {
         return definition
             .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-            .Select(number => ParseScaleDegree(number))
+            .Select(ParseScaleDegree)
             .ToArray();
     }
 
-    private ScaleDegree ParseScaleDegree(string number)
+    private ScaleDegree? ParseScaleDegree(string number)
     {
         return number switch
         {
@@ -63,7 +55,7 @@ public partial class ChordProgressionsViewModel : ViewModelBase
             "5" => ScaleDegree.V,
             "6" => ScaleDegree.VI,
             "7" => ScaleDegree.VII,
-            _ => throw new ArgumentException($"Invalid scale degree: {number}")
+            _ => null
         };
     }
 }
