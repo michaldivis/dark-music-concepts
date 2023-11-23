@@ -186,6 +186,4 @@ Time.HalfNoteDotted + Time.Bar - (Time.SixteenthNote * 8); // => 16 320 ticks
 
 ## More
 
-Checkout the sample apps to learn more:
-- [Console sample app](/sample/SampleConsoleApp/)
-- [WPF sample app](/sample/TheoryPlayground/)
+Checkout the [Demo app](/sample/TheoryPlayground/) to learn more.

@@ -7,9 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.6.1" />
-    <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+	<PackageReference Include="Syncfusion.Shared.WPF" Version="23.2.4" />
+	<PackageReference Include="Syncfusion.Themes.FluentDark.WPF" Version="23.2.4" />
+	<PackageReference Include="Syncfusion.SfTextInputLayout.WPF" Version="23.2.4" />
+	<PackageReference Include="Syncfusion.Tools.WPF" Version="23.2.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ChordProgressionGeneratorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ChordProgressionsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
